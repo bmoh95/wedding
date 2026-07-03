@@ -196,11 +196,12 @@
   }
 
   function setupGallery() {
-    const mainImage = document.getElementById('gallery-current');
     const counter = document.getElementById('gallery-counter');
     const prevButton = document.querySelector('[data-gallery-prev]');
     const nextButton = document.querySelector('[data-gallery-next]');
     const openButton = document.querySelector('[data-gallery-open]');
+    const track = document.getElementById('gallery-track');
+    const slideImages = Array.from(track?.querySelectorAll('img') || []);
     const thumbButtons = Array.from(document.querySelectorAll('[data-gallery-index]'));
     const lightbox = document.getElementById('gallery-lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
@@ -213,15 +214,12 @@
     const zoomResetButton = document.querySelector('[data-zoom-reset]');
     const zoomInButton = document.querySelector('[data-zoom-in]');
 
-    if (!mainImage || !counter || !prevButton || !nextButton || !openButton || !lightbox || !lightboxImage || !viewport) return;
+    if (!counter || !prevButton || !nextButton || !openButton || !track || !slideImages.length || !lightbox || !lightboxImage || !viewport) return;
 
-    const slides = thumbButtons.map((button, index) => {
-      const image = button.querySelector('img');
-      return {
-        src: image?.getAttribute('src') || '',
-        alt: `웨딩 사진 샘플 ${index + 1}`
-      };
-    }).filter((slide) => slide.src);
+    const slides = slideImages.map((image, imageIndex) => ({
+      src: image.getAttribute('src') || '',
+      alt: image.getAttribute('alt') || `웨딩 사진 샘플 ${imageIndex + 1}`
+    })).filter((slide) => slide.src);
     if (!slides.length) return;
 
     let index = 0;
@@ -231,11 +229,23 @@
     let dragStart = null;
     let pinchStart = null;
     let touchPanStart = null;
-    let swipeStart = null;
+    let stageDrag = null;
+    let lightboxSwipeStart = null;
     let lastSwipeAt = 0;
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
+    }
+
+    function stageWidth() {
+      return openButton.getBoundingClientRect().width || 1;
+    }
+
+    function setTrackPosition(offsetPx = 0, animate = true) {
+      track.classList.toggle('is-dragging', !animate);
+      track.style.transform = offsetPx
+        ? `translate3d(calc(${-index * 100}% + ${offsetPx}px), 0, 0)`
+        : `translate3d(${-index * 100}%, 0, 0)`;
     }
 
     function updateZoom(nextZoom, resetPan = false) {
@@ -250,11 +260,12 @@
       if (zoomResetButton) zoomResetButton.textContent = `${Math.round(zoom * 100)}%`;
     }
 
-    function render() {
-      const slide = slides[index];
-      mainImage.src = slide.src;
-      mainImage.alt = slide.alt;
+    function render(animate = true) {
+      setTrackPosition(0, animate);
       counter.textContent = `${index + 1} / ${slides.length}`;
+      slideImages.forEach((image, imageIndex) => {
+        image.toggleAttribute('aria-hidden', imageIndex !== index);
+      });
       thumbButtons.forEach((button, buttonIndex) => {
         const active = buttonIndex === index;
         button.classList.toggle('is-active', active);
@@ -274,12 +285,12 @@
 
     function move(delta) {
       index = (index + delta + slides.length) % slides.length;
-      render();
+      render(true);
     }
 
     function goTo(nextIndex) {
       index = clamp(nextIndex, 0, slides.length - 1);
-      render();
+      render(true);
     }
 
     function openLightbox() {
@@ -302,26 +313,88 @@
       return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
     }
 
-    function attachSwipe(element) {
+    function startStageDrag(event) {
+      if (slides.length < 2) return;
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      stageDrag = {
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        dx: 0,
+        dy: 0,
+        width: stageWidth(),
+        startedAt: performance.now(),
+        locked: null,
+        dragged: false
+      };
+      try { openButton.setPointerCapture(event.pointerId); } catch (error) {}
+    }
+
+    function updateStageDrag(event) {
+      if (!stageDrag || event.pointerId !== stageDrag.pointerId) return;
+      stageDrag.dx = event.clientX - stageDrag.startX;
+      stageDrag.dy = event.clientY - stageDrag.startY;
+
+      if (!stageDrag.locked && Math.hypot(stageDrag.dx, stageDrag.dy) > 8) {
+        stageDrag.locked = Math.abs(stageDrag.dx) > Math.abs(stageDrag.dy) * 1.15 ? 'x' : 'y';
+      }
+      if (stageDrag.locked !== 'x') return;
+
+      event.preventDefault();
+      stageDrag.dragged = true;
+      setTrackPosition(stageDrag.dx, false);
+    }
+
+    function finishStageDrag(event) {
+      if (!stageDrag || event.pointerId !== stageDrag.pointerId) return;
+      const drag = stageDrag;
+      stageDrag = null;
+      try { openButton.releasePointerCapture(event.pointerId); } catch (error) {}
+
+      if (drag.locked === 'x' && drag.dragged) {
+        const elapsed = Math.max(1, performance.now() - drag.startedAt);
+        const velocity = drag.dx / elapsed;
+        const threshold = Math.min(90, Math.max(42, drag.width * .18));
+        if (Math.abs(drag.dx) > threshold || Math.abs(velocity) > .45) {
+          index = (index + (drag.dx < 0 ? 1 : -1) + slides.length) % slides.length;
+        }
+        lastSwipeAt = Date.now();
+      }
+      render(true);
+    }
+
+    function cancelStageDrag() {
+      if (!stageDrag) return;
+      stageDrag = null;
+      render(true);
+    }
+
+    function attachLightboxSwipe(element) {
       element.addEventListener('touchstart', (event) => {
         if (element === viewport && zoom > 1) {
-          swipeStart = null;
+          lightboxSwipeStart = null;
           return;
         }
-        if (event.touches.length === 1) swipeStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+        if (event.touches.length === 1) {
+          lightboxSwipeStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+        }
       }, { passive: true });
       element.addEventListener('touchend', (event) => {
-        if (!swipeStart) return;
+        if (!lightboxSwipeStart) return;
         const touch = event.changedTouches[0];
-        const dx = touch.clientX - swipeStart.x;
-        const dy = touch.clientY - swipeStart.y;
-        swipeStart = null;
+        const dx = touch.clientX - lightboxSwipeStart.x;
+        const dy = touch.clientY - lightboxSwipeStart.y;
+        lightboxSwipeStart = null;
         if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-          lastSwipeAt = Date.now();
           move(dx < 0 ? 1 : -1);
         }
       }, { passive: true });
     }
+
+    openButton.addEventListener('pointerdown', startStageDrag);
+    openButton.addEventListener('pointermove', updateStageDrag);
+    openButton.addEventListener('pointerup', finishStageDrag);
+    openButton.addEventListener('pointercancel', cancelStageDrag);
 
     prevButton.addEventListener('click', () => move(-1));
     nextButton.addEventListener('click', () => move(1));
@@ -390,8 +463,7 @@
       touchPanStart = null;
     }, { passive: true });
 
-    attachSwipe(openButton);
-    attachSwipe(viewport);
+    attachLightboxSwipe(viewport);
 
     document.addEventListener('keydown', (event) => {
       if (!lightbox.classList.contains('is-open')) return;
@@ -403,7 +475,7 @@
       if (event.key === '0') updateZoom(1, true);
     });
 
-    render();
+    render(false);
   }
 
   setupGallery();

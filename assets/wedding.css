@@ -332,6 +332,7 @@ h2 span { color: var(--wedding-accent-dark); }
 .gallery-stage {
   appearance: none;
   display: block;
+  position: relative;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -341,12 +342,31 @@ h2 span { color: var(--wedding-accent-dark); }
   background: #f8f1eb;
   aspect-ratio: 4 / 5;
   cursor: zoom-in;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.gallery-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform .32s cubic-bezier(.22, .61, .36, 1);
+  will-change: transform;
+}
+.gallery-track.is-dragging {
+  transition: none;
 }
 .gallery-stage img {
   display: block;
+  flex: 0 0 100%;
   width: 100%;
+  min-width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 .gallery-arrow,
 .lightbox-arrow {
