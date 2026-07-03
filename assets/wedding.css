@@ -563,7 +563,7 @@ h2 span { color: var(--wedding-accent-dark); }
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
   align-items: center;
-  padding: var(--content-divider-gap) 0;
+  padding: var(--content-divider-gap) 8px var(--content-divider-gap) 0;
   border: 0;
   background: transparent;
 }
@@ -599,6 +599,7 @@ h2 span { color: var(--wedding-accent-dark); }
 .copy-button {
   justify-self: end;
   min-width: 58px;
+  max-width: 100%;
   min-height: 40px;
   padding-inline: 16px;
   border: 1px solid #000;
@@ -745,7 +746,7 @@ body.lightbox-open { overflow: hidden; }
   .cover-family span { font-size: 9.5px; letter-spacing: -.07em; }
   .map-actions { grid-template-columns: 1fr; }
   .account-card { grid-template-columns: 1fr; }
-  .copy-button { width: 100%; }
+  .copy-button { justify-self: stretch; width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
