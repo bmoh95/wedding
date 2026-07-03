@@ -7,7 +7,7 @@
   --content-divider-gap: 22px;
   --wedding-accent-dark: #000;
   --font-gothic: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Montserrat", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -188,6 +188,7 @@ body {
   gap: 14px;
   margin: 0 auto 18px;
   color: #000;
+  font-family: var(--font-gothic);
   font-size: 17px;
   font-weight: 400;
   letter-spacing: .24em;
@@ -304,14 +305,12 @@ h2 span { color: var(--wedding-accent-dark); }
 
 .place-date-section,
 .gallery-section,
-.account-section,
-.closing-section { text-align: center; }
+.account-section { text-align: center; }
 .gallery-section {
   padding-top: 38px;
   padding-bottom: 38px;
 }
 .account-section { padding-bottom: 22px; }
-.closing-section { padding-top: 30px; }
 .countdown {
   position: relative;
   display: grid;
@@ -393,8 +392,7 @@ h2 span { color: var(--wedding-accent-dark); }
   margin-top: 10px;
 }
 .place-copy,
-.account-note,
-.closing-section p {
+.account-note {
   margin: 10px 0 0;
   color: var(--wedding-muted);
   font-size: 14px;
@@ -684,17 +682,6 @@ h2 span { color: var(--wedding-accent-dark); }
   color: #000;
   background: #fff;
 }
-
-.closing-section { padding-bottom: 40px; }
-.closing-lettering {
-  font-family: var(--font-display);
-  font-size: 34px;
-  font-weight: 500;
-  line-height: 1.18;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.closing-section .solid-button { width: 100%; margin-top: var(--content-divider-gap); }
 
 body.lightbox-open { overflow: hidden; }
 .gallery-lightbox {

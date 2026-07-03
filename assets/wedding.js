@@ -298,29 +298,6 @@
     button.addEventListener('click', () => copyText(button.dataset.copy || ''));
   });
 
-  const shareButton = document.getElementById('share-invitation');
-  if (shareButton) {
-    shareButton.addEventListener('click', async () => {
-      const shareData = {
-        title: '박용태 · 나수진 모바일 청첩장',
-        text: '박용태와 나수진의 결혼식에 초대합니다.',
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-          return;
-        } catch (error) {
-          if (error.name === 'AbortError') return;
-        }
-      }
-
-      await copyText(window.location.href);
-      showToast('청첩장 주소를 복사했습니다.');
-    });
-  }
-
   async function setupGallery() {
     const galleryRoot = document.querySelector('[data-gallery-max]');
     const counter = document.getElementById('gallery-counter');
