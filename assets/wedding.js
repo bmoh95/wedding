@@ -195,31 +195,63 @@
     });
   }
 
-  function setupGallery() {
+  async function setupGallery() {
+    const galleryRoot = document.querySelector('[data-gallery-max]');
     const counter = document.getElementById('gallery-counter');
     const prevButton = document.querySelector('[data-gallery-prev]');
     const nextButton = document.querySelector('[data-gallery-next]');
     const openButton = document.querySelector('[data-gallery-open]');
     const track = document.getElementById('gallery-track');
-    const slideImages = Array.from(track?.querySelectorAll('img') || []);
-    const thumbButtons = Array.from(document.querySelectorAll('[data-gallery-index]'));
+    const thumbsContainer = document.querySelector('.gallery-thumbs');
     const lightbox = document.getElementById('gallery-lightbox');
     const lightboxTrack = document.getElementById('lightbox-track');
-    const lightboxImages = Array.from(lightboxTrack?.querySelectorAll('img') || []);
     const lightboxCounter = document.getElementById('lightbox-counter');
     const viewport = document.querySelector('[data-lightbox-viewport]');
     const closeButton = document.querySelector('[data-lightbox-close]');
     const lightboxPrev = document.querySelector('[data-lightbox-prev]');
     const lightboxNext = document.querySelector('[data-lightbox-next]');
 
-    if (!counter || !prevButton || !nextButton || !openButton || !track || !slideImages.length || !lightbox || !lightboxTrack || !lightboxImages.length || !viewport) return;
+    if (!galleryRoot || !counter || !prevButton || !nextButton || !openButton || !track || !thumbsContainer || !lightbox || !lightboxTrack || !viewport) return;
 
-    const slides = slideImages.map((image, imageIndex) => ({
+    const fallbackSlides = Array.from(track.querySelectorAll('img')).map((image, imageIndex) => ({
       src: image.getAttribute('src') || '',
-      alt: image.getAttribute('alt') || `웨딩 사진 샘플 ${imageIndex + 1}`
+      alt: image.getAttribute('alt') || `웨딩 사진 ${imageIndex + 1}`,
+      width: Number(image.getAttribute('width')) || 900,
+      height: Number(image.getAttribute('height')) || 900
     })).filter((slide) => slide.src);
+
+    const galleryMax = Math.min(10, Math.max(1, Number(galleryRoot.dataset.galleryMax || 10)));
+
+    function normalizeSlide(slide, slideIndex) {
+      if (!slide || !slide.src) return null;
+      return {
+        src: String(slide.src),
+        alt: String(slide.alt || `웨딩 사진 ${slideIndex + 1}`),
+        width: Number(slide.width) || 900,
+        height: Number(slide.height) || 900
+      };
+    }
+
+    async function loadGalleryManifest() {
+      if (!window.fetch) return [];
+      try {
+        const response = await fetch('assets/wedding-gallery.json', { cache: 'no-store' });
+        if (!response.ok) return [];
+        const data = await response.json();
+        if (!Array.isArray(data)) return [];
+        return data.map(normalizeSlide).filter(Boolean).slice(0, galleryMax);
+      } catch (error) {
+        return [];
+      }
+    }
+
+    let slides = await loadGalleryManifest();
+    if (!slides.length) slides = fallbackSlides.map(normalizeSlide).filter(Boolean).slice(0, galleryMax);
     if (!slides.length) return;
 
+    let slideImages = [];
+    let thumbButtons = [];
+    let lightboxImages = [];
     let index = 0;
     let galleryDrag = null;
     let lightboxDrag = null;
@@ -229,6 +261,43 @@
     let lightboxPanX = 0;
     let lightboxPanY = 0;
     let lastSwipeAt = 0;
+
+    function createGalleryImage(slide, slideIndex, fullSize = false) {
+      const image = document.createElement('img');
+      image.src = slide.src;
+      image.width = slide.width;
+      image.height = slide.height;
+      image.decoding = 'async';
+      image.alt = fullSize ? `${slide.alt} 전체화면` : slide.alt;
+      if (slideIndex > 0) image.loading = 'lazy';
+      return image;
+    }
+
+    function buildGalleryDom() {
+      track.textContent = '';
+      lightboxTrack.textContent = '';
+      thumbsContainer.textContent = '';
+
+      slides.forEach((slide, slideIndex) => {
+        track.appendChild(createGalleryImage(slide, slideIndex, false));
+        lightboxTrack.appendChild(createGalleryImage(slide, slideIndex, true));
+
+        const button = document.createElement('button');
+        button.className = 'gallery-thumb';
+        button.type = 'button';
+        button.dataset.galleryIndex = String(slideIndex);
+        button.setAttribute('aria-label', `${slideIndex + 1}번 사진 보기`);
+        button.appendChild(createGalleryImage({ ...slide, alt: `${slide.alt} 미리보기` }, slideIndex, false));
+        button.addEventListener('click', () => goTo(slideIndex));
+        thumbsContainer.appendChild(button);
+      });
+
+      slideImages = Array.from(track.querySelectorAll('img'));
+      lightboxImages = Array.from(lightboxTrack.querySelectorAll('img'));
+      thumbButtons = Array.from(thumbsContainer.querySelectorAll('[data-gallery-index]'));
+      galleryRoot.dataset.galleryCount = String(slides.length);
+      openButton.setAttribute('aria-label', `${index + 1}번 사진 전체화면으로 보기`);
+    }
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
@@ -289,6 +358,7 @@
       const atEnd = index === slides.length - 1;
       counter.textContent = `${index + 1} / ${slides.length}`;
       if (lightboxCounter) lightboxCounter.textContent = `${index + 1} / ${slides.length}`;
+      openButton.setAttribute('aria-label', `${index + 1}번 사진 전체화면으로 보기`);
       slideImages.forEach((image, imageIndex) => {
         image.toggleAttribute('aria-hidden', imageIndex !== index);
       });
@@ -505,6 +575,8 @@
       event.preventDefault();
     }
 
+    buildGalleryDom();
+
     openButton.addEventListener('pointerdown', (event) => startTrackDrag(event, 'gallery'));
     openButton.addEventListener('pointermove', (event) => updateTrackDrag(event, 'gallery'));
     openButton.addEventListener('pointerup', (event) => finishTrackDrag(event, 'gallery'));
@@ -532,7 +604,6 @@
       if (Date.now() - lastSwipeAt < 420) return;
       openLightbox();
     });
-    thumbButtons.forEach((button) => button.addEventListener('click', () => goTo(Number(button.dataset.galleryIndex || 0))));
     closeButton?.addEventListener('click', closeLightbox);
     lightboxPrev?.addEventListener('click', () => move(-1));
     lightboxNext?.addEventListener('click', () => move(1));
@@ -547,6 +618,7 @@
     render(false, true);
   }
 
+  setupGallery();
   setupGallery();
   setupAccountAnimations();
 
