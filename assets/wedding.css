@@ -58,8 +58,8 @@ body {
 .card-section:last-of-type::after { display: none; }
 
 .cover {
-  min-height: 760px;
-  padding: 74px 0 68px;
+  min-height: 680px;
+  padding: 74px 0 36px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -168,16 +168,6 @@ body {
   justify-self: center;
   background: #000;
   opacity: .18;
-}
-.intro {
-  margin: 30px 0 0;
-  color: #000;
-  font-size: 13px;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 2;
-  letter-spacing: -.02em;
-  word-break: keep-all;
 }
 .date-lockup {
   display: grid;
@@ -740,7 +730,7 @@ body.lightbox-open { overflow: hidden; }
 
 @media (min-width: 720px) {
   .invitation { padding-top: 30px; padding-bottom: 50px; }
-  .cover { min-height: 760px; }
+  .cover { min-height: 680px; }
 }
 
 @media (max-width: 360px) {
@@ -749,7 +739,7 @@ body.lightbox-open { overflow: hidden; }
     --content-divider-gap: 20px;
   }
   .invitation { padding-left: 14px; padding-right: 14px; }
-  .cover { min-height: 720px; padding-top: 58px; padding-bottom: 58px; }
+  .cover { min-height: 650px; padding-top: 58px; padding-bottom: 34px; }
   .cover-illustration { width: min(100%, 332px); margin-bottom: 30px; }
   .cover-title { font-size: 20px; letter-spacing: .28em; }
   .cover-title span { text-indent: .28em; }

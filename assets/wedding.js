@@ -64,7 +64,7 @@
   }
 
   const eventTitle = '박용태 · 나수진 결혼식';
-  const eventLocation = '더채플앳청담 커티지홀, 서울 강남구 선릉로 757';
+  const eventLocation = '더채플앳청담 커티지홀, 서울 강남구 선릉로 757, 더채플앳청담 2F';
   const eventDescription = '박용태와 나수진의 결혼식에 초대합니다.';
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=20261122T063000Z%2F20261122T083000Z&ctz=Asia%2FSeoul&location=${encodeURIComponent(eventLocation)}&details=${encodeURIComponent(eventDescription)}&sf=true&output=xml`;
   const androidIntentUrl = `intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title=${encodeURIComponent(eventTitle)};S.eventLocation=${encodeURIComponent(eventLocation)};S.description=${encodeURIComponent(eventDescription)};l.beginTime=1795329000000;l.endTime=1795336200000;end`;
