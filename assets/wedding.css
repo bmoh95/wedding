@@ -1,27 +1,26 @@
 :root {
-  --wedding-ink: #1b1715;
-  --wedding-muted: #7b716b;
-  --wedding-line: #e7ded6;
-  --wedding-divider: linear-gradient(90deg, transparent, rgba(123, 92, 73, .28), transparent);
+  --wedding-ink: #000;
+  --wedding-muted: #000;
+  --wedding-divider: linear-gradient(90deg, transparent, rgba(0, 0, 0, .22), transparent);
   --wedding-divider-width: 76%;
   --section-divider-gap: 58px;
   --content-divider-gap: 22px;
-  --wedding-accent-dark: #7b5c49;
+  --wedding-accent-dark: #000;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: auto; }
 :where(a, button, summary):focus { outline: none; }
 :where(a, button, summary):focus-visible {
-  outline: 1px solid rgba(123, 92, 73, .52);
+  outline: 1px solid rgba(0, 0, 0, .62);
   outline-offset: 4px;
 }
 .fonts-loading .invitation { visibility: hidden; }
 body {
   margin: 0;
   min-height: 100%;
-  background: #f7f3ef;
-  color: var(--wedding-ink);
+  background: #fff;
+  color: #000;
   font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
   font-weight: 300;
   overflow-x: hidden;
@@ -34,7 +33,7 @@ body {
   width: min(100%, 430px);
   margin: 0 auto;
   padding: 0 24px 40px;
-  background: #fffdfa;
+  background: #fff;
 }
 
 .card-section {
@@ -59,63 +58,94 @@ body {
 .card-section:last-of-type::after { display: none; }
 
 .cover {
-  min-height: 535px;
-  padding-bottom: 22px;
+  min-height: 760px;
+  padding: 74px 0 68px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  color: #000;
 }
 
-.cover::before { top: 28px; }
+.cover::before { display: none; }
 
 .kicker,
 .section-label {
-  margin: 0 0 14px;
-  color: var(--wedding-accent-dark);
+  margin: 0 0 18px;
+  color: #000;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: .28em;
+  letter-spacing: .34em;
   text-transform: uppercase;
 }
-
-.lettering {
-  margin: 0 auto 22px;
-  color: #14100e;
-  font-family: "Oooh Baby", "Brush Script MT", cursive;
-  font-size: clamp(70px, 24vw, 116px);
-  font-weight: 400;
-  line-height: .74;
-  letter-spacing: -.035em;
-  text-wrap: balance;
+.cover .kicker {
+  margin-bottom: 30px;
+  font-size: 11px;
+  letter-spacing: .38em;
 }
-.lettering span { display: inline-block; transform: translateY(.08em) rotate(-7deg); }
-
+.cover-illustration {
+  width: min(72%, 230px);
+  margin: 0 auto 38px;
+  color: #000;
+  opacity: .62;
+}
+.cover-illustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.cover-title {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto 28px;
+  color: #000;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(22px, 6.2vw, 31px);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+}
+.cover-title span {
+  display: block;
+  text-indent: .34em;
+}
+.cover-title em {
+  color: #000;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: .7em;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-indent: .18em;
+}
 .names {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin: 8px auto 0;
-  font-size: 21px;
-  font-weight: 500;
-  letter-spacing: .22em;
+  gap: 14px;
+  margin: 0 auto 18px;
+  color: #000;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: .24em;
 }
 .names i {
   display: block;
-  width: 34px;
+  width: 30px;
   height: 1px;
-  background: var(--wedding-line);
+  background: #000;
+  opacity: .28;
 }
 .cover-family {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
   width: min(100%, 330px);
-  margin: 18px auto 0;
-  color: #5f554f;
+  margin: 0 auto;
+  color: #000;
 }
 .cover-family .family-side {
   display: grid;
@@ -127,22 +157,26 @@ body {
 .cover-family span {
   display: block;
   font-size: 10.5px;
-  line-height: 1.45;
+  line-height: 1.6;
   letter-spacing: -.04em;
   word-break: keep-all;
 }
 .cover-family i {
   display: block;
   width: 1px;
-  height: 36px;
+  height: 30px;
   justify-self: center;
-  background: var(--wedding-line);
+  background: #000;
+  opacity: .18;
 }
 .intro {
-  margin: 28px 0 0;
-  color: #4d4540;
-  font-size: 15px;
-  line-height: 1.9;
+  margin: 30px 0 0;
+  color: #000;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 2;
+  letter-spacing: -.02em;
   word-break: keep-all;
 }
 .date-lockup {
@@ -290,15 +324,17 @@ h2 span { color: var(--wedding-accent-dark); }
   display: grid;
   place-items: center;
   aspect-ratio: 1;
+  border: 1px solid transparent;
   border-radius: 999px;
-  color: #5b514b;
+  color: #000;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 15px;
   font-weight: 600;
 }
 .dates .selected {
-  color: #fff;
-  background: var(--wedding-ink);
+  color: #000;
+  background: #fff;
+  border-color: #000;
 }
 
 .calendar-add-button {
@@ -331,7 +367,7 @@ h2 span { color: var(--wedding-accent-dark); }
   overflow: hidden;
   border: 0;
   border-radius: 0;
-  background: #f8f1eb;
+  background: #fff;
   aspect-ratio: 4 / 5;
   cursor: zoom-in;
   touch-action: pan-y;
@@ -369,9 +405,9 @@ h2 span { color: var(--wedding-accent-dark); }
   place-items: center;
   width: 38px;
   height: 52px;
-  border: 0;
-  color: #fff;
-  background: rgba(27, 23, 21, .38);
+  border: 1px solid rgba(0, 0, 0, .18);
+  color: #000;
+  background: rgba(255, 255, 255, .78);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 38px;
   line-height: 1;
@@ -455,14 +491,14 @@ h2 span { color: var(--wedding-accent-dark); }
   cursor: pointer;
 }
 .solid-button {
-  border: 1px solid var(--wedding-ink);
-  color: #fff;
-  background: var(--wedding-ink);
+  border: 1px solid #000;
+  color: #000;
+  background: #fff;
 }
 .outline-button {
-  border: 1px solid var(--wedding-line);
-  color: var(--wedding-ink);
-  background: #fffdf9;
+  border: 1px solid #000;
+  color: #000;
+  background: #fff;
 }
 .account-groups {
   position: relative;
@@ -568,7 +604,7 @@ h2 span { color: var(--wedding-accent-dark); }
 }
 .account-card p {
   margin: 0;
-  color: #5b514b;
+  color: #000;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   font-size: 14px;
   font-weight: 700;
@@ -578,8 +614,8 @@ h2 span { color: var(--wedding-accent-dark); }
 }
 .copy-button {
   min-height: 40px;
-  border: 1px solid #dacabc;
-  color: var(--wedding-accent-dark);
+  border: 1px solid #000;
+  color: #000;
   background: #fff;
 }
 
@@ -677,7 +713,7 @@ body.lightbox-open { overflow: hidden; }
   transform: translateY(-50%);
   width: 42px;
   height: 58px;
-  background: rgba(255, 255, 255, .14);
+  background: rgba(255, 255, 255, .78);
 }
 .lightbox-prev { left: 12px; }
 .lightbox-next { right: 12px; }
@@ -713,9 +749,11 @@ body.lightbox-open { overflow: hidden; }
     --content-divider-gap: 20px;
   }
   .invitation { padding-left: 14px; padding-right: 14px; }
-  .cover { min-height: 560px; }
-  .lettering { font-size: 66px; }
-  .names { font-size: 19px; letter-spacing: .18em; }
+  .cover { min-height: 720px; padding-top: 58px; padding-bottom: 58px; }
+  .cover-illustration { width: min(76%, 210px); margin-bottom: 32px; }
+  .cover-title { font-size: 20px; letter-spacing: .28em; }
+  .cover-title span { text-indent: .28em; }
+  .names { font-size: 16px; letter-spacing: .18em; }
   .cover-family { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 6px; }
   .cover-family span { font-size: 9.5px; letter-spacing: -.07em; }
   .map-actions { grid-template-columns: 1fr; }
