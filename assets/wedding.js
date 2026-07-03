@@ -204,17 +204,15 @@
     const slideImages = Array.from(track?.querySelectorAll('img') || []);
     const thumbButtons = Array.from(document.querySelectorAll('[data-gallery-index]'));
     const lightbox = document.getElementById('gallery-lightbox');
-    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxTrack = document.getElementById('lightbox-track');
+    const lightboxImages = Array.from(lightboxTrack?.querySelectorAll('img') || []);
     const lightboxCounter = document.getElementById('lightbox-counter');
     const viewport = document.querySelector('[data-lightbox-viewport]');
     const closeButton = document.querySelector('[data-lightbox-close]');
     const lightboxPrev = document.querySelector('[data-lightbox-prev]');
     const lightboxNext = document.querySelector('[data-lightbox-next]');
-    const zoomOutButton = document.querySelector('[data-zoom-out]');
-    const zoomResetButton = document.querySelector('[data-zoom-reset]');
-    const zoomInButton = document.querySelector('[data-zoom-in]');
 
-    if (!counter || !prevButton || !nextButton || !openButton || !track || !slideImages.length || !lightbox || !lightboxImage || !viewport) return;
+    if (!counter || !prevButton || !nextButton || !openButton || !track || !slideImages.length || !lightbox || !lightboxTrack || !lightboxImages.length || !viewport) return;
 
     const slides = slideImages.map((image, imageIndex) => ({
       src: image.getAttribute('src') || '',
@@ -223,47 +221,33 @@
     if (!slides.length) return;
 
     let index = 0;
-    let zoom = 1;
-    let panX = 0;
-    let panY = 0;
-    let dragStart = null;
-    let pinchStart = null;
-    let touchPanStart = null;
-    let stageDrag = null;
-    let lightboxSwipeStart = null;
+    let galleryDrag = null;
+    let lightboxDrag = null;
     let lastSwipeAt = 0;
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
     }
 
-    function stageWidth() {
-      return openButton.getBoundingClientRect().width || 1;
+    function surfaceWidth(surface) {
+      return surface.getBoundingClientRect().width || 1;
     }
 
-    function setTrackPosition(offsetPx = 0, animate = true) {
-      track.classList.toggle('is-dragging', !animate);
-      track.style.transform = offsetPx
+    function setTrackPosition(targetTrack, offsetPx = 0, animate = true) {
+      if (!targetTrack) return;
+      targetTrack.classList.toggle('is-dragging', !animate);
+      targetTrack.style.transform = offsetPx
         ? `translate3d(calc(${-index * 100}% + ${offsetPx}px), 0, 0)`
         : `translate3d(${-index * 100}%, 0, 0)`;
     }
 
-    function updateZoom(nextZoom, resetPan = false) {
-      zoom = clamp(nextZoom, 1, 4);
-      if (resetPan || zoom === 1) {
-        panX = 0;
-        panY = 0;
-      }
-      lightboxImage.style.setProperty('--zoom', zoom.toFixed(2));
-      lightboxImage.style.setProperty('--pan-x', `${panX}px`);
-      lightboxImage.style.setProperty('--pan-y', `${panY}px`);
-      if (zoomResetButton) zoomResetButton.textContent = `${Math.round(zoom * 100)}%`;
-    }
-
-    function render(animate = true) {
-      setTrackPosition(0, animate);
+    function updateActiveState() {
       counter.textContent = `${index + 1} / ${slides.length}`;
+      if (lightboxCounter) lightboxCounter.textContent = `${index + 1} / ${slides.length}`;
       slideImages.forEach((image, imageIndex) => {
+        image.toggleAttribute('aria-hidden', imageIndex !== index);
+      });
+      lightboxImages.forEach((image, imageIndex) => {
         image.toggleAttribute('aria-hidden', imageIndex !== index);
       });
       thumbButtons.forEach((button, buttonIndex) => {
@@ -272,15 +256,12 @@
         if (active) button.setAttribute('aria-current', 'true');
         else button.removeAttribute('aria-current');
       });
-      if (lightbox.classList.contains('is-open')) renderLightbox(true);
     }
 
-    function renderLightbox(resetZoom = false) {
-      const slide = slides[index];
-      lightboxImage.src = slide.src;
-      lightboxImage.alt = `${slide.alt} 전체화면`;
-      if (lightboxCounter) lightboxCounter.textContent = `${index + 1} / ${slides.length}`;
-      if (resetZoom) updateZoom(1, true);
+    function render(animate = true) {
+      setTrackPosition(track, 0, animate);
+      setTrackPosition(lightboxTrack, 0, animate);
+      updateActiveState();
     }
 
     function move(delta) {
@@ -294,7 +275,7 @@
     }
 
     function openLightbox() {
-      renderLightbox(true);
+      render(false);
       lightbox.classList.add('is-open');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.classList.add('lightbox-open');
@@ -308,48 +289,57 @@
       openButton.focus({ preventScroll: true });
     }
 
-    function distance(touches) {
-      const [a, b] = touches;
-      return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    function dragTarget(kind) {
+      const isLightbox = kind === 'lightbox';
+      return {
+        surface: isLightbox ? viewport : openButton,
+        trackElement: isLightbox ? lightboxTrack : track,
+        getState: () => (isLightbox ? lightboxDrag : galleryDrag),
+        setState: (value) => { if (isLightbox) lightboxDrag = value; else galleryDrag = value; }
+      };
     }
 
-    function startStageDrag(event) {
+    function startTrackDrag(event, kind) {
       if (slides.length < 2) return;
       if (event.pointerType === 'mouse' && event.button !== 0) return;
-      stageDrag = {
+      const target = dragTarget(kind);
+      target.setState({
         pointerId: event.pointerId,
         startX: event.clientX,
         startY: event.clientY,
         dx: 0,
         dy: 0,
-        width: stageWidth(),
+        width: surfaceWidth(target.surface),
         startedAt: performance.now(),
         locked: null,
         dragged: false
-      };
-      try { openButton.setPointerCapture(event.pointerId); } catch (error) {}
+      });
+      try { target.surface.setPointerCapture(event.pointerId); } catch (error) {}
     }
 
-    function updateStageDrag(event) {
-      if (!stageDrag || event.pointerId !== stageDrag.pointerId) return;
-      stageDrag.dx = event.clientX - stageDrag.startX;
-      stageDrag.dy = event.clientY - stageDrag.startY;
+    function updateTrackDrag(event, kind) {
+      const target = dragTarget(kind);
+      const drag = target.getState();
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      drag.dx = event.clientX - drag.startX;
+      drag.dy = event.clientY - drag.startY;
 
-      if (!stageDrag.locked && Math.hypot(stageDrag.dx, stageDrag.dy) > 8) {
-        stageDrag.locked = Math.abs(stageDrag.dx) > Math.abs(stageDrag.dy) * 1.15 ? 'x' : 'y';
+      if (!drag.locked && Math.hypot(drag.dx, drag.dy) > 8) {
+        drag.locked = Math.abs(drag.dx) > Math.abs(drag.dy) * 1.15 ? 'x' : 'y';
       }
-      if (stageDrag.locked !== 'x') return;
+      if (drag.locked !== 'x') return;
 
       event.preventDefault();
-      stageDrag.dragged = true;
-      setTrackPosition(stageDrag.dx, false);
+      drag.dragged = true;
+      setTrackPosition(target.trackElement, drag.dx, false);
     }
 
-    function finishStageDrag(event) {
-      if (!stageDrag || event.pointerId !== stageDrag.pointerId) return;
-      const drag = stageDrag;
-      stageDrag = null;
-      try { openButton.releasePointerCapture(event.pointerId); } catch (error) {}
+    function finishTrackDrag(event, kind) {
+      const target = dragTarget(kind);
+      const drag = target.getState();
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      target.setState(null);
+      try { target.surface.releasePointerCapture(event.pointerId); } catch (error) {}
 
       if (drag.locked === 'x' && drag.dragged) {
         const elapsed = Math.max(1, performance.now() - drag.startedAt);
@@ -358,43 +348,27 @@
         if (Math.abs(drag.dx) > threshold || Math.abs(velocity) > .45) {
           index = (index + (drag.dx < 0 ? 1 : -1) + slides.length) % slides.length;
         }
-        lastSwipeAt = Date.now();
+        if (kind === 'gallery') lastSwipeAt = Date.now();
       }
       render(true);
     }
 
-    function cancelStageDrag() {
-      if (!stageDrag) return;
-      stageDrag = null;
+    function cancelTrackDrag(kind) {
+      const target = dragTarget(kind);
+      if (!target.getState()) return;
+      target.setState(null);
       render(true);
     }
 
-    function attachLightboxSwipe(element) {
-      element.addEventListener('touchstart', (event) => {
-        if (element === viewport && zoom > 1) {
-          lightboxSwipeStart = null;
-          return;
-        }
-        if (event.touches.length === 1) {
-          lightboxSwipeStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-        }
-      }, { passive: true });
-      element.addEventListener('touchend', (event) => {
-        if (!lightboxSwipeStart) return;
-        const touch = event.changedTouches[0];
-        const dx = touch.clientX - lightboxSwipeStart.x;
-        const dy = touch.clientY - lightboxSwipeStart.y;
-        lightboxSwipeStart = null;
-        if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-          move(dx < 0 ? 1 : -1);
-        }
-      }, { passive: true });
-    }
+    openButton.addEventListener('pointerdown', (event) => startTrackDrag(event, 'gallery'));
+    openButton.addEventListener('pointermove', (event) => updateTrackDrag(event, 'gallery'));
+    openButton.addEventListener('pointerup', (event) => finishTrackDrag(event, 'gallery'));
+    openButton.addEventListener('pointercancel', () => cancelTrackDrag('gallery'));
 
-    openButton.addEventListener('pointerdown', startStageDrag);
-    openButton.addEventListener('pointermove', updateStageDrag);
-    openButton.addEventListener('pointerup', finishStageDrag);
-    openButton.addEventListener('pointercancel', cancelStageDrag);
+    viewport.addEventListener('pointerdown', (event) => startTrackDrag(event, 'lightbox'));
+    viewport.addEventListener('pointermove', (event) => updateTrackDrag(event, 'lightbox'));
+    viewport.addEventListener('pointerup', (event) => finishTrackDrag(event, 'lightbox'));
+    viewport.addEventListener('pointercancel', () => cancelTrackDrag('lightbox'));
 
     prevButton.addEventListener('click', () => move(-1));
     nextButton.addEventListener('click', () => move(1));
@@ -406,73 +380,12 @@
     closeButton?.addEventListener('click', closeLightbox);
     lightboxPrev?.addEventListener('click', () => move(-1));
     lightboxNext?.addEventListener('click', () => move(1));
-    zoomOutButton?.addEventListener('click', () => updateZoom(zoom - .35));
-    zoomResetButton?.addEventListener('click', () => updateZoom(1, true));
-    zoomInButton?.addEventListener('click', () => updateZoom(zoom + .35));
-
-    viewport.addEventListener('wheel', (event) => {
-      if (!lightbox.classList.contains('is-open')) return;
-      event.preventDefault();
-      updateZoom(zoom + (event.deltaY < 0 ? .18 : -.18));
-    }, { passive: false });
-
-    viewport.addEventListener('pointerdown', (event) => {
-      if (zoom <= 1 || event.pointerType === 'touch') return;
-      dragStart = { x: event.clientX, y: event.clientY, panX, panY };
-      viewport.classList.add('is-dragging');
-      viewport.setPointerCapture(event.pointerId);
-    });
-    viewport.addEventListener('pointermove', (event) => {
-      if (!dragStart) return;
-      panX = dragStart.panX + event.clientX - dragStart.x;
-      panY = dragStart.panY + event.clientY - dragStart.y;
-      updateZoom(zoom);
-    });
-    viewport.addEventListener('pointerup', () => {
-      dragStart = null;
-      viewport.classList.remove('is-dragging');
-    });
-    viewport.addEventListener('pointercancel', () => {
-      dragStart = null;
-      viewport.classList.remove('is-dragging');
-    });
-
-    viewport.addEventListener('touchstart', (event) => {
-      if (event.touches.length === 2) {
-        pinchStart = { distance: distance(event.touches), zoom };
-        touchPanStart = null;
-      } else if (event.touches.length === 1 && zoom > 1) {
-        touchPanStart = { x: event.touches[0].clientX, y: event.touches[0].clientY, panX, panY };
-      }
-    }, { passive: true });
-    viewport.addEventListener('touchmove', (event) => {
-      if (pinchStart && event.touches.length === 2) {
-        event.preventDefault();
-        updateZoom(pinchStart.zoom * (distance(event.touches) / pinchStart.distance));
-        return;
-      }
-      if (touchPanStart && event.touches.length === 1) {
-        event.preventDefault();
-        panX = touchPanStart.panX + event.touches[0].clientX - touchPanStart.x;
-        panY = touchPanStart.panY + event.touches[0].clientY - touchPanStart.y;
-        updateZoom(zoom);
-      }
-    }, { passive: false });
-    viewport.addEventListener('touchend', () => {
-      pinchStart = null;
-      touchPanStart = null;
-    }, { passive: true });
-
-    attachLightboxSwipe(viewport);
 
     document.addEventListener('keydown', (event) => {
       if (!lightbox.classList.contains('is-open')) return;
       if (event.key === 'Escape') closeLightbox();
       if (event.key === 'ArrowLeft') move(-1);
       if (event.key === 'ArrowRight') move(1);
-      if (event.key === '+' || event.key === '=') updateZoom(zoom + .35);
-      if (event.key === '-') updateZoom(zoom - .35);
-      if (event.key === '0') updateZoom(1, true);
     });
 
     render(false);

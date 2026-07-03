@@ -191,14 +191,14 @@
     </div>
     <button class="lightbox-arrow lightbox-prev" type="button" data-lightbox-prev aria-label="이전 사진">‹</button>
     <div class="lightbox-viewport" data-lightbox-viewport>
-      <img id="lightbox-image" src="assets/wedding-gallery-sample-01.svg" width="900" height="1125" decoding="async" alt="웨딩 사진 샘플 1 전체화면" />
+      <div class="lightbox-track" id="lightbox-track">
+        <img src="assets/wedding-gallery-sample-01.svg" width="900" height="1125" decoding="async" alt="웨딩 사진 샘플 1 전체화면" />
+        <img src="assets/wedding-gallery-sample-02.svg" width="900" height="900" decoding="async" alt="웨딩 사진 샘플 2 전체화면" />
+        <img src="assets/wedding-gallery-sample-03.svg" width="900" height="900" decoding="async" alt="웨딩 사진 샘플 3 전체화면" />
+        <img src="assets/wedding-gallery-sample-04.svg" width="900" height="600" decoding="async" alt="웨딩 사진 샘플 4 전체화면" />
+      </div>
     </div>
     <button class="lightbox-arrow lightbox-next" type="button" data-lightbox-next aria-label="다음 사진">›</button>
-    <div class="lightbox-tools" aria-label="사진 확대 축소">
-      <button type="button" data-zoom-out aria-label="축소">−</button>
-      <button type="button" data-zoom-reset aria-label="확대 초기화">100%</button>
-      <button type="button" data-zoom-in aria-label="확대">＋</button>
-    </div>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="assets/wedding.js"></script>
