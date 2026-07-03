@@ -13,11 +13,11 @@
     <section class="hero compact">
       <p class="eyebrow">Daily Fortune</p>
       <h1>운세 기록</h1>
-      <p class="lead" id="summary">데이터 불러오는 중…</p>
+      <p class="lead" id="summary">JSON 데이터를 불러와 같은 View로 렌더링합니다…</p>
     </section>
 
     <section id="status" class="status"></section>
-    <section id="fortune-list" class="stack"></section>
+    <section id="fortune-list" class="stack" data-source="data/daily_fortunes.json" aria-live="polite"></section>
   </main>
 
   <script src="assets/daily-fortunes.js"></script>

@@ -119,27 +119,39 @@ function renderEntry(entry, index) {
   </details>`;
 }
 
+function normalizeEntries(data) {
+  return Array.isArray(data?.entries) ? data.entries : [];
+}
+
+// Data contract: fortune-history.html keeps only the shell,
+// data/daily_fortunes.json stores records, and this reusable view loops over entries.
+const summaryEl = document.getElementById('summary');
+const statusEl = document.getElementById('status');
+const fortuneListEl = document.getElementById('fortune-list');
+const dataSource = fortuneListEl?.dataset.source || 'data/daily_fortunes.json';
+
 function render(data) {
-  const entries = data.entries || [];
-  document.getElementById('summary').textContent = `${entries.length}건 · ${shortUpdated(data.updatedAt)}`;
-  document.getElementById('status').innerHTML = [
+  const entries = normalizeEntries(data);
+  summaryEl.textContent = `${entries.length}건 · ${shortUpdated(data?.updatedAt)}`;
+  statusEl.innerHTML = [
     `<span class="pill">기록 ${entries.length}건</span>`,
-    `<span class="pill">${esc(shortUpdated(data.updatedAt))}</span>`,
+    `<span class="pill">${esc(shortUpdated(data?.updatedAt))}</span>`,
+    `<span class="pill">JSON 데이터 기반</span>`,
     `<span class="pill">개인정보 비공개</span>`,
     `<span class="pill">종합 먼저 · 4체계 접기/펼치기</span>`,
   ].join('');
-  document.getElementById('fortune-list').innerHTML = entries.length
-    ? entries.map(renderEntry).join('')
+  fortuneListEl.innerHTML = entries.length
+    ? entries.map((entry, index) => renderEntry(entry, index)).join('')
     : '<div class="grade-card empty">아직 공개 가능한 운세 기록이 없습니다.</div>';
 }
 
-fetch('data/daily_fortunes.json?ts=' + Date.now())
+fetch(`${dataSource}?ts=${Date.now()}`)
   .then((res) => {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   })
   .then(render)
   .catch((err) => {
-    document.getElementById('summary').textContent = '데이터 로드 실패';
-    document.getElementById('fortune-list').innerHTML = `<div class="grade-card empty">${esc(err.message)}</div>`;
+    summaryEl.textContent = '데이터 로드 실패';
+    fortuneListEl.innerHTML = `<div class="grade-card empty">${esc(err.message)}</div>`;
   });
