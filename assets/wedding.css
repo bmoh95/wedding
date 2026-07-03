@@ -579,9 +579,6 @@ h2 span { color: var(--wedding-accent-dark); }
   cursor: pointer;
   user-select: none;
 }
-.account-group[open] summary {
-  padding-bottom: 16px;
-}
 .account-group summary::-webkit-details-marker { display: none; }
 .account-group summary span {
   color: var(--wedding-ink);
@@ -615,10 +612,8 @@ h2 span { color: var(--wedding-accent-dark); }
 .account-list {
   display: grid;
   gap: 0;
-  margin: 0 0 18px 12px;
-  padding: 7px 0 7px 16px;
-  border-left: 1px solid rgba(0, 0, 0, .22);
-  background: linear-gradient(90deg, rgba(0, 0, 0, .035), rgba(0, 0, 0, 0) 74%);
+  margin: 0 0 12px;
+  padding-top: 4px;
 }
 .account-group[data-animated] .account-list {
   max-height: 0;
@@ -638,46 +633,40 @@ h2 span { color: var(--wedding-accent-dark); }
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
   align-items: center;
-  padding: 15px 8px 15px 0;
+  padding: 14px 8px 14px 12px;
   border: 0;
   background: transparent;
 }
 .account-card > div { min-width: 0; }
 .account-card::after {
-  left: 0;
+  left: 12px;
   bottom: 0;
   transform: none;
-  width: 100%;
-  opacity: .38;
+  width: calc(100% - 12px);
+  opacity: .5;
 }
 .account-card:last-child::after { display: none; }
 .account-card.temp-account { background: transparent; }
 .account-card .role {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  margin-bottom: 7px;
-  padding: 2px 7px 3px;
-  border: 1px solid rgba(0, 0, 0, .16);
-  border-radius: 999px;
-  color: var(--wedding-accent-dark);
-  background: rgba(255, 255, 255, .72);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: .08em;
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(0, 0, 0, .58);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
 }
 .account-card strong {
   display: block;
   margin-bottom: 4px;
-  font-size: 16.5px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 500;
 }
 .account-card p {
   margin: 0;
-  color: rgba(0, 0, 0, .72);
+  color: #000;
   font-family: var(--font-gothic);
-  font-size: 13.5px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 0;
   line-height: 1.45;
   overflow-wrap: anywhere;
