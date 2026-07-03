@@ -644,7 +644,8 @@ body.lightbox-open { overflow: hidden; }
   position: relative;
   min-height: 0;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: none;
+  overscroll-behavior: contain;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -657,6 +658,8 @@ body.lightbox-open { overflow: hidden; }
   will-change: transform;
 }
 .lightbox-track.is-dragging { transition: none; }
+.lightbox-track.is-pinching img,
+.lightbox-track.is-panning img { transition: none; }
 .lightbox-track img {
   display: block;
   flex: 0 0 100%;
@@ -665,6 +668,9 @@ body.lightbox-open { overflow: hidden; }
   height: 100%;
   object-fit: contain;
   pointer-events: none;
+  transform: translate3d(var(--zoom-pan-x, 0px), var(--zoom-pan-y, 0px), 0) scale(var(--zoom, 1));
+  transform-origin: center center;
+  transition: transform .18s ease;
   user-select: none;
   -webkit-user-drag: none;
 }

@@ -223,6 +223,11 @@
     let index = 0;
     let galleryDrag = null;
     let lightboxDrag = null;
+    let imagePanDrag = null;
+    let pinchState = null;
+    let lightboxZoom = 1;
+    let lightboxPanX = 0;
+    let lightboxPanY = 0;
     let lastSwipeAt = 0;
 
     function clamp(value, min, max) {
@@ -239,6 +244,44 @@
       targetTrack.style.transform = offsetPx
         ? `translate3d(calc(${-index * 100}% + ${offsetPx}px), 0, 0)`
         : `translate3d(${-index * 100}%, 0, 0)`;
+    }
+
+    function activeLightboxImage() {
+      return lightboxImages[index];
+    }
+
+    function clearImageZoom(image) {
+      if (!image) return;
+      image.style.removeProperty('--zoom');
+      image.style.removeProperty('--zoom-pan-x');
+      image.style.removeProperty('--zoom-pan-y');
+    }
+
+    function applyLightboxZoom(animate = true) {
+      lightboxImages.forEach((image, imageIndex) => {
+        if (imageIndex !== index) clearImageZoom(image);
+      });
+      lightboxTrack.classList.toggle('is-panning', !animate && !pinchState && lightboxZoom > 1);
+      const image = activeLightboxImage();
+      if (!image) return;
+      if (lightboxZoom <= 1.001) {
+        lightboxZoom = 1;
+        lightboxPanX = 0;
+        lightboxPanY = 0;
+      }
+      image.style.setProperty('--zoom', lightboxZoom.toFixed(3));
+      image.style.setProperty('--zoom-pan-x', `${lightboxPanX}px`);
+      image.style.setProperty('--zoom-pan-y', `${lightboxPanY}px`);
+    }
+
+    function resetLightboxZoom() {
+      lightboxZoom = 1;
+      lightboxPanX = 0;
+      lightboxPanY = 0;
+      imagePanDrag = null;
+      pinchState = null;
+      lightboxTrack.classList.remove('is-panning', 'is-pinching');
+      lightboxImages.forEach(clearImageZoom);
     }
 
     function updateActiveState() {
@@ -258,24 +301,31 @@
       });
     }
 
-    function render(animate = true) {
+    function render(animate = true, resetZoom = true) {
+      if (resetZoom) resetLightboxZoom();
       setTrackPosition(track, 0, animate);
       setTrackPosition(lightboxTrack, 0, animate);
+      if (!animate) {
+        requestAnimationFrame(() => {
+          track.classList.remove('is-dragging');
+          lightboxTrack.classList.remove('is-dragging');
+        });
+      }
       updateActiveState();
     }
 
     function move(delta) {
       index = (index + delta + slides.length) % slides.length;
-      render(true);
+      render(true, true);
     }
 
     function goTo(nextIndex) {
       index = clamp(nextIndex, 0, slides.length - 1);
-      render(true);
+      render(true, true);
     }
 
     function openLightbox() {
-      render(false);
+      render(false, true);
       lightbox.classList.add('is-open');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.classList.add('lightbox-open');
@@ -283,6 +333,7 @@
     }
 
     function closeLightbox() {
+      resetLightboxZoom();
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('lightbox-open');
@@ -302,6 +353,19 @@
     function startTrackDrag(event, kind) {
       if (slides.length < 2) return;
       if (event.pointerType === 'mouse' && event.button !== 0) return;
+      if (kind === 'lightbox' && lightboxZoom > 1) {
+        imagePanDrag = {
+          pointerId: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          panX: lightboxPanX,
+          panY: lightboxPanY
+        };
+        lightboxTrack.classList.add('is-panning');
+        try { viewport.setPointerCapture(event.pointerId); } catch (error) {}
+        return;
+      }
+      if (kind === 'lightbox' && pinchState) return;
       const target = dragTarget(kind);
       target.setState({
         pointerId: event.pointerId,
@@ -318,6 +382,13 @@
     }
 
     function updateTrackDrag(event, kind) {
+      if (kind === 'lightbox' && imagePanDrag && event.pointerId === imagePanDrag.pointerId) {
+        event.preventDefault();
+        lightboxPanX = imagePanDrag.panX + event.clientX - imagePanDrag.startX;
+        lightboxPanY = imagePanDrag.panY + event.clientY - imagePanDrag.startY;
+        applyLightboxZoom(false);
+        return;
+      }
       const target = dragTarget(kind);
       const drag = target.getState();
       if (!drag || event.pointerId !== drag.pointerId) return;
@@ -335,6 +406,13 @@
     }
 
     function finishTrackDrag(event, kind) {
+      if (kind === 'lightbox' && imagePanDrag && event.pointerId === imagePanDrag.pointerId) {
+        imagePanDrag = null;
+        lightboxTrack.classList.remove('is-panning');
+        try { viewport.releasePointerCapture(event.pointerId); } catch (error) {}
+        applyLightboxZoom(true);
+        return;
+      }
       const target = dragTarget(kind);
       const drag = target.getState();
       if (!drag || event.pointerId !== drag.pointerId) return;
@@ -350,14 +428,69 @@
         }
         if (kind === 'gallery') lastSwipeAt = Date.now();
       }
-      render(true);
+      render(true, true);
     }
 
     function cancelTrackDrag(kind) {
       const target = dragTarget(kind);
+      if (kind === 'lightbox') {
+        imagePanDrag = null;
+        lightboxTrack.classList.remove('is-panning');
+      }
       if (!target.getState()) return;
       target.setState(null);
-      render(true);
+      render(true, true);
+    }
+
+    function touchDistance(touches) {
+      const [a, b] = touches;
+      return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    }
+
+    function startPinch(event) {
+      if (!lightbox.classList.contains('is-open') || event.touches.length !== 2) return;
+      event.preventDefault();
+      cancelTrackDrag('lightbox');
+      imagePanDrag = null;
+      pinchState = {
+        distance: touchDistance(event.touches),
+        zoom: lightboxZoom,
+        panX: lightboxPanX,
+        panY: lightboxPanY
+      };
+      lightboxTrack.classList.add('is-pinching');
+    }
+
+    function updatePinch(event) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.touches.length > 1) event.preventDefault();
+      if (!pinchState || event.touches.length !== 2) return;
+      const nextZoom = pinchState.zoom * (touchDistance(event.touches) / pinchState.distance);
+      lightboxZoom = clamp(nextZoom, 1, 4);
+      if (lightboxZoom <= 1.001) {
+        lightboxPanX = 0;
+        lightboxPanY = 0;
+      } else {
+        lightboxPanX = pinchState.panX;
+        lightboxPanY = pinchState.panY;
+      }
+      applyLightboxZoom(false);
+    }
+
+    function finishPinch(event) {
+      if (!pinchState || event.touches.length > 1) return;
+      pinchState = null;
+      lightboxTrack.classList.remove('is-pinching');
+      if (lightboxZoom < 1.03) {
+        resetLightboxZoom();
+      } else {
+        applyLightboxZoom(true);
+      }
+    }
+
+    function blockNativeGesture(event) {
+      if (!lightbox.classList.contains('is-open')) return;
+      event.preventDefault();
     }
 
     openButton.addEventListener('pointerdown', (event) => startTrackDrag(event, 'gallery'));
@@ -369,6 +502,17 @@
     viewport.addEventListener('pointermove', (event) => updateTrackDrag(event, 'lightbox'));
     viewport.addEventListener('pointerup', (event) => finishTrackDrag(event, 'lightbox'));
     viewport.addEventListener('pointercancel', () => cancelTrackDrag('lightbox'));
+    viewport.addEventListener('touchstart', startPinch, { passive: false });
+    viewport.addEventListener('touchmove', updatePinch, { passive: false });
+    viewport.addEventListener('touchend', finishPinch, { passive: false });
+    viewport.addEventListener('touchcancel', finishPinch, { passive: false });
+    ['gesturestart', 'gesturechange', 'gestureend'].forEach((type) => {
+      viewport.addEventListener(type, blockNativeGesture, { passive: false });
+      lightbox.addEventListener(type, blockNativeGesture, { passive: false });
+    });
+    document.addEventListener('touchmove', (event) => {
+      if (lightbox.classList.contains('is-open') && event.touches.length > 1) event.preventDefault();
+    }, { passive: false });
 
     prevButton.addEventListener('click', () => move(-1));
     nextButton.addEventListener('click', () => move(1));
@@ -388,7 +532,7 @@
       if (event.key === 'ArrowRight') move(1);
     });
 
-    render(false);
+    render(false, true);
   }
 
   setupGallery();
