@@ -97,7 +97,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin: 8px auto 6px;
+  margin: 8px auto 0;
   font-size: 21px;
   font-weight: 500;
   letter-spacing: .22em;
@@ -108,21 +108,13 @@ body {
   height: 1px;
   background: var(--wedding-line);
 }
-.english-names {
-  margin: 0;
-  color: var(--wedding-muted);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .18em;
-}
 .cover-family {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
   width: min(100%, 330px);
-  margin: 22px auto 0;
+  margin: 18px auto 0;
   color: #5f554f;
 }
 .cover-family .family-side {
