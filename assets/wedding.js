@@ -21,14 +21,20 @@
 
     bgm.volume = 0.57;
     let musicWanted = true;
+    let pausedForBackground = false;
+
+    function pageAllowsMusic() {
+      return document.visibilityState !== 'hidden';
+    }
 
     function setMusicState(state) {
       const isPlaying = state === 'playing';
       const isLoading = state === 'loading';
+      const isPressed = isPlaying || (isLoading && musicWanted);
       musicToggle.classList.toggle('is-playing', isPlaying);
       musicToggle.classList.toggle('is-loading', isLoading);
-      musicToggle.setAttribute('aria-pressed', String(isPlaying));
-      musicToggle.setAttribute('aria-label', isPlaying ? '배경음악 끄기' : '배경음악 켜기');
+      musicToggle.setAttribute('aria-pressed', String(isPressed));
+      musicToggle.setAttribute('aria-label', isPressed ? '배경음악 끄기' : '배경음악 켜기');
     }
 
     function prepareMusic() {
@@ -37,34 +43,66 @@
     }
 
     async function playMusic(options = {}) {
-      const { silent = false } = options;
+      const { silent = false, mutedStart = false } = options;
+      if (!pageAllowsMusic()) return;
       setMusicState('loading');
       prepareMusic();
       try {
-        bgm.muted = false;
+        bgm.muted = mutedStart;
         await bgm.play();
+        if (mutedStart) {
+          bgm.muted = false;
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          if (bgm.paused) throw new DOMException('Unmuted autoplay was blocked.', 'NotAllowedError');
+        }
         setMusicState('playing');
       } catch (error) {
-        setMusicState('off');
+        setMusicState(silent && musicWanted ? 'loading' : 'off');
         if (!silent) showToast('브라우저가 재생을 막았습니다. 버튼을 한 번 더 눌러 주세요.');
       }
     }
 
-    function pauseMusic() {
-      musicWanted = false;
+    function pauseMusic({ keepWanted = false } = {}) {
+      if (!keepWanted) musicWanted = false;
       bgm.pause();
+      bgm.muted = false;
       setMusicState('off');
     }
 
+    function pauseForBackground() {
+      if (bgm.paused) return;
+      pausedForBackground = true;
+      pauseMusic({ keepWanted: true });
+    }
+
     function resumeWantedMusic(event) {
-      if (!musicWanted || !bgm.paused) return;
+      if (!musicWanted || !pageAllowsMusic()) return;
       if (event?.target?.closest?.('#music-toggle')) return;
-      playMusic({ silent: true });
+      if (!bgm.paused && bgm.muted) {
+        bgm.muted = false;
+        setMusicState('playing');
+        return;
+      }
+      if (bgm.paused) playMusic({ silent: true });
+    }
+
+    function handleVisibilityChange() {
+      if (!pageAllowsMusic()) {
+        pauseForBackground();
+        return;
+      }
+      if (musicWanted && pausedForBackground) {
+        pausedForBackground = false;
+        playMusic({ silent: true, mutedStart: true });
+      }
     }
 
     musicToggle.addEventListener('click', () => {
-      if (bgm.paused) {
+      if (musicWanted && bgm.paused && musicToggle.classList.contains('is-loading')) {
+        pauseMusic();
+      } else if (bgm.paused) {
         musicWanted = true;
+        pausedForBackground = false;
         playMusic();
       }
       else pauseMusic();
@@ -73,6 +111,9 @@
     ['pointerdown', 'touchstart', 'keydown'].forEach((eventName) => {
       document.addEventListener(eventName, resumeWantedMusic, { passive: true });
     });
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', pauseForBackground);
+    window.addEventListener('blur', pauseForBackground);
 
     bgm.addEventListener('canplay', () => {
       if (!bgm.paused) setMusicState('playing');
@@ -85,7 +126,7 @@
       showToast('음악 파일을 불러오지 못했습니다.');
     });
 
-    playMusic({ silent: true });
+    playMusic({ silent: true, mutedStart: true });
   }
 
   function updateCountdown() {
