@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>운세 기록 · BMO Hermes</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <main class="shell wide">
+    <nav class="topnav"><a href="index.html">← 메인</a></nav>
+
+    <section class="hero compact">
+      <p class="eyebrow">Daily Fortune</p>
+      <h1>운세 기록</h1>
+      <p class="lead" id="summary">JSON 데이터를 불러와 같은 View로 렌더링합니다…</p>
+    </section>
+
+    <section id="status" class="status"></section>
+    <section id="fortune-list" class="stack" data-source="data/daily_fortunes.json" aria-live="polite"></section>
+  </main>
+
+  <script src="assets/daily-fortunes.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDF to JPG · BMO Hermes</title>
+  <link rel="stylesheet" href="assets/styles.css?v=pdf-to-jpg-20260630" />
+</head>
+<body>
+  <main class="shell wide">
+    <nav class="topnav"><a href="index.html">← 메인</a></nav>
+
+    <section class="hero compact pdf-hero">
+      <p class="eyebrow">Local Tool</p>
+      <h1>PDF to JPG</h1>
+      <p class="lead">PDF 파일을 브라우저 안에서만 JPG로 변환하고 ZIP으로 묶어 다운로드합니다. 파일 업로드·외부 API 호출·CDN 로딩 없이 로컬 정적 파일로 실행됩니다.</p>
+    </section>
+
+    <section class="status" aria-label="privacy status">
+      <span class="pill">🔒 PDF 업로드 없음</span>
+      <span class="pill">📦 JPG ZIP 다운로드</span>
+      <span class="pill">🧩 PDF.js + JSZip 로컬 포함</span>
+    </section>
+
+    <section class="converter-layout" aria-label="PDF to JPG 변환기">
+      <article class="grade-card converter-card">
+        <div class="grade-head">
+          <h2>변환 설정</h2>
+          <span id="pdf-file-summary">PDF 대기</span>
+        </div>
+
+        <div class="converter-body">
+          <label class="drop-zone" for="pdf-input" id="drop-zone">
+            <span class="drop-icon">📄</span>
+            <strong>PDF 파일 선택</strong>
+            <small>또는 여기에 끌어다 놓기 · 파일은 현재 기기에서만 읽습니다.</small>
+            <input id="pdf-input" type="file" accept="application/pdf,.pdf" />
+          </label>
+
+          <div class="option-grid">
+            <label>
+              <span>출력 해상도</span>
+              <select id="dpi-select">
+                <option value="144">144 DPI · 빠름</option>
+                <option value="200" selected>200 DPI · 권장</option>
+                <option value="300">300 DPI · 고해상도</option>
+              </select>
+            </label>
+            <label>
+              <span>JPG 품질</span>
+              <select id="quality-select">
+                <option value="0.82">82% · 작은 용량</option>
+                <option value="0.9" selected>90% · 권장</option>
+                <option value="0.96">96% · 고품질</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="converter-actions">
+            <button type="button" id="convert-button" class="primary-action" disabled>JPG ZIP 만들기</button>
+            <a id="download-link" class="secondary-action" href="#" download hidden>ZIP 다시 다운로드</a>
+          </div>
+
+          <div class="progress-wrap" aria-live="polite">
+            <div class="progress-bar" aria-hidden="true"><span id="progress-fill"></span></div>
+            <p id="progress-text">대기: PDF 파일을 선택해주세요.</p>
+          </div>
+
+          <p class="local-note">보안 안내: 이 도구는 선택한 PDF를 서버로 보내지 않습니다. 변환은 Canvas, PDF.js, JSZip을 이용해 브라우저 메모리에서 처리됩니다.</p>
+        </div>
+      </article>
+
+      <article class="grade-card preview-card">
+        <div class="grade-head">
+          <h2>미리보기</h2>
+          <span id="preview-summary">변환 전</span>
+        </div>
+        <div class="preview-empty" id="preview-empty">변환하면 첫 페이지 일부를 미리 보여줍니다.</div>
+        <ol class="preview-list" id="preview-list"></ol>
+      </article>
+    </section>
+  </main>
+
+  <script src="assets/vendor/jszip/jszip.min.js?v=3.10.1"></script>
+  <script type="module" src="assets/pdf-to-jpg.js?v=20260630"></script>
+</body>
+</html>

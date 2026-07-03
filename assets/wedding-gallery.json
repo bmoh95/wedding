@@ -1,0 +1,26 @@
+[
+  {
+    "src": "assets/wedding-gallery-sample-01.svg",
+    "width": 900,
+    "height": 1125,
+    "alt": "웨딩 사진 1"
+  },
+  {
+    "src": "assets/wedding-gallery-sample-02.svg",
+    "width": 900,
+    "height": 900,
+    "alt": "웨딩 사진 2"
+  },
+  {
+    "src": "assets/wedding-gallery-sample-03.svg",
+    "width": 900,
+    "height": 900,
+    "alt": "웨딩 사진 3"
+  },
+  {
+    "src": "assets/wedding-gallery-sample-04.svg",
+    "width": 900,
+    "height": 600,
+    "alt": "웨딩 사진 4"
+  }
+]

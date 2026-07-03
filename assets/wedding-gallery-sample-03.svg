@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-label="Wedding photo sample 3">
+  <rect width="900" height="900" fill="#f8f3ed"/>
+  <rect x="150" y="130" width="600" height="520" rx="36" fill="#fffdfa" stroke="#dfd0c4" stroke-width="4"/>
+  <path d="M205 560l160-170 130 115 105-90 95 145" fill="none" stroke="#b6947d" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="610" cy="250" r="46" fill="#e8d8ca"/>
+  <text x="450" y="740" text-anchor="middle" font-family="Georgia, serif" font-size="40" fill="#7b5c49" letter-spacing="4">GALLERY</text>
+</svg>

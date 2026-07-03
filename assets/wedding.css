@@ -1,0 +1,828 @@
+:root {
+  --wedding-ink: #000;
+  --wedding-muted: #000;
+  --wedding-divider: linear-gradient(90deg, transparent, rgba(0, 0, 0, .22), transparent);
+  --wedding-divider-width: 76%;
+  --section-divider-gap: 58px;
+  --content-divider-gap: 22px;
+  --wedding-accent-dark: #000;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+:where(a, button, summary):focus { outline: none; }
+:where(a, button, summary):focus-visible {
+  outline: 1px solid rgba(0, 0, 0, .62);
+  outline-offset: 4px;
+}
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #fff;
+  color: #000;
+  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+.invitation {
+  position: relative;
+  width: min(100%, 430px);
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  background: #fff;
+}
+
+.music-toggle {
+  appearance: none;
+  position: fixed;
+  top: max(15px, env(safe-area-inset-top));
+  right: max(15px, env(safe-area-inset-right));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  color: rgba(92, 92, 92, .86);
+  background: transparent;
+  cursor: pointer;
+}
+.music-toggle__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+}
+.music-toggle__speaker {
+  fill: currentColor;
+}
+.music-toggle__wave,
+.music-toggle__slash {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.music-toggle__wave {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+.music-toggle__slash {
+  opacity: .72;
+  transition: opacity .18s ease;
+}
+.music-toggle.is-loading,
+.music-toggle.is-playing {
+  color: rgba(82, 82, 82, .9);
+}
+.music-toggle.is-loading .music-toggle__icon,
+.music-toggle.is-playing .music-toggle__icon {
+  animation: musicSpeakerPulse 1.6s ease-in-out infinite;
+}
+.music-toggle.is-loading .music-toggle__wave,
+.music-toggle.is-playing .music-toggle__wave {
+  animation: musicWave 1.05s ease-in-out infinite;
+}
+.music-toggle.is-playing .music-toggle__wave--two { animation-delay: .18s; }
+.music-toggle.is-loading .music-toggle__slash,
+.music-toggle.is-playing .music-toggle__slash { opacity: 0; }
+
+@keyframes musicSpeakerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+
+@keyframes musicWave {
+  0%, 100% { opacity: .22; transform: scaleX(.82); }
+  45% { opacity: 1; transform: scaleX(1.08); }
+}
+
+.card-section {
+  position: relative;
+  margin: 0;
+  padding: var(--section-divider-gap) 0;
+  border: 0;
+  background: transparent;
+}
+.card-section::after,
+.cover::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--wedding-divider-width);
+  height: 1px;
+  background: var(--wedding-divider);
+  pointer-events: none;
+}
+.card-section::after { bottom: 0; }
+.card-section:last-of-type::after { display: none; }
+
+.cover {
+  min-height: 680px;
+  padding: 74px 0 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: #000;
+}
+
+.cover::before { display: none; }
+
+.kicker,
+.section-label {
+  margin: 0 0 18px;
+  color: #000;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+}
+.cover .kicker {
+  margin-bottom: 30px;
+  font-size: 11px;
+  letter-spacing: .38em;
+}
+.cover-illustration {
+  width: min(100%, 374px);
+  margin: 0 auto 34px;
+  color: #000;
+  opacity: 1;
+}
+.cover-illustration img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.cover-title {
+  display: grid;
+  gap: 9px;
+  margin: 0 auto 30px;
+  color: #000;
+  font-family: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  font-size: clamp(17px, 4.9vw, 22px);
+  font-weight: 700;
+  line-height: 1.42;
+  letter-spacing: .43em;
+  text-transform: uppercase;
+}
+.cover-title span {
+  display: block;
+  white-space: nowrap;
+  text-indent: .43em;
+}
+.names {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 auto 18px;
+  color: #000;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: .24em;
+}
+.names i {
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: #000;
+  opacity: .28;
+}
+.cover-family {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 330px);
+  margin: 0 auto;
+  color: #000;
+}
+.cover-family .family-side {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.cover-family .family-side:first-child { text-align: right; }
+.cover-family .family-side:last-child { text-align: left; }
+.cover-family span {
+  display: block;
+  font-size: 10.5px;
+  line-height: 1.6;
+  letter-spacing: -.04em;
+  word-break: keep-all;
+}
+.cover-family i {
+  display: block;
+  width: 1px;
+  height: 30px;
+  justify-self: center;
+  background: #000;
+  opacity: .18;
+}
+.date-lockup {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  margin: 0 auto 12px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+.date-lockup .day {
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+.date-lockup .time {
+  color: var(--wedding-muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+.venue {
+  margin: 16px 0 0;
+  color: var(--wedding-accent-dark);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+
+h2 {
+  margin: 0;
+  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -.04em;
+  word-break: keep-all;
+}
+h2 span { color: var(--wedding-accent-dark); }
+.place-date-lockup {
+  gap: 6px;
+  margin: 0 auto 18px;
+  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+}
+.place-date-lockup .day,
+.place-date-lockup .time {
+  color: var(--wedding-ink);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -.04em;
+}
+.place-date-venue {
+  margin-top: 18px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -.04em;
+}
+.place-date-venue span {
+  display: inline-block;
+  color: var(--wedding-accent-dark);
+  font-size: 20px;
+}
+.place-date-address {
+  margin-top: 10px;
+  font-size: 14.5px;
+}
+.place-date-actions {
+  position: relative;
+  margin-top: var(--content-divider-gap);
+  padding-top: var(--content-divider-gap);
+}
+.place-date-actions::before { top: 0; }
+
+.place-date-section,
+.gallery-section,
+.account-section,
+.closing-section { text-align: center; }
+.gallery-section {
+  padding-top: 38px;
+  padding-bottom: 38px;
+}
+.account-section { padding-bottom: 22px; }
+.closing-section { padding-top: 30px; }
+.countdown {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  margin: var(--content-divider-gap) 0;
+  padding: var(--content-divider-gap) 0;
+  min-height: 104px;
+}
+.countdown::before,
+.countdown::after,
+.place-date-actions::before,
+.account-groups::before,
+.account-group::after,
+.account-group[open] summary::before,
+.account-card::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--wedding-divider-width);
+  height: 1px;
+  background: var(--wedding-divider);
+  pointer-events: none;
+}
+.countdown::before { top: 0; }
+.countdown::after { bottom: 0; }
+.countdown strong {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 31px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.countdown span {
+  color: var(--wedding-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.calendar-box {
+  margin: var(--content-divider-gap) 0;
+  padding: 0;
+}
+.calendar-head {
+  margin-bottom: 12px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+.weekdays,
+.dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.weekdays { margin-bottom: 8px; color: var(--wedding-muted); font-family: "Cormorant Garamond", Georgia, serif; font-size: 12px; font-weight: 600; }
+.dates li {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #000;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+.dates .selected {
+  color: #000;
+  background: #fff;
+  border-color: #000;
+}
+
+.calendar-add-button {
+  width: 100%;
+  margin-top: 10px;
+}
+.place-copy,
+.account-note,
+.closing-section p {
+  margin: 10px 0 0;
+  color: var(--wedding-muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+.gallery-carousel {
+  position: relative;
+  margin-top: 0;
+  padding-bottom: 4px;
+}
+.gallery-frame {
+  position: relative;
+}
+.gallery-stage {
+  appearance: none;
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  aspect-ratio: 4 / 5;
+  cursor: zoom-in;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.gallery-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform .32s cubic-bezier(.22, .61, .36, 1);
+}
+.gallery-track.is-dragging {
+  transition: none;
+  will-change: transform;
+}
+.gallery-stage img {
+  display: block;
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.gallery-arrow,
+.lightbox-arrow {
+  appearance: none;
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 52px;
+  border: 1px solid rgba(0, 0, 0, .18);
+  color: #000;
+  background: rgba(255, 255, 255, .78);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+}
+.gallery-arrow:disabled,
+.lightbox-arrow:disabled {
+  opacity: .22;
+  cursor: default;
+  pointer-events: none;
+}
+.gallery-arrow { top: 50%; transform: translateY(-50%); }
+.gallery-arrow-prev { left: 0; }
+.gallery-arrow-next { right: 0; }
+.gallery-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  color: var(--wedding-muted);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+.gallery-status span:first-child {
+  color: var(--wedding-accent-dark);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 15px;
+  letter-spacing: .08em;
+}
+.gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+}
+.gallery-thumb {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  aspect-ratio: 1;
+  cursor: pointer;
+  opacity: .56;
+}
+.gallery-thumb.is-active {
+  border-color: var(--wedding-accent-dark);
+  opacity: 1;
+}
+.gallery-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.map-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 0;
+}
+
+.solid-button,
+.outline-button,
+.copy-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 999px;
+  padding: 0 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+.solid-button {
+  border: 1px solid #000;
+  color: #000;
+  background: #fff;
+}
+.outline-button {
+  border: 1px solid #000;
+  color: #000;
+  background: #fff;
+}
+.account-groups {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin-top: var(--content-divider-gap);
+  text-align: left;
+}
+.account-groups::before { top: 0; }
+.account-group {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+}
+.account-group::after { bottom: 0; }
+.account-group:last-child::after { display: none; }
+.account-group summary {
+  position: relative;
+  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  align-items: center;
+  min-height: 72px;
+  padding: var(--content-divider-gap) 0;
+  cursor: pointer;
+  user-select: none;
+}
+.account-group summary::-webkit-details-marker { display: none; }
+.account-group summary span {
+  color: var(--wedding-ink);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+.account-group summary small {
+  grid-column: 1 / -1;
+  color: var(--wedding-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.account-group summary::after {
+  content: '⌄';
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--wedding-accent-dark);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1;
+}
+.account-group[open] summary::before { bottom: 0; }
+.account-group[open] summary::after { content: '⌃'; }
+.account-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+.account-group[data-animated] .account-list {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: max-height .36s ease, opacity .24s ease, transform .36s ease;
+}
+.account-group[data-animating="true"] .account-list { will-change: max-height, opacity, transform; }
+.account-group[data-animated][open] .account-list {
+  opacity: 1;
+  transform: translateY(0);
+}
+.account-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: var(--content-divider-gap) 8px var(--content-divider-gap) 0;
+  border: 0;
+  background: transparent;
+}
+.account-card > div { min-width: 0; }
+.account-card::after { bottom: 0; opacity: .72; }
+.account-card:last-child::after { display: none; }
+.account-card.temp-account { background: transparent; }
+.account-card .role {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--wedding-accent-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.account-card strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.account-card p {
+  margin: 0;
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+.copy-button {
+  justify-self: end;
+  min-width: 58px;
+  max-width: 100%;
+  min-height: 40px;
+  padding-inline: 16px;
+  border: 1px solid #000;
+  color: #000;
+  background: #fff;
+}
+
+.closing-section { padding-bottom: 40px; }
+.closing-lettering {
+  font-family: "Oooh Baby", "Brush Script MT", cursive;
+  font-size: 54px;
+  font-weight: 400;
+  line-height: .9;
+  letter-spacing: -.035em;
+}
+.closing-section .solid-button { width: 100%; margin-top: var(--content-divider-gap); }
+
+body.lightbox-open { overflow: hidden; }
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-rows: 44px minmax(0, 1fr);
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  padding: max(18px, env(safe-area-inset-top)) 16px max(18px, env(safe-area-inset-bottom));
+  background: #100d0b;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.gallery-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.lightbox-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 44px;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+}
+.lightbox-close {
+  appearance: none;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(255, 255, 255, .08);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+}
+.lightbox-viewport {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: contain;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lightbox-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform .32s cubic-bezier(.22, .61, .36, 1);
+}
+.lightbox-track.is-dragging { transition: none; will-change: transform; }
+.lightbox-track.is-pinching,
+.lightbox-track.is-panning { will-change: transform; }
+.lightbox-track.is-pinching img,
+.lightbox-track.is-panning img { transition: none; }
+.lightbox-track img {
+  display: block;
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  transform: translate3d(var(--zoom-pan-x, 0px), var(--zoom-pan-y, 0px), 0) scale(var(--zoom, 1));
+  transform-origin: center center;
+  transition: transform .18s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.lightbox-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 58px;
+  background: rgba(255, 255, 255, .78);
+}
+.lightbox-prev { left: 12px; }
+.lightbox-next { right: 12px; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 50;
+  transform: translate(-50%, 18px);
+  max-width: min(360px, calc(100% - 36px));
+  padding: 12px 16px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(27, 23, 21, .92);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (min-width: 720px) {
+  .invitation { padding-top: 30px; padding-bottom: 50px; }
+  .cover { min-height: 680px; }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --section-divider-gap: 48px;
+    --content-divider-gap: 20px;
+  }
+  .invitation { padding-left: 14px; padding-right: 14px; }
+  .cover { min-height: 650px; padding-top: 58px; padding-bottom: 34px; }
+  .cover-illustration { width: min(100%, 332px); margin-bottom: 30px; }
+  .cover-title { font-size: 17px; letter-spacing: .34em; }
+  .cover-title span { text-indent: .34em; }
+  .names { font-size: 16px; letter-spacing: .18em; }
+  .cover-family { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 6px; }
+  .cover-family span { font-size: 9.5px; letter-spacing: -.07em; }
+  .map-actions { grid-template-columns: 1fr; }
+  .account-card { grid-template-columns: 1fr; }
+  .copy-button { justify-self: stretch; width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+  .music-toggle.is-loading .music-toggle__icon,
+  .music-toggle.is-playing .music-toggle__icon,
+  .music-toggle.is-loading .music-toggle__wave,
+  .music-toggle.is-playing .music-toggle__wave { animation: none !important; }
+  .account-group[data-animated] .account-list { transition: none !important; }
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" role="img" aria-label="Wedding photo sample 4">
+  <rect width="900" height="600" fill="#eee2d7"/>
+  <rect x="60" y="60" width="780" height="480" rx="34" fill="#fffdfa" stroke="#e7ded6" stroke-width="3"/>
+  <path d="M170 390c90-110 175-110 260 0s170 110 300 0" fill="none" stroke="#b6947d" stroke-width="12" stroke-linecap="round"/>
+  <text x="450" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="44" fill="#7b5c49" letter-spacing="5">WEDDING SAMPLE</text>
+</svg>

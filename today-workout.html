@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>오늘의 운동 · BMO Hermes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='48'%3E%F0%9F%8F%8B%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/styles.css?v=breakfast-realistic-20260624" />
+</head>
+<body>
+  <main class="shell wide">
+    <nav class="topnav"><a href="index.html">← 메인</a></nav>
+
+    <section class="hero compact fitness-hero">
+      <p class="eyebrow">Hardgainer Muscle Plan</p>
+      <h1>오늘의 운동</h1>
+      <p class="lead" id="fitness-summary">오늘 식단과 운동 루틴을 불러오는 중…</p>
+    </section>
+
+    <section id="fitness-status" class="status"></section>
+
+    <section class="today-layout" aria-label="오늘과 내일의 식단 및 운동">
+      <article id="today-panel" class="grade-card day-panel"></article>
+      <article id="tomorrow-panel" class="grade-card day-panel muted-panel"></article>
+    </section>
+
+    <section class="grade-card tracker-card" aria-label="증량 체크 규칙">
+      <div class="grade-head">
+        <h2>2주 체크 규칙</h2>
+        <span>매일 자동 표시</span>
+      </div>
+      <div class="tracker-grid">
+        <div><strong>체중이 2주 정체</strong><small>하루 +200kcal: 밥 100g 또는 우유 300ml 추가</small></div>
+        <div><strong>목표 증량</strong><small>60kg 기준 주 +0.15~0.30kg</small></div>
+        <div><strong>운동 기록 정체</strong><small>목표 반복 상단 달성 전까지 무게 유지</small></div>
+        <div><strong>회복 안 됨</strong><small>첫 4주는 실패 세트 금지 · RIR 2 유지</small></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/today-fitness.js?v=breakfast-realistic-20260624"></script>
+</body>
+</html>
