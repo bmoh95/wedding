@@ -88,13 +88,12 @@ body {
   width: min(100%, 374px);
   margin: 0 auto 34px;
   color: #000;
-  opacity: .86;
+  opacity: 1;
 }
 .cover-illustration img {
   display: block;
   width: 100%;
   height: auto;
-  filter: grayscale(1) contrast(1.18);
 }
 .cover-title {
   display: grid;
