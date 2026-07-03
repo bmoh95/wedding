@@ -567,6 +567,7 @@ h2 span { color: var(--wedding-accent-dark); }
   border: 0;
   background: transparent;
 }
+.account-card > div { min-width: 0; }
 .account-card::after { bottom: 0; opacity: .72; }
 .account-card:last-child::after { display: none; }
 .account-card.temp-account { background: transparent; }
@@ -592,10 +593,14 @@ h2 span { color: var(--wedding-accent-dark); }
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.45;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
 }
 .copy-button {
+  justify-self: end;
+  min-width: 58px;
   min-height: 40px;
+  padding-inline: 16px;
   border: 1px solid #000;
   color: #000;
   background: #fff;

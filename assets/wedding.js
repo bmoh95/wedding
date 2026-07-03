@@ -67,17 +67,36 @@
   const eventLocation = '더채플앳청담 커티지홀, 서울 강남구 선릉로 757, 더채플앳청담 2F';
   const eventDescription = '박용태와 나수진의 결혼식에 초대합니다.';
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=20261122T063000Z%2F20261122T083000Z&ctz=Asia%2FSeoul&location=${encodeURIComponent(eventLocation)}&details=${encodeURIComponent(eventDescription)}&sf=true&output=xml`;
-  const androidIntentUrl = `intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title=${encodeURIComponent(eventTitle)};S.eventLocation=${encodeURIComponent(eventLocation)};S.description=${encodeURIComponent(eventDescription)};l.beginTime=1795329000000;l.endTime=1795336200000;end`;
+  const androidIntentUrl = `intent://com.android.calendar/events#Intent;scheme=content;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title=${encodeURIComponent(eventTitle)};S.eventLocation=${encodeURIComponent(eventLocation)};S.description=${encodeURIComponent(eventDescription)};l.beginTime=1795329000000;l.endTime=1795336200000;end`;
 
   function calendarTarget() {
     const ua = navigator.userAgent || '';
     const isAndroid = /Android/i.test(ua);
     const isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isSamsungBrowser = /SamsungBrowser/i.test(ua);
     const icsUrl = new URL('wedding.ics', window.location.href).href;
 
-    if (isAndroid) return { label: 'Android 캘린더', url: androidIntentUrl, fallback: googleCalendarUrl };
+    if (isAndroid) return { label: 'Android 캘린더', url: androidIntentUrl, fallback: isSamsungBrowser ? '' : icsUrl, fallbackDelay: 1800 };
     if (isIOS) return { label: 'iPhone 캘린더', url: icsUrl };
     return { label: 'Google 캘린더', url: googleCalendarUrl };
+  }
+
+  function openCalendarTarget(target) {
+    let externalOpenStarted = false;
+    const markExternalOpen = () => { externalOpenStarted = true; };
+    const markHidden = () => { if (document.hidden) markExternalOpen(); };
+
+    window.addEventListener('pagehide', markExternalOpen, { once: true });
+    window.addEventListener('blur', markExternalOpen, { once: true });
+    document.addEventListener('visibilitychange', markHidden, { once: true });
+
+    window.location.href = target.url;
+    if (!target.fallback) return;
+
+    window.setTimeout(() => {
+      const pageStillActive = !externalOpenStarted && !document.hidden && document.hasFocus();
+      if (pageStillActive) window.location.href = target.fallback;
+    }, target.fallbackDelay || 1600);
   }
 
   const calendarAddButton = document.getElementById('calendar-add');
@@ -85,12 +104,7 @@
     calendarAddButton.addEventListener('click', () => {
       const target = calendarTarget();
       showToast(`${target.label} 등록 화면을 엽니다.`);
-      window.location.href = target.url;
-      if (target.fallback) {
-        window.setTimeout(() => {
-          if (!document.hidden) window.location.href = target.fallback;
-        }, 900);
-      }
+      openCalendarTarget(target);
     });
   }
 
