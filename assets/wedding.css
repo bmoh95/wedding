@@ -15,7 +15,6 @@ html { scroll-behavior: auto; }
   outline: 1px solid rgba(0, 0, 0, .62);
   outline-offset: 4px;
 }
-.fonts-loading .invitation { visibility: hidden; }
 body {
   margin: 0;
   min-height: 100%;
@@ -34,6 +33,92 @@ body {
   margin: 0 auto;
   padding: 0 24px 40px;
   background: #fff;
+}
+
+.music-toggle {
+  appearance: none;
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, .24);
+  border-radius: 999px;
+  color: #000;
+  background: rgba(255, 255, 255, .78);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.music-toggle__mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+}
+.music-toggle__note {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  transform: translate(-3px, -1px);
+}
+.music-toggle__bars {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  display: inline-flex;
+  align-items: end;
+  gap: 2px;
+  width: 10px;
+  height: 11px;
+}
+.music-toggle__bars span {
+  display: block;
+  width: 2px;
+  height: 5px;
+  border-radius: 999px;
+  background: #000;
+  opacity: .34;
+  transform-origin: bottom;
+}
+.music-toggle__slash {
+  position: absolute;
+  width: 29px;
+  height: 1px;
+  background: rgba(0, 0, 0, .72);
+  transform: rotate(-42deg);
+  transform-origin: center;
+}
+.music-toggle.is-playing {
+  border-color: rgba(0, 0, 0, .38);
+  background: rgba(255, 255, 255, .88);
+}
+.music-toggle.is-playing .music-toggle__mark {
+  animation: musicPulse 1.6s ease-in-out infinite;
+}
+.music-toggle.is-playing .music-toggle__bars span {
+  opacity: .9;
+  animation: musicBar .72s ease-in-out infinite;
+}
+.music-toggle.is-playing .music-toggle__bars span:nth-child(2) { animation-delay: .12s; }
+.music-toggle.is-playing .music-toggle__bars span:nth-child(3) { animation-delay: .24s; }
+.music-toggle.is-playing .music-toggle__slash { opacity: 0; }
+
+@keyframes musicPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes musicBar {
+  0%, 100% { transform: scaleY(.58); }
+  50% { transform: scaleY(1.55); }
 }
 
 .card-section {
@@ -362,10 +447,10 @@ h2 span { color: var(--wedding-accent-dark); }
   height: 100%;
   transform: translate3d(0, 0, 0);
   transition: transform .32s cubic-bezier(.22, .61, .36, 1);
-  will-change: transform;
 }
 .gallery-track.is-dragging {
   transition: none;
+  will-change: transform;
 }
 .gallery-stage img {
   display: block;
@@ -551,8 +636,8 @@ h2 span { color: var(--wedding-accent-dark); }
   opacity: 0;
   transform: translateY(-4px);
   transition: max-height .36s ease, opacity .24s ease, transform .36s ease;
-  will-change: max-height, opacity, transform;
 }
+.account-group[data-animating="true"] .account-list { will-change: max-height, opacity, transform; }
 .account-group[data-animated][open] .account-list {
   opacity: 1;
   transform: translateY(0);
@@ -677,9 +762,10 @@ body.lightbox-open { overflow: hidden; }
   height: 100%;
   transform: translate3d(0, 0, 0);
   transition: transform .32s cubic-bezier(.22, .61, .36, 1);
-  will-change: transform;
 }
-.lightbox-track.is-dragging { transition: none; }
+.lightbox-track.is-dragging { transition: none; will-change: transform; }
+.lightbox-track.is-pinching,
+.lightbox-track.is-panning { will-change: transform; }
 .lightbox-track.is-pinching img,
 .lightbox-track.is-panning img { transition: none; }
 .lightbox-track img {
@@ -752,5 +838,7 @@ body.lightbox-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
+  .music-toggle.is-playing .music-toggle__mark,
+  .music-toggle.is-playing .music-toggle__bars span { animation: none !important; }
   .account-group[data-animated] .account-list { transition: none !important; }
 }

@@ -1,15 +1,4 @@
 (() => {
-  function revealInvitation() {
-    document.documentElement.classList.remove('fonts-loading');
-  }
-
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(revealInvitation, revealInvitation);
-    window.setTimeout(revealInvitation, 1800);
-  } else {
-    revealInvitation();
-  }
-
   const weddingStart = new Date('2026-11-22T15:30:00+09:00');
   const weddingEnd = new Date('2026-11-22T17:30:00+09:00');
   const dday = document.getElementById('d-day');
@@ -23,6 +12,48 @@
     toast.classList.add('show');
     window.clearTimeout(toastTimer);
     toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function setupMusicToggle() {
+    const musicToggle = document.getElementById('music-toggle');
+    const bgm = document.getElementById('wedding-bgm');
+    if (!musicToggle || !bgm) return;
+
+    bgm.volume = 0.72;
+
+    function setPlayingState(isPlaying) {
+      musicToggle.classList.toggle('is-playing', isPlaying);
+      musicToggle.setAttribute('aria-pressed', String(isPlaying));
+      musicToggle.setAttribute('aria-label', isPlaying ? '배경음악 끄기' : '배경음악 켜기');
+    }
+
+    async function playMusic() {
+      try {
+        await bgm.play();
+        setPlayingState(true);
+      } catch (error) {
+        setPlayingState(false);
+        showToast('음악 재생 버튼을 다시 눌러 주세요.');
+      }
+    }
+
+    function pauseMusic() {
+      bgm.pause();
+      setPlayingState(false);
+    }
+
+    musicToggle.addEventListener('click', () => {
+      if (bgm.paused) playMusic();
+      else pauseMusic();
+    });
+
+    bgm.addEventListener('playing', () => setPlayingState(true));
+    bgm.addEventListener('pause', () => setPlayingState(false));
+    bgm.addEventListener('ended', () => setPlayingState(false));
+    bgm.addEventListener('error', () => {
+      setPlayingState(false);
+      showToast('음악 파일을 불러오지 못했습니다.');
+    });
   }
 
   function updateCountdown() {
@@ -225,7 +256,7 @@
     async function loadGalleryManifest() {
       if (!window.fetch) return [];
       try {
-        const response = await fetch('assets/wedding-gallery.json', { cache: 'no-store' });
+        const response = await fetch('assets/wedding-gallery.json');
         if (!response.ok) return [];
         const data = await response.json();
         if (!Array.isArray(data)) return [];
@@ -258,8 +289,9 @@
       image.width = slide.width;
       image.height = slide.height;
       image.decoding = 'async';
+      image.loading = 'lazy';
+      image.fetchPriority = 'low';
       image.alt = fullSize ? `${slide.alt} 전체화면` : slide.alt;
-      if (slideIndex > 0) image.loading = 'lazy';
       return image;
     }
 
@@ -268,9 +300,13 @@
       lightboxTrack.textContent = '';
       thumbsContainer.textContent = '';
 
+      const trackFragment = document.createDocumentFragment();
+      const lightboxFragment = document.createDocumentFragment();
+      const thumbsFragment = document.createDocumentFragment();
+
       slides.forEach((slide, slideIndex) => {
-        track.appendChild(createGalleryImage(slide, slideIndex, false));
-        lightboxTrack.appendChild(createGalleryImage(slide, slideIndex, true));
+        trackFragment.appendChild(createGalleryImage(slide, slideIndex, false));
+        lightboxFragment.appendChild(createGalleryImage(slide, slideIndex, true));
 
         const button = document.createElement('button');
         button.className = 'gallery-thumb';
@@ -279,8 +315,12 @@
         button.setAttribute('aria-label', `${slideIndex + 1}번 사진 보기`);
         button.appendChild(createGalleryImage({ ...slide, alt: `${slide.alt} 미리보기` }, slideIndex, false));
         button.addEventListener('click', () => goTo(slideIndex));
-        thumbsContainer.appendChild(button);
+        thumbsFragment.appendChild(button);
       });
+
+      track.appendChild(trackFragment);
+      lightboxTrack.appendChild(lightboxFragment);
+      thumbsContainer.appendChild(thumbsFragment);
 
       slideImages = Array.from(track.querySelectorAll('img'));
       lightboxImages = Array.from(lightboxTrack.querySelectorAll('img'));
@@ -401,6 +441,7 @@
       lightbox.classList.add('is-open');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.classList.add('lightbox-open');
+      document.addEventListener('touchmove', preventDocumentPinch, { passive: false });
       closeButton?.focus({ preventScroll: true });
     }
 
@@ -409,6 +450,7 @@
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('lightbox-open');
+      document.removeEventListener('touchmove', preventDocumentPinch);
       openButton.focus({ preventScroll: true });
     }
 
@@ -565,6 +607,10 @@
       event.preventDefault();
     }
 
+    function preventDocumentPinch(event) {
+      if (event.touches.length > 1) event.preventDefault();
+    }
+
     buildGalleryDom();
 
     openButton.addEventListener('pointerdown', (event) => startTrackDrag(event, 'gallery'));
@@ -584,9 +630,6 @@
       viewport.addEventListener(type, blockNativeGesture, { passive: false });
       lightbox.addEventListener(type, blockNativeGesture, { passive: false });
     });
-    document.addEventListener('touchmove', (event) => {
-      if (lightbox.classList.contains('is-open') && event.touches.length > 1) event.preventDefault();
-    }, { passive: false });
 
     prevButton.addEventListener('click', () => move(-1));
     nextButton.addEventListener('click', () => move(1));
@@ -608,7 +651,7 @@
     render(false, true);
   }
 
-  setupGallery();
+  setupMusicToggle();
   setupGallery();
   setupAccountAnimations();
 
