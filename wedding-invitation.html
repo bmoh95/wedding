@@ -11,14 +11,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="image" href="assets/wedding-cover-chapel-sketch.jpg" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+KR:wght@300;400;500;700&family=Oooh+Baby&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/wedding.css?v=20260703-speaker-toggle" />
+  <link rel="stylesheet" href="assets/wedding.css?v=20260703-minimal-autoon" />
   <style>
     .cover-illustration { opacity: 1 !important; }
     .cover-illustration img { filter: none !important; }
   </style>
 </head>
 <body>
-  <button class="music-toggle" type="button" id="music-toggle" aria-label="배경음악 켜기" aria-pressed="false">
+  <button class="music-toggle is-loading" type="button" id="music-toggle" aria-label="배경음악 끄기" aria-pressed="true">
     <svg class="music-toggle__icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
       <path class="music-toggle__speaker" d="M5 13h5.2L17 7.8v16.4L10.2 19H5z" />
       <path class="music-toggle__wave music-toggle__wave--one" d="M20.5 12.6c1.35 1.7 1.35 5.1 0 6.8" />
@@ -26,8 +26,8 @@
       <path class="music-toggle__slash" d="M7 7l18 18" />
     </svg>
   </button>
-  <audio id="wedding-bgm" preload="metadata" loop playsinline>
-    <source src="assets/wedding-bgm.mp3?v=20260703-speaker-toggle" type="audio/mpeg">
+  <audio id="wedding-bgm" preload="metadata" loop playsinline autoplay>
+    <source src="assets/wedding-bgm.mp3?v=20260703-minimal-autoon" type="audio/mpeg">
   </audio>
   <main class="invitation" aria-label="박용태 나수진 모바일 청첩장">
     <section class="cover card-section" aria-labelledby="wedding-title">
@@ -222,6 +222,6 @@
     <button class="lightbox-arrow lightbox-next" type="button" data-lightbox-next aria-label="다음 사진">›</button>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script defer src="assets/wedding.js?v=20260703-speaker-toggle"></script>
+  <script defer src="assets/wedding.js?v=20260703-minimal-autoon"></script>
 </body>
 </html>

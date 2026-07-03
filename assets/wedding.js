@@ -19,7 +19,8 @@
     const bgm = document.getElementById('wedding-bgm');
     if (!musicToggle || !bgm) return;
 
-    bgm.volume = 0.82;
+    bgm.volume = 0.57;
+    let musicWanted = true;
 
     function setMusicState(state) {
       const isPlaying = state === 'playing';
@@ -35,7 +36,8 @@
       if (bgm.readyState === 0) bgm.load();
     }
 
-    async function playMusic() {
+    async function playMusic(options = {}) {
+      const { silent = false } = options;
       setMusicState('loading');
       prepareMusic();
       try {
@@ -44,18 +46,32 @@
         setMusicState('playing');
       } catch (error) {
         setMusicState('off');
-        showToast('브라우저가 재생을 막았습니다. 버튼을 한 번 더 눌러 주세요.');
+        if (!silent) showToast('브라우저가 재생을 막았습니다. 버튼을 한 번 더 눌러 주세요.');
       }
     }
 
     function pauseMusic() {
+      musicWanted = false;
       bgm.pause();
       setMusicState('off');
     }
 
+    function resumeWantedMusic(event) {
+      if (!musicWanted || !bgm.paused) return;
+      if (event?.target?.closest?.('#music-toggle')) return;
+      playMusic({ silent: true });
+    }
+
     musicToggle.addEventListener('click', () => {
-      if (bgm.paused) playMusic();
+      if (bgm.paused) {
+        musicWanted = true;
+        playMusic();
+      }
       else pauseMusic();
+    });
+
+    ['pointerdown', 'touchstart', 'keydown'].forEach((eventName) => {
+      document.addEventListener(eventName, resumeWantedMusic, { passive: true });
     });
 
     bgm.addEventListener('canplay', () => {
@@ -68,6 +84,8 @@
       setMusicState('off');
       showToast('음악 파일을 불러오지 못했습니다.');
     });
+
+    playMusic({ silent: true });
   }
 
   function updateCountdown() {

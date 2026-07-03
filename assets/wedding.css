@@ -38,27 +38,23 @@ body {
 .music-toggle {
   appearance: none;
   position: fixed;
-  top: max(14px, env(safe-area-inset-top));
-  right: max(14px, env(safe-area-inset-right));
+  top: max(15px, env(safe-area-inset-top));
+  right: max(15px, env(safe-area-inset-right));
   z-index: 30;
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 32px;
+  height: 32px;
   padding: 0;
-  border: 1px solid rgba(0, 0, 0, .24);
-  border-radius: 999px;
-  color: #000;
-  background: rgba(255, 255, 255, .78);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
+  border: 0;
+  color: rgba(92, 92, 92, .86);
+  background: transparent;
   cursor: pointer;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 .music-toggle__icon {
   display: block;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   overflow: visible;
 }
 .music-toggle__speaker {
@@ -68,7 +64,7 @@ body {
 .music-toggle__slash {
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.25;
+  stroke-width: 2.15;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -78,13 +74,12 @@ body {
   transform-origin: left center;
 }
 .music-toggle__slash {
-  opacity: .82;
+  opacity: .72;
   transition: opacity .18s ease;
 }
 .music-toggle.is-loading,
 .music-toggle.is-playing {
-  border-color: rgba(0, 0, 0, .38);
-  background: rgba(255, 255, 255, .88);
+  color: rgba(82, 82, 82, .9);
 }
 .music-toggle.is-loading .music-toggle__icon,
 .music-toggle.is-playing .music-toggle__icon {
