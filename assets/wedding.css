@@ -385,6 +385,12 @@ h2 span { color: var(--wedding-accent-dark); }
   line-height: 1;
   cursor: pointer;
 }
+.gallery-arrow:disabled,
+.lightbox-arrow:disabled {
+  opacity: .22;
+  cursor: default;
+  pointer-events: none;
+}
 .gallery-arrow { top: 50%; transform: translateY(-50%); }
 .gallery-arrow-prev { left: 0; }
 .gallery-arrow-next { right: 0; }

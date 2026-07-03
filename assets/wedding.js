@@ -285,6 +285,8 @@
     }
 
     function updateActiveState() {
+      const atStart = index === 0;
+      const atEnd = index === slides.length - 1;
       counter.textContent = `${index + 1} / ${slides.length}`;
       if (lightboxCounter) lightboxCounter.textContent = `${index + 1} / ${slides.length}`;
       slideImages.forEach((image, imageIndex) => {
@@ -298,6 +300,16 @@
         button.classList.toggle('is-active', active);
         if (active) button.setAttribute('aria-current', 'true');
         else button.removeAttribute('aria-current');
+      });
+      [prevButton, lightboxPrev].forEach((button) => {
+        if (!button) return;
+        button.disabled = atStart;
+        button.setAttribute('aria-disabled', String(atStart));
+      });
+      [nextButton, lightboxNext].forEach((button) => {
+        if (!button) return;
+        button.disabled = atEnd;
+        button.setAttribute('aria-disabled', String(atEnd));
       });
     }
 
@@ -315,7 +327,7 @@
     }
 
     function move(delta) {
-      index = (index + delta + slides.length) % slides.length;
+      index = clamp(index + delta, 0, slides.length - 1);
       render(true, true);
     }
 
@@ -424,7 +436,7 @@
         const velocity = drag.dx / elapsed;
         const threshold = Math.min(90, Math.max(42, drag.width * .18));
         if (Math.abs(drag.dx) > threshold || Math.abs(velocity) > .45) {
-          index = (index + (drag.dx < 0 ? 1 : -1) + slides.length) % slides.length;
+          index = clamp(index + (drag.dx < 0 ? 1 : -1), 0, slides.length - 1);
         }
         if (kind === 'gallery') lastSwipeAt = Date.now();
       }
