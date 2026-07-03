@@ -1,16 +1,21 @@
 :root {
-  --wedding-bg: #f7f3ef;
-  --wedding-card: #fffdfa;
   --wedding-ink: #1b1715;
   --wedding-muted: #7b716b;
   --wedding-line: #e7ded6;
-  --wedding-accent: #b6947d;
+  --wedding-divider: linear-gradient(90deg, transparent, rgba(123, 92, 73, .28), transparent);
+  --wedding-divider-width: 76%;
+  --section-divider-gap: 58px;
+  --content-divider-gap: 22px;
   --wedding-accent-dark: #7b5c49;
-  --wedding-shadow: none;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: auto; }
+:where(a, button, summary):focus { outline: none; }
+:where(a, button, summary):focus-visible {
+  outline: 1px solid rgba(123, 92, 73, .52);
+  outline-offset: 4px;
+}
 .fonts-loading .invitation { visibility: hidden; }
 body {
   margin: 0;
@@ -35,33 +40,34 @@ body {
 .card-section {
   position: relative;
   margin: 0;
-  padding: 54px 0;
+  padding: var(--section-divider-gap) 0;
   border: 0;
-  border-bottom: 1px solid var(--wedding-line);
   background: transparent;
 }
-.card-section:last-of-type { border-bottom: 0; }
+.card-section::after,
+.cover::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--wedding-divider-width);
+  height: 1px;
+  background: var(--wedding-divider);
+  pointer-events: none;
+}
+.card-section::after { bottom: 0; }
+.card-section:last-of-type::after { display: none; }
 
 .cover {
-  min-height: 720px;
+  min-height: 535px;
+  padding-bottom: 22px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 }
 
-.cover::before,
-.cover::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 76%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(123, 92, 73, .28), transparent);
-}
 .cover::before { top: 28px; }
-.cover::after { bottom: 28px; }
 
 .kicker,
 .section-label {
@@ -141,7 +147,7 @@ body {
   background: var(--wedding-line);
 }
 .intro {
-  margin: 28px 0 30px;
+  margin: 28px 0 0;
   color: #4d4540;
   font-size: 15px;
   line-height: 1.9;
@@ -183,21 +189,78 @@ h2 {
   word-break: keep-all;
 }
 h2 span { color: var(--wedding-accent-dark); }
+.place-date-lockup {
+  gap: 6px;
+  margin: 0 auto 18px;
+  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+}
+.place-date-lockup .day,
+.place-date-lockup .time {
+  color: var(--wedding-ink);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -.04em;
+}
+.place-date-venue {
+  margin-top: 18px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -.04em;
+}
+.place-date-venue span {
+  display: inline-block;
+  color: var(--wedding-accent-dark);
+  font-size: 20px;
+}
+.place-date-address {
+  margin-top: 10px;
+  font-size: 14.5px;
+}
+.place-date-actions {
+  position: relative;
+  margin-top: var(--content-divider-gap);
+  padding-top: var(--content-divider-gap);
+}
+.place-date-actions::before { top: 0; }
 
-.date-section,
-.place-section,
+.place-date-section,
 .gallery-section,
 .account-section,
 .closing-section { text-align: center; }
+.gallery-section {
+  padding-top: 38px;
+  padding-bottom: 38px;
+}
+.account-section { padding-bottom: 22px; }
+.closing-section { padding-top: 30px; }
 .countdown {
+  position: relative;
   display: grid;
   gap: 5px;
-  margin: 22px 0;
-  padding: 16px 0;
-  border-top: 1px solid var(--wedding-line);
-  border-bottom: 1px solid var(--wedding-line);
+  margin: var(--content-divider-gap) 0;
+  padding: var(--content-divider-gap) 0;
   min-height: 104px;
 }
+.countdown::before,
+.countdown::after,
+.place-date-actions::before,
+.account-groups::before,
+.account-group::after,
+.account-group[open] summary::before,
+.account-card::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--wedding-divider-width);
+  height: 1px;
+  background: var(--wedding-divider);
+  pointer-events: none;
+}
+.countdown::before { top: 0; }
+.countdown::after { bottom: 0; }
 .countdown strong {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 31px;
@@ -211,8 +274,8 @@ h2 span { color: var(--wedding-accent-dark); }
 }
 
 .calendar-box {
-  margin: 10px 0 18px;
-  padding: 18px 0 16px;
+  margin: var(--content-divider-gap) 0;
+  padding: 0;
 }
 .calendar-head {
   margin-bottom: 12px;
@@ -248,28 +311,23 @@ h2 span { color: var(--wedding-accent-dark); }
 
 .calendar-add-button {
   width: 100%;
-  margin-top: 18px;
+  margin-top: 10px;
 }
-.calendar-hint {
-  margin: 10px 0 0;
-  color: var(--wedding-muted);
-  font-size: 13px;
-  line-height: 1.55;
-}
-
 .place-copy,
-.gallery-copy,
 .account-note,
 .closing-section p {
-  margin: 14px 0 0;
+  margin: 10px 0 0;
   color: var(--wedding-muted);
   font-size: 14px;
   line-height: 1.75;
 }
 .gallery-carousel {
   position: relative;
-  margin-top: 22px;
+  margin-top: 0;
   padding-bottom: 4px;
+}
+.gallery-frame {
+  position: relative;
 }
 .gallery-stage {
   appearance: none;
@@ -307,15 +365,15 @@ h2 span { color: var(--wedding-accent-dark); }
   line-height: 1;
   cursor: pointer;
 }
-.gallery-arrow { top: calc(50% - 52px); transform: translateY(-50%); }
+.gallery-arrow { top: 50%; transform: translateY(-50%); }
 .gallery-arrow-prev { left: 0; }
 .gallery-arrow-next { right: 0; }
 .gallery-status {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 10px;
   color: var(--wedding-muted);
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
   font-size: 12px;
@@ -359,7 +417,7 @@ h2 span { color: var(--wedding-accent-dark); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 0;
 }
 
 .solid-button,
@@ -389,26 +447,30 @@ h2 span { color: var(--wedding-accent-dark); }
   background: #fffdf9;
 }
 .account-groups {
+  position: relative;
   display: grid;
   gap: 0;
-  margin-top: 22px;
+  margin-top: var(--content-divider-gap);
   text-align: left;
-  border-top: 1px solid var(--wedding-line);
 }
+.account-groups::before { top: 0; }
 .account-group {
+  position: relative;
   overflow: hidden;
   border: 0;
-  border-bottom: 1px solid var(--wedding-line);
   background: transparent;
 }
+.account-group::after { bottom: 0; }
+.account-group:last-child::after { display: none; }
 .account-group summary {
+  position: relative;
   list-style: none;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 8px 12px;
   align-items: center;
   min-height: 72px;
-  padding: 16px 0;
+  padding: var(--content-divider-gap) 0;
   cursor: pointer;
   user-select: none;
 }
@@ -440,24 +502,37 @@ h2 span { color: var(--wedding-accent-dark); }
   font-weight: 800;
   line-height: 1;
 }
-.account-group[open] summary { border-bottom: 1px solid var(--wedding-line); }
+.account-group[open] summary::before { bottom: 0; }
 .account-group[open] summary::after { content: '⌃'; }
 .account-list {
   display: grid;
   gap: 0;
   margin: 0;
 }
+.account-group[data-animated] .account-list {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: max-height .36s ease, opacity .24s ease, transform .36s ease;
+  will-change: max-height, opacity, transform;
+}
+.account-group[data-animated][open] .account-list {
+  opacity: 1;
+  transform: translateY(0);
+}
 .account-card {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
   align-items: center;
-  padding: 15px 0;
+  padding: var(--content-divider-gap) 0;
   border: 0;
-  border-bottom: 1px solid rgba(231, 222, 214, .72);
   background: transparent;
 }
-.account-card:last-child { border-bottom: 0; }
+.account-card::after { bottom: 0; opacity: .72; }
+.account-card:last-child::after { display: none; }
 .account-card.temp-account { background: transparent; }
 .account-card .role {
   display: block;
@@ -498,7 +573,7 @@ h2 span { color: var(--wedding-accent-dark); }
   line-height: .9;
   letter-spacing: -.035em;
 }
-.closing-section .solid-button { width: 100%; margin-top: 24px; }
+.closing-section .solid-button { width: 100%; margin-top: var(--content-divider-gap); }
 
 body.lightbox-open { overflow: hidden; }
 .gallery-lightbox {
@@ -611,9 +686,12 @@ body.lightbox-open { overflow: hidden; }
 }
 
 @media (max-width: 360px) {
+  :root {
+    --section-divider-gap: 48px;
+    --content-divider-gap: 20px;
+  }
   .invitation { padding-left: 14px; padding-right: 14px; }
-  .card-section { padding-top: 46px; padding-bottom: 46px; }
-  .cover { min-height: 680px; }
+  .cover { min-height: 560px; }
   .lettering { font-size: 66px; }
   .names { font-size: 19px; letter-spacing: .18em; }
   .cover-family { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 6px; }
@@ -626,4 +704,5 @@ body.lightbox-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
+  .account-group[data-animated] .account-list { transition: none !important; }
 }

@@ -33,16 +33,16 @@
         </div>
       </div>
       <p class="intro">저희 두 사람이 사랑과 믿음으로 한 가정을 이루려 합니다.<br>소중한 걸음으로 함께 축복해 주세요.</p>
-      <div class="date-lockup" aria-label="예식 일시">
-        <span class="day">2026.11.22</span>
-        <span class="time">SUN · 3:30 PM</span>
-      </div>
-      <p class="venue">더채플앳청담 커티지홀</p>
     </section>
 
-    <section class="card-section date-section" aria-labelledby="date-heading">
-      <p class="section-label">Date</p>
-      <h2 id="date-heading">2026년 11월 22일 일요일<br>오후 3시 30분</h2>
+    <section class="card-section place-date-section" aria-labelledby="place-date-heading">
+      <p class="section-label">Place &amp; Date</p>
+      <h2 id="place-date-heading" class="date-lockup place-date-lockup" aria-label="예식 일시와 장소">
+        <span class="day">2026. 11. 22</span>
+        <span class="time">일요일 오후 3:30</span>
+      </h2>
+      <p class="venue place-date-venue">더채플앳청담<br><span>2F 커티지홀</span></p>
+      <p class="place-copy place-date-address">서울 강남구 선릉로 757, 더채플앳청담</p>
       <div class="countdown" aria-live="polite">
         <strong id="d-day">D-Day</strong>
         <span id="countdown-detail">예식일까지 남은 시간을 계산 중입니다.</span>
@@ -60,33 +60,27 @@
           <li>29</li><li>30</li><li></li><li></li><li></li><li></li><li></li>
         </ol>
       </div>
-      <button class="solid-button calendar-add-button" type="button" id="calendar-add">일정 추가하기</button>
-      <p class="calendar-hint">기기에 맞는 캘린더 등록 화면을 엽니다.</p>
-    </section>
-
-    <section class="card-section place-section" aria-labelledby="place-heading">
-      <p class="section-label">Place</p>
-      <h2 id="place-heading">더채플앳청담<br><span>커티지홀</span></h2>
-      <p class="place-copy">서울 강남구 선릉로 757, 더채플앳청담</p>
-      <div class="map-actions">
-        <a class="solid-button" href="https://map.naver.com/p/search/%EB%8D%94%EC%B1%84%ED%94%8C%EC%95%B3%EC%B2%AD%EB%8B%B4%20%EC%BB%A4%ED%8B%B0%EC%A7%80%ED%99%80" target="_blank" rel="noopener">네이버 지도</a>
-        <a class="outline-button" href="https://map.kakao.com/link/search/%EB%8D%94%EC%B1%84%ED%94%8C%EC%95%B3%EC%B2%AD%EB%8B%B4%20%EC%BB%A4%ED%8B%B0%EC%A7%80%ED%99%80" target="_blank" rel="noopener">카카오맵</a>
+      <div class="place-date-actions" aria-label="지도와 일정 추가">
+        <div class="map-actions">
+          <a class="solid-button" href="https://map.naver.com/p/search/%EB%8D%94%EC%B1%84%ED%94%8C%EC%95%B3%EC%B2%AD%EB%8B%B4%20%EC%BB%A4%ED%8B%B0%EC%A7%80%ED%99%80" target="_blank" rel="noopener">네이버 지도</a>
+          <a class="outline-button" href="https://map.kakao.com/link/search/%EB%8D%94%EC%B1%84%ED%94%8C%EC%95%B3%EC%B2%AD%EB%8B%B4%20%EC%BB%A4%ED%8B%B0%EC%A7%80%ED%99%80" target="_blank" rel="noopener">카카오맵</a>
+        </div>
+        <button class="solid-button calendar-add-button" type="button" id="calendar-add">일정 추가하기</button>
       </div>
     </section>
 
-    <section class="card-section gallery-section" aria-labelledby="gallery-heading">
+    <section class="card-section gallery-section" aria-label="Gallery">
       <p class="section-label">Gallery</p>
-      <h2 id="gallery-heading">웨딩 갤러리</h2>
-      <p class="gallery-copy">샘플 사진을 좌우로 넘겨 보실 수 있습니다. 사진을 누르면 전체화면으로 확대됩니다.</p>
       <div class="gallery-carousel" aria-roledescription="carousel" aria-label="웨딩 사진 샘플 갤러리">
-        <button class="gallery-arrow gallery-arrow-prev" type="button" data-gallery-prev aria-label="이전 사진">‹</button>
-        <button class="gallery-stage" type="button" data-gallery-open aria-label="현재 사진 전체화면으로 보기">
-          <img id="gallery-current" src="assets/wedding-gallery-sample-01.svg" width="900" height="1125" decoding="async" alt="웨딩 사진 샘플 1" />
-        </button>
-        <button class="gallery-arrow gallery-arrow-next" type="button" data-gallery-next aria-label="다음 사진">›</button>
+        <div class="gallery-frame">
+          <button class="gallery-arrow gallery-arrow-prev" type="button" data-gallery-prev aria-label="이전 사진">‹</button>
+          <button class="gallery-stage" type="button" data-gallery-open aria-label="현재 사진 전체화면으로 보기">
+            <img id="gallery-current" src="assets/wedding-gallery-sample-01.svg" width="900" height="1125" decoding="async" alt="웨딩 사진 샘플 1" />
+          </button>
+          <button class="gallery-arrow gallery-arrow-next" type="button" data-gallery-next aria-label="다음 사진">›</button>
+        </div>
         <div class="gallery-status" aria-live="polite">
           <span id="gallery-counter">1 / 4</span>
-          <span>탭해서 크게 보기</span>
         </div>
         <div class="gallery-thumbs" aria-label="사진 페이지 선택">
           <button class="gallery-thumb is-active" type="button" data-gallery-index="0" aria-label="1번 사진 보기" aria-current="true">
