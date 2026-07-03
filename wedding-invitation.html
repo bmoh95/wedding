@@ -18,7 +18,7 @@
   </style>
 </head>
 <body>
-  <button class="music-toggle is-loading" type="button" id="music-toggle" aria-label="배경음악 끄기" aria-pressed="true">
+  <button class="music-toggle is-loading" type="button" id="music-toggle" data-bgm-src="assets/wedding-bgm.mp3?v=20260703-howler1" aria-label="배경음악 끄기" aria-pressed="true">
     <svg class="music-toggle__icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
       <path class="music-toggle__speaker" d="M5 13h5.2L17 7.8v16.4L10.2 19H5z" />
       <path class="music-toggle__wave music-toggle__wave--one" d="M20.5 12.6c1.35 1.7 1.35 5.1 0 6.8" />
@@ -26,9 +26,7 @@
       <path class="music-toggle__slash" d="M7 7l18 18" />
     </svg>
   </button>
-  <audio id="wedding-bgm" preload="auto" loop playsinline autoplay muted>
-    <source src="assets/wedding-bgm.mp3?v=20260703-minimal-autoon4" type="audio/mpeg">
-  </audio>
+
   <main class="invitation" aria-label="박용태 나수진 모바일 청첩장">
     <section class="cover card-section" aria-labelledby="wedding-title">
       <p class="kicker">Wedding Invitation</p>
@@ -222,6 +220,7 @@
     <button class="lightbox-arrow lightbox-next" type="button" data-lightbox-next aria-label="다음 사진">›</button>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script defer src="assets/wedding.js?v=20260703-minimal-autoon4"></script>
+  <script defer src="assets/vendor/howler/howler.core.min.js?v=2.2.4"></script>
+  <script defer src="assets/wedding.js?v=20260703-howler1"></script>
 </body>
 </html>

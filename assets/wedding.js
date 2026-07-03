@@ -16,13 +16,15 @@
 
   function setupMusicToggle() {
     const musicToggle = document.getElementById('music-toggle');
-    const bgm = document.getElementById('wedding-bgm');
-    if (!musicToggle || !bgm) return;
+    if (!musicToggle) return;
 
-    bgm.volume = 0.57;
+    const bgmSrc = musicToggle.dataset.bgmSrc || 'assets/wedding-bgm.mp3';
     let musicWanted = true;
     let pausedForBackground = false;
     let readyAutoplayTried = false;
+    let playInFlight = false;
+    let lastPlayWasSilent = true;
+    let bgm;
 
     function pageAllowsMusic() {
       return document.visibilityState !== 'hidden';
@@ -38,26 +40,22 @@
       musicToggle.setAttribute('aria-label', isPressed ? '배경음악 끄기' : '배경음악 켜기');
     }
 
-    function prepareMusic() {
-      if (bgm.preload !== 'auto') bgm.preload = 'auto';
-      if (bgm.readyState === 0) bgm.load();
+    if (typeof window.Howl !== 'function') {
+      musicWanted = false;
+      setMusicState('off');
+      return;
     }
 
-    async function playMusic(options = {}) {
-      const { silent = false, mutedStart = false } = options;
-      if (!pageAllowsMusic()) return;
+    function playMusic(options = {}) {
+      const { silent = false } = options;
+      if (!musicWanted || !pageAllowsMusic() || bgm.playing() || playInFlight) return;
+      lastPlayWasSilent = silent;
+      playInFlight = true;
       setMusicState('loading');
-      prepareMusic();
       try {
-        bgm.muted = mutedStart;
-        await bgm.play();
-        if (mutedStart) {
-          bgm.muted = false;
-          await new Promise((resolve) => requestAnimationFrame(resolve));
-          if (bgm.paused) throw new DOMException('Unmuted autoplay was blocked.', 'NotAllowedError');
-        }
-        setMusicState('playing');
+        bgm.play();
       } catch (error) {
+        playInFlight = false;
         setMusicState(silent && musicWanted ? 'loading' : 'off');
         if (!silent) showToast('브라우저가 재생을 막았습니다. 버튼을 한 번 더 눌러 주세요.');
       }
@@ -65,13 +63,14 @@
 
     function pauseMusic({ keepWanted = false } = {}) {
       if (!keepWanted) musicWanted = false;
+      playInFlight = false;
       bgm.pause();
-      bgm.muted = false;
       setMusicState('off');
     }
 
     function pauseForBackground() {
-      if (bgm.paused) return;
+      if (!musicWanted) return;
+      if (!bgm.playing() && !musicToggle.classList.contains('is-loading')) return;
       pausedForBackground = true;
       pauseMusic({ keepWanted: true });
     }
@@ -79,12 +78,14 @@
     function resumeWantedMusic(event) {
       if (!musicWanted || !pageAllowsMusic()) return;
       if (event?.target?.closest?.('#music-toggle')) return;
-      if (!bgm.paused && bgm.muted) {
-        bgm.muted = false;
-        setMusicState('playing');
-        return;
+      playMusic({ silent: true });
+    }
+
+    function resumeAfterForeground() {
+      if (musicWanted && pausedForBackground && pageAllowsMusic()) {
+        pausedForBackground = false;
+        playMusic({ silent: true });
       }
-      if (bgm.paused) playMusic({ silent: true });
     }
 
     function handleVisibilityChange() {
@@ -92,28 +93,59 @@
         pauseForBackground();
         return;
       }
-      if (musicWanted && pausedForBackground) {
-        pausedForBackground = false;
-        playMusic({ silent: true, mutedStart: true });
-      }
+      resumeAfterForeground();
     }
 
     function retryAutoplayAfterLoad() {
-      if (readyAutoplayTried || !musicWanted || !pageAllowsMusic()) return;
-      if (!bgm.paused && !bgm.muted) return;
+      if (readyAutoplayTried || !musicWanted || !pageAllowsMusic() || bgm.playing()) return;
       readyAutoplayTried = true;
-      playMusic({ silent: true, mutedStart: true });
+      playMusic({ silent: true });
     }
 
+    bgm = new window.Howl({
+      src: [bgmSrc],
+      html5: true,
+      loop: true,
+      preload: true,
+      volume: 0.57,
+      onload: retryAutoplayAfterLoad,
+      onplay: () => {
+        playInFlight = false;
+        setMusicState('playing');
+      },
+      onpause: () => {
+        playInFlight = false;
+        if (!musicWanted || pausedForBackground) setMusicState('off');
+      },
+      onstop: () => {
+        playInFlight = false;
+        if (!musicWanted) setMusicState('off');
+      },
+      onplayerror: () => {
+        playInFlight = false;
+        setMusicState(musicWanted ? 'loading' : 'off');
+        if (!lastPlayWasSilent) showToast('브라우저가 재생을 막았습니다. 화면을 한 번 터치해 주세요.');
+        bgm.once('unlock', () => {
+          if (musicWanted && pageAllowsMusic()) playMusic({ silent: true });
+        });
+      },
+      onloaderror: () => {
+        playInFlight = false;
+        setMusicState('off');
+        showToast('음악 파일을 불러오지 못했습니다.');
+      }
+    });
+
     musicToggle.addEventListener('click', () => {
-      if (musicWanted && bgm.paused && musicToggle.classList.contains('is-loading')) {
+      if (musicWanted && !bgm.playing() && musicToggle.classList.contains('is-loading')) {
         pauseMusic();
-      } else if (bgm.paused) {
+      } else if (!bgm.playing()) {
         musicWanted = true;
         pausedForBackground = false;
         playMusic();
+      } else {
+        pauseMusic();
       }
-      else pauseMusic();
     });
 
     ['pointerdown', 'touchstart', 'keydown'].forEach((eventName) => {
@@ -122,23 +154,11 @@
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('pagehide', pauseForBackground);
     window.addEventListener('blur', pauseForBackground);
-
-    bgm.addEventListener('canplay', () => {
-      if (!bgm.paused) setMusicState('playing');
-      retryAutoplayAfterLoad();
-    });
-    bgm.addEventListener('loadeddata', retryAutoplayAfterLoad, { once: true });
-    bgm.addEventListener('canplaythrough', retryAutoplayAfterLoad, { once: true });
-    bgm.addEventListener('playing', () => setMusicState('playing'));
-    bgm.addEventListener('pause', () => setMusicState('off'));
-    bgm.addEventListener('ended', () => setMusicState('off'));
-    bgm.addEventListener('error', () => {
-      setMusicState('off');
-      showToast('음악 파일을 불러오지 못했습니다.');
-    });
-
-    playMusic({ silent: true, mutedStart: true });
+    window.addEventListener('pageshow', resumeAfterForeground);
+    window.addEventListener('focus', resumeAfterForeground);
     window.addEventListener('load', retryAutoplayAfterLoad, { once: true });
+
+    playMusic({ silent: true });
   }
 
   function updateCountdown() {
