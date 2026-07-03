@@ -97,28 +97,20 @@ body {
 }
 .cover-title {
   display: grid;
-  gap: 12px;
-  margin: 0 auto 28px;
+  gap: 9px;
+  margin: 0 auto 30px;
   color: #000;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(22px, 6.2vw, 31px);
-  font-weight: 600;
-  line-height: 1.55;
-  letter-spacing: .34em;
+  font-family: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  font-size: clamp(17px, 4.9vw, 22px);
+  font-weight: 700;
+  line-height: 1.42;
+  letter-spacing: .43em;
   text-transform: uppercase;
 }
 .cover-title span {
   display: block;
-  text-indent: .34em;
-}
-.cover-title em {
-  color: #000;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: .7em;
-  font-style: normal;
-  font-weight: 500;
-  letter-spacing: .18em;
-  text-indent: .18em;
+  white-space: nowrap;
+  text-indent: .43em;
 }
 .names {
   display: inline-flex;
@@ -741,8 +733,8 @@ body.lightbox-open { overflow: hidden; }
   .invitation { padding-left: 14px; padding-right: 14px; }
   .cover { min-height: 650px; padding-top: 58px; padding-bottom: 34px; }
   .cover-illustration { width: min(100%, 332px); margin-bottom: 30px; }
-  .cover-title { font-size: 20px; letter-spacing: .28em; }
-  .cover-title span { text-indent: .28em; }
+  .cover-title { font-size: 17px; letter-spacing: .34em; }
+  .cover-title span { text-indent: .34em; }
   .names { font-size: 16px; letter-spacing: .18em; }
   .cover-family { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 6px; }
   .cover-family span { font-size: 9.5px; letter-spacing: -.07em; }
