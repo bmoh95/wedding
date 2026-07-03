@@ -22,7 +22,7 @@ jobs:
           rm -rf _site
           mkdir -p _site/assets _site/data
           cp -f .nojekyll README.md *.html wedding.ics _site/
-          cp -f assets/*.css assets/*.js assets/wedding-gallery-sample-*.svg assets/wedding-cover-*.jpg _site/assets/
+          cp -f assets/*.css assets/*.js assets/*.json assets/wedding-gallery-sample-*.svg assets/wedding-cover-*.jpg _site/assets/
           cp -R assets/vendor _site/assets/vendor
           cp -f data/*.json _site/data/
       - name: Push gh-pages branch
