@@ -19,27 +19,38 @@
     const bgm = document.getElementById('wedding-bgm');
     if (!musicToggle || !bgm) return;
 
-    bgm.volume = 0.72;
+    bgm.volume = 0.82;
 
-    function setPlayingState(isPlaying) {
+    function setMusicState(state) {
+      const isPlaying = state === 'playing';
+      const isLoading = state === 'loading';
       musicToggle.classList.toggle('is-playing', isPlaying);
+      musicToggle.classList.toggle('is-loading', isLoading);
       musicToggle.setAttribute('aria-pressed', String(isPlaying));
       musicToggle.setAttribute('aria-label', isPlaying ? '배경음악 끄기' : '배경음악 켜기');
     }
 
+    function prepareMusic() {
+      if (bgm.preload !== 'auto') bgm.preload = 'auto';
+      if (bgm.readyState === 0) bgm.load();
+    }
+
     async function playMusic() {
+      setMusicState('loading');
+      prepareMusic();
       try {
+        bgm.muted = false;
         await bgm.play();
-        setPlayingState(true);
+        setMusicState('playing');
       } catch (error) {
-        setPlayingState(false);
-        showToast('음악 재생 버튼을 다시 눌러 주세요.');
+        setMusicState('off');
+        showToast('브라우저가 재생을 막았습니다. 버튼을 한 번 더 눌러 주세요.');
       }
     }
 
     function pauseMusic() {
       bgm.pause();
-      setPlayingState(false);
+      setMusicState('off');
     }
 
     musicToggle.addEventListener('click', () => {
@@ -47,11 +58,14 @@
       else pauseMusic();
     });
 
-    bgm.addEventListener('playing', () => setPlayingState(true));
-    bgm.addEventListener('pause', () => setPlayingState(false));
-    bgm.addEventListener('ended', () => setPlayingState(false));
+    bgm.addEventListener('canplay', () => {
+      if (!bgm.paused) setMusicState('playing');
+    });
+    bgm.addEventListener('playing', () => setMusicState('playing'));
+    bgm.addEventListener('pause', () => setMusicState('off'));
+    bgm.addEventListener('ended', () => setMusicState('off'));
     bgm.addEventListener('error', () => {
-      setPlayingState(false);
+      setMusicState('off');
       showToast('음악 파일을 불러오지 못했습니다.');
     });
   }

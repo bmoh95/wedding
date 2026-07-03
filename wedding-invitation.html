@@ -19,15 +19,16 @@
 </head>
 <body>
   <button class="music-toggle" type="button" id="music-toggle" aria-label="배경음악 켜기" aria-pressed="false">
-    <span class="music-toggle__mark" aria-hidden="true">
-      <span class="music-toggle__note">♪</span>
-      <span class="music-toggle__bars">
-        <span></span><span></span><span></span>
-      </span>
-      <span class="music-toggle__slash"></span>
-    </span>
+    <svg class="music-toggle__icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path class="music-toggle__speaker" d="M5 13h5.2L17 7.8v16.4L10.2 19H5z" />
+      <path class="music-toggle__wave music-toggle__wave--one" d="M20.5 12.6c1.35 1.7 1.35 5.1 0 6.8" />
+      <path class="music-toggle__wave music-toggle__wave--two" d="M23.4 9.4c3.1 3.7 3.1 9.5 0 13.2" />
+      <path class="music-toggle__slash" d="M7 7l18 18" />
+    </svg>
   </button>
-  <audio id="wedding-bgm" src="assets/wedding-bgm.mp3" preload="none" loop></audio>
+  <audio id="wedding-bgm" preload="metadata" loop playsinline>
+    <source src="assets/wedding-bgm.mp3" type="audio/mpeg">
+  </audio>
   <main class="invitation" aria-label="박용태 나수진 모바일 청첩장">
     <section class="cover card-section" aria-labelledby="wedding-title">
       <p class="kicker">Wedding Invitation</p>
