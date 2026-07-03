@@ -85,15 +85,16 @@ body {
   letter-spacing: .38em;
 }
 .cover-illustration {
-  width: min(72%, 230px);
-  margin: 0 auto 38px;
+  width: min(100%, 374px);
+  margin: 0 auto 34px;
   color: #000;
-  opacity: .62;
+  opacity: .86;
 }
-.cover-illustration svg {
+.cover-illustration img {
   display: block;
   width: 100%;
   height: auto;
+  filter: grayscale(1) contrast(1.18);
 }
 .cover-title {
   display: grid;
@@ -750,7 +751,7 @@ body.lightbox-open { overflow: hidden; }
   }
   .invitation { padding-left: 14px; padding-right: 14px; }
   .cover { min-height: 720px; padding-top: 58px; padding-bottom: 58px; }
-  .cover-illustration { width: min(76%, 210px); margin-bottom: 32px; }
+  .cover-illustration { width: min(100%, 332px); margin-bottom: 30px; }
   .cover-title { font-size: 20px; letter-spacing: .28em; }
   .cover-title span { text-indent: .28em; }
   .names { font-size: 16px; letter-spacing: .18em; }
