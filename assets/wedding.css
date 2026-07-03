@@ -6,6 +6,8 @@
   --section-divider-gap: 58px;
   --content-divider-gap: 22px;
   --wedding-accent-dark: #000;
+  --font-gothic: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Montserrat", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -20,8 +22,8 @@ body {
   min-height: 100%;
   background: #fff;
   color: #000;
-  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
-  font-weight: 300;
+  font-family: var(--font-gothic);
+  font-weight: 400;
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
@@ -140,7 +142,7 @@ body {
 .section-label {
   margin: 0 0 18px;
   color: #000;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .34em;
@@ -167,17 +169,17 @@ body {
   gap: 9px;
   margin: 0 auto 30px;
   color: #000;
-  font-family: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(17px, 4.9vw, 22px);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.42;
-  letter-spacing: .43em;
+  letter-spacing: .34em;
   text-transform: uppercase;
 }
 .cover-title span {
   display: block;
   white-space: nowrap;
-  text-indent: .43em;
+  text-indent: .34em;
 }
 .names {
   display: inline-flex;
@@ -233,7 +235,7 @@ body {
   gap: 4px;
   justify-items: center;
   margin: 0 auto 12px;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-display);
 }
 .date-lockup .day {
   font-size: 25px;
@@ -256,7 +258,7 @@ body {
 
 h2 {
   margin: 0;
-  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  font-family: var(--font-gothic);
   font-size: 24px;
   font-weight: 400;
   line-height: 1.55;
@@ -267,7 +269,7 @@ h2 span { color: var(--wedding-accent-dark); }
 .place-date-lockup {
   gap: 6px;
   margin: 0 auto 18px;
-  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  font-family: var(--font-gothic);
 }
 .place-date-lockup .day,
 .place-date-lockup .time {
@@ -337,7 +339,7 @@ h2 span { color: var(--wedding-accent-dark); }
 .countdown::before { top: 0; }
 .countdown::after { bottom: 0; }
 .countdown strong {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 31px;
   font-weight: 600;
   letter-spacing: .02em;
@@ -354,7 +356,7 @@ h2 span { color: var(--wedding-accent-dark); }
 }
 .calendar-head {
   margin-bottom: 12px;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 18px;
   font-weight: 600;
   letter-spacing: .16em;
@@ -368,7 +370,7 @@ h2 span { color: var(--wedding-accent-dark); }
   padding: 0;
   list-style: none;
 }
-.weekdays { margin-bottom: 8px; color: var(--wedding-muted); font-family: "Cormorant Garamond", Georgia, serif; font-size: 12px; font-weight: 600; }
+.weekdays { margin-bottom: 8px; color: var(--wedding-muted); font-family: var(--font-display); font-size: 12px; font-weight: 600; }
 .dates li {
   display: grid;
   place-items: center;
@@ -376,7 +378,7 @@ h2 span { color: var(--wedding-accent-dark); }
   border: 1px solid transparent;
   border-radius: 999px;
   color: #000;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 15px;
   font-weight: 600;
 }
@@ -457,7 +459,7 @@ h2 span { color: var(--wedding-accent-dark); }
   border: 1px solid rgba(0, 0, 0, .18);
   color: #000;
   background: rgba(255, 255, 255, .78);
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 38px;
   line-height: 1;
   cursor: pointer;
@@ -478,13 +480,13 @@ h2 span { color: var(--wedding-accent-dark); }
   gap: 12px;
   margin-top: 10px;
   color: var(--wedding-muted);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--font-gothic);
   font-size: 12px;
   font-weight: 700;
 }
 .gallery-status span:first-child {
   color: var(--wedding-accent-dark);
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 15px;
   letter-spacing: .08em;
 }
@@ -533,7 +535,7 @@ h2 span { color: var(--wedding-accent-dark); }
   min-height: 46px;
   border-radius: 999px;
   padding: 0 18px;
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--font-gothic);
   font-size: 14px;
   font-weight: 800;
   text-decoration: none;
@@ -600,7 +602,7 @@ h2 span { color: var(--wedding-accent-dark); }
   width: 28px;
   height: 28px;
   color: var(--wedding-accent-dark);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--font-gothic);
   font-size: 21px;
   font-weight: 800;
   line-height: 1;
@@ -655,7 +657,7 @@ h2 span { color: var(--wedding-accent-dark); }
 .account-card p {
   margin: 0;
   color: #000;
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: var(--font-gothic);
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0;
@@ -676,11 +678,12 @@ h2 span { color: var(--wedding-accent-dark); }
 
 .closing-section { padding-bottom: 40px; }
 .closing-lettering {
-  font-family: "Oooh Baby", "Brush Script MT", cursive;
-  font-size: 54px;
-  font-weight: 400;
-  line-height: .9;
-  letter-spacing: -.035em;
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 .closing-section .solid-button { width: 100%; margin-top: var(--content-divider-gap); }
 
@@ -713,7 +716,7 @@ body.lightbox-open { overflow: hidden; }
   gap: 14px;
   min-height: 44px;
   color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--font-gothic);
   font-size: 13px;
   font-weight: 800;
 }
@@ -725,7 +728,7 @@ body.lightbox-open { overflow: hidden; }
   border-radius: 999px;
   color: #fff;
   background: rgba(255, 255, 255, .08);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--font-gothic);
   font-size: 13px;
   font-weight: 800;
 }
@@ -785,7 +788,7 @@ body.lightbox-open { overflow: hidden; }
   border-radius: 999px;
   color: #fff;
   background: rgba(27, 23, 21, .92);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--font-gothic);
   font-size: 13px;
   font-weight: 800;
   text-align: center;
