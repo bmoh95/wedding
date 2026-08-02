@@ -1,31 +1,31 @@
 [
   {
-    "src": "assets/wedding-gallery-photo.jpg?v=20260803-photo1",
+    "src": "assets/wedding-gallery-01.jpg?v=20260803-photos5",
     "width": 915,
     "height": 1280,
     "alt": "웨딩 사진 1"
   },
   {
-    "src": "assets/wedding-gallery-photo.jpg?v=20260803-photo1",
-    "width": 915,
+    "src": "assets/wedding-gallery-02.jpg?v=20260803-photos5",
+    "width": 914,
     "height": 1280,
     "alt": "웨딩 사진 2"
   },
   {
-    "src": "assets/wedding-gallery-photo.jpg?v=20260803-photo1",
-    "width": 915,
+    "src": "assets/wedding-gallery-03.jpg?v=20260803-photos5",
+    "width": 914,
     "height": 1280,
     "alt": "웨딩 사진 3"
   },
   {
-    "src": "assets/wedding-gallery-photo.jpg?v=20260803-photo1",
-    "width": 915,
+    "src": "assets/wedding-gallery-04.jpg?v=20260803-photos5",
+    "width": 914,
     "height": 1280,
     "alt": "웨딩 사진 4"
   },
   {
-    "src": "assets/wedding-gallery-photo.jpg?v=20260803-photo1",
-    "width": 915,
+    "src": "assets/wedding-gallery-05.jpg?v=20260803-photos5",
+    "width": 914,
     "height": 1280,
     "alt": "웨딩 사진 5"
   }

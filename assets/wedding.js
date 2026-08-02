@@ -346,7 +346,7 @@
     async function loadGalleryManifest() {
       if (!window.fetch) return [];
       try {
-        const response = await fetch('assets/wedding-gallery.json?v=20260803-photo1');
+        const response = await fetch('assets/wedding-gallery.json?v=20260803-photos5');
         if (!response.ok) return [];
         const data = await response.json();
         if (!Array.isArray(data)) return [];
