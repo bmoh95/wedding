@@ -115,7 +115,7 @@ body {
   background: var(--section-surface, #fff);
 }
 .card-section.surface-white { --section-surface: #fff; }
-.card-section.surface-gray { --section-surface: #f3f3f3; }
+.card-section.surface-gray { --section-surface: #fff; }
 .card-section::after,
 .cover::before {
   content: "";
