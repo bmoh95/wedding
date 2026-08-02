@@ -800,8 +800,8 @@ body.lightbox-open { overflow: hidden; }
   border-top: 2px solid currentColor;
   border-right: 2px solid currentColor;
 }
-.lightbox-prev::before { transform: translate(-50%, -50%) rotate(-135deg); }
-.lightbox-next::before { transform: translate(-50%, -50%) rotate(45deg); }
+.lightbox-prev::before { transform: translate(calc(-50% + 5px), -50%) rotate(-135deg); }
+.lightbox-next::before { transform: translate(calc(-50% - 4px), -50%) rotate(45deg); }
 
 .toast {
   position: fixed;
