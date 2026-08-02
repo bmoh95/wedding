@@ -434,8 +434,8 @@ h2 span { color: var(--wedding-accent-dark); }
   transition: background-color .32s cubic-bezier(.22, .61, .36, 1);
 }
 .gallery-carousel[data-gallery-surface="gray"] .gallery-stage {
-  padding: 10px;
-  background: #ededed;
+  padding: 0;
+  background: #fff;
 }
 .gallery-track {
   display: flex;
@@ -604,22 +604,22 @@ h2 span { color: var(--wedding-accent-dark); }
   line-height: 1.45;
 }
 .account-group summary::after {
-  content: '⌄';
+  content: "";
   grid-column: 2;
   grid-row: 1;
   justify-self: end;
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 10px;
+  height: 10px;
+  margin-right: 9px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
   color: var(--wedding-accent-dark);
-  font-family: var(--font-gothic);
-  font-size: 21px;
-  font-weight: 800;
-  line-height: 1;
+  transform: rotate(45deg);
 }
 .account-group[open] summary::before { display: none; }
-.account-group[open] summary::after { content: '⌃'; }
+.account-group[open] summary::after { transform: rotate(225deg); }
 .account-list {
   display: grid;
   gap: 0;
@@ -781,10 +781,23 @@ body.lightbox-open { overflow: hidden; }
   transform: translateY(-50%);
   width: 42px;
   height: 58px;
+  padding: 0;
+  font-size: 0;
+  line-height: 0;
   background: rgba(255, 255, 255, .78);
 }
 .lightbox-prev { left: 12px; }
 .lightbox-next { right: 12px; }
+.lightbox-arrow::before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+.lightbox-prev::before { transform: rotate(-135deg); }
+.lightbox-next::before { transform: rotate(45deg); }
 
 .toast {
   position: fixed;
