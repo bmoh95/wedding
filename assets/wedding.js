@@ -468,6 +468,7 @@
     function updateActiveState() {
       const atStart = index === 0;
       const atEnd = index === slides.length - 1;
+      galleryRoot.dataset.gallerySurface = index % 2 === 0 ? 'white' : 'gray';
       counter.textContent = `${index + 1} / ${slides.length}`;
       if (lightboxCounter) lightboxCounter.textContent = `${index + 1} / ${slides.length}`;
       openButton.setAttribute('aria-label', `${index + 1}번 사진 전체화면으로 보기`);

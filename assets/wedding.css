@@ -30,10 +30,11 @@ body {
 }
 
 .invitation {
+  --invitation-gutter: 24px;
   position: relative;
   width: min(100%, 430px);
   margin: 0 auto;
-  padding: 0 24px 40px;
+  padding: 0 var(--invitation-gutter) 40px;
   background: #fff;
 }
 
@@ -108,10 +109,13 @@ body {
 .card-section {
   position: relative;
   margin: 0;
-  padding: var(--section-divider-gap) 0;
+  margin-inline: calc(var(--invitation-gutter) * -1);
+  padding: var(--section-divider-gap) var(--invitation-gutter);
   border: 0;
-  background: transparent;
+  background: var(--section-surface, #fff);
 }
+.card-section.surface-white { --section-surface: #fff; }
+.card-section.surface-gray { --section-surface: #f3f3f3; }
 .card-section::after,
 .cover::before {
   content: "";
@@ -275,14 +279,14 @@ h2 span { color: var(--wedding-accent-dark); }
 .place-date-lockup .day,
 .place-date-lockup .time {
   color: var(--wedding-ink);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1.55;
   letter-spacing: -.04em;
 }
 .place-date-venue {
   margin-top: 18px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1.55;
   letter-spacing: -.04em;
@@ -290,7 +294,7 @@ h2 span { color: var(--wedding-accent-dark); }
 .place-date-venue span {
   display: inline-block;
   color: var(--wedding-accent-dark);
-  font-size: 20px;
+  font-size: 16px;
 }
 .place-date-address {
   margin-top: 10px;
@@ -412,7 +416,7 @@ h2 span { color: var(--wedding-accent-dark); }
   position: relative;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   overflow: hidden;
   border: 0;
   border-radius: 0;
@@ -422,7 +426,9 @@ h2 span { color: var(--wedding-accent-dark); }
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+  transition: background-color .32s cubic-bezier(.22, .61, .36, 1);
 }
+.gallery-carousel[data-gallery-surface="gray"] .gallery-stage { background: #ececec; }
 .gallery-track {
   display: flex;
   width: 100%;
@@ -803,7 +809,9 @@ body.lightbox-open { overflow: hidden; }
     --section-divider-gap: 48px;
     --content-divider-gap: 20px;
   }
-  .invitation { padding-left: 14px; padding-right: 14px; }
+  .invitation {
+    --invitation-gutter: 14px;
+  }
   .cover { min-height: 650px; padding-top: 58px; padding-bottom: 34px; }
   .cover-illustration { width: min(100%, 332px); margin-bottom: 30px; }
   .cover-title { font-size: 17px; letter-spacing: .34em; }
