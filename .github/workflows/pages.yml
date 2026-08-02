@@ -28,7 +28,7 @@ jobs:
           mkdir -p _site/assets _site/data
           shopt -s nullglob
           cp -f .nojekyll README.md *.html wedding.ics _site/
-          cp -f assets/*.css assets/*.js assets/*.json assets/*.mp3 assets/wedding-gallery-sample-*.svg assets/wedding-cover-*.jpg _site/assets/
+          cp -f assets/*.css assets/*.js assets/*.json assets/*.mp3 assets/wedding-gallery-photo.jpg assets/wedding-gallery-sample-*.svg assets/wedding-cover-*.jpg _site/assets/
           if [ -d assets/vendor ]; then
             cp -R assets/vendor _site/assets/vendor
           fi
