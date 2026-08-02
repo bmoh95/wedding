@@ -619,7 +619,8 @@ h2 span { color: var(--wedding-accent-dark); }
   transform: rotate(45deg);
 }
 .account-group[open] summary::before { display: none; }
-.account-group[open] summary::after { transform: rotate(225deg); }
+.account-group[data-account-state="closed"] summary::after { transform: rotate(45deg); }
+.account-group[data-account-state="open"] summary::after { transform: rotate(225deg); }
 .account-list {
   display: grid;
   gap: 0;
@@ -630,13 +631,19 @@ h2 span { color: var(--wedding-accent-dark); }
 }
 .account-group[data-animated] .account-list {
   max-height: 0;
+  margin-bottom: 0;
+  padding-block: 0;
+  border-width: 0;
   overflow: hidden;
   opacity: 0;
   transform: translateY(-4px);
-  transition: max-height .36s ease, opacity .24s ease, transform .36s ease;
+  transition: max-height .36s ease, margin-bottom .36s ease, padding-block .36s ease, border-width .36s ease, opacity .24s ease, transform .36s ease;
 }
 .account-group[data-animating="true"] .account-list { will-change: max-height, opacity, transform; }
-.account-group[data-animated][open] .account-list {
+.account-group[data-animated][data-account-state="open"] .account-list {
+  margin-bottom: 18px;
+  padding-block: 4px;
+  border-width: 1px;
   opacity: 1;
   transform: translateY(0);
 }

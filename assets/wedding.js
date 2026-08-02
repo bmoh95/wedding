@@ -230,6 +230,7 @@
       const panel = group.querySelector('.account-list');
       if (!summary || !panel) return;
       group.dataset.animated = 'true';
+      group.dataset.accountState = group.open ? 'open' : 'closed';
       if (group.open) panel.style.maxHeight = `${panel.scrollHeight}px`;
 
       summary.addEventListener('click', (event) => {
@@ -242,23 +243,27 @@
 
     function finish(group, panel) {
       group.dataset.animating = 'false';
+      group.dataset.accountState = group.open ? 'open' : 'closed';
       if (group.open) panel.style.maxHeight = `${panel.scrollHeight}px`;
     }
 
     function openGroup(group, panel) {
       if (reduceMotion) {
+        group.dataset.accountState = 'open';
         group.open = true;
         panel.style.maxHeight = `${panel.scrollHeight}px`;
         return;
       }
       group.dataset.animating = 'true';
+      group.dataset.accountState = 'open';
       group.open = true;
+      const expandedHeight = panel.scrollHeight;
       panel.style.maxHeight = '0px';
       panel.style.opacity = '0';
       panel.style.transform = 'translateY(-4px)';
       panel.offsetHeight;
       requestAnimationFrame(() => {
-        panel.style.maxHeight = `${panel.scrollHeight}px`;
+        panel.style.maxHeight = `${expandedHeight}px`;
         panel.style.opacity = '1';
         panel.style.transform = 'translateY(0)';
       });
@@ -271,12 +276,15 @@
 
     function closeGroup(group, panel) {
       if (reduceMotion) {
+        group.dataset.accountState = 'closed';
         group.open = false;
         panel.style.maxHeight = '0px';
         return;
       }
       group.dataset.animating = 'true';
-      panel.style.maxHeight = `${panel.scrollHeight}px`;
+      const expandedHeight = panel.scrollHeight;
+      group.dataset.accountState = 'closed';
+      panel.style.maxHeight = `${expandedHeight}px`;
       panel.style.opacity = '1';
       panel.style.transform = 'translateY(0)';
       panel.offsetHeight;
