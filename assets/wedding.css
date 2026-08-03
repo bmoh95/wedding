@@ -272,38 +272,57 @@ h2 {
 }
 h2 span { color: var(--wedding-accent-dark); }
 .place-date-lockup {
-  gap: 6px;
-  margin: 0 auto 18px;
+  gap: 4px;
+  margin: 0 auto 12px;
   font-family: var(--font-gothic);
 }
-.place-date-lockup .day,
-.place-date-lockup .time {
+.place-date-lockup .day {
   color: var(--wedding-ink);
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.55;
-  letter-spacing: -.04em;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -.035em;
+  white-space: nowrap;
 }
 .place-date-venue {
-  margin-top: 18px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.55;
-  letter-spacing: -.04em;
+  margin-top: 14px;
+  color: var(--wedding-ink);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -.025em;
 }
 .place-date-venue span {
   display: inline-block;
   color: var(--wedding-accent-dark);
   font-size: 16px;
 }
+.address-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
 .place-date-address {
-  margin-top: 10px;
-  font-size: 14.5px;
+  min-width: 0;
+  margin-top: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.address-copy {
+  flex: 0 0 auto;
+  min-height: 30px;
+  padding: 0 9px;
+  border-radius: 0;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 .place-date-actions {
   position: relative;
-  margin-top: var(--content-divider-gap);
-  padding-top: var(--content-divider-gap);
+  margin-top: 20px;
+  padding-top: 20px;
 }
 .place-date-actions::before { top: 0; }
 
@@ -326,13 +345,18 @@ h2 span { color: var(--wedding-accent-dark); }
 .countdown {
   position: relative;
   display: grid;
-  gap: 5px;
-  margin: var(--content-divider-gap) 0;
-  padding: var(--content-divider-gap) 0;
-  min-height: 104px;
+  justify-items: center;
+  gap: 2px;
+  width: min(100%, 260px);
+  min-height: 0;
+  margin: 22px auto 0;
+  padding: 14px 18px 13px;
+  border: 1px solid rgba(122, 90, 58, .34);
+  border-radius: 2px;
+  background: #f8f3ec;
 }
 .countdown::before,
-.countdown::after,
+.countdown::after { display: none; }
 .place-date-actions::before,
 .account-groups::before,
 .account-group::after,
@@ -347,61 +371,71 @@ h2 span { color: var(--wedding-accent-dark); }
   background: var(--wedding-divider);
   pointer-events: none;
 }
-.countdown::before { top: 0; }
-.countdown::after { bottom: 0; }
 .countdown strong {
+  color: #7a5a3a;
   font-family: var(--font-display);
-  font-size: 31px;
+  font-size: 32px;
   font-weight: 600;
-  letter-spacing: .02em;
+  line-height: 1.05;
+  letter-spacing: .01em;
 }
 .countdown span {
-  color: var(--wedding-muted);
-  font-size: 13px;
-  line-height: 1.55;
+  color: #75695d;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: .12em;
 }
 
 .calendar-box {
-  margin: var(--content-divider-gap) 0;
+  width: 68%;
+  max-width: 240px;
+  margin: 20px auto 0;
   padding: 0;
 }
 .calendar-head {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  color: #666;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: .16em;
+  letter-spacing: .12em;
 }
 .weekdays,
 .dates {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
+  gap: 2px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.weekdays { margin-bottom: 8px; color: var(--wedding-muted); font-family: var(--font-display); font-size: 12px; font-weight: 600; }
+.weekdays { margin-bottom: 4px; color: #aaa; font-family: var(--font-display); font-size: 10px; font-weight: 500; }
 .dates li {
   display: grid;
   place-items: center;
   aspect-ratio: 1;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  color: #000;
+  border: 0;
+  border-radius: 50%;
+  color: #ccc;
   font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 400;
 }
+.dates li:empty { visibility: hidden; }
 .dates .selected {
-  color: #000;
-  background: #fff;
-  border-color: #000;
+  color: #fff;
+  background: #8a6a4a;
+  border: 0;
+  font-weight: 600;
 }
 
 .calendar-add-button {
-  width: 100%;
-  margin-top: 10px;
+  width: min(100%, 240px);
+  margin: 14px auto 0;
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .05em;
 }
 .place-copy,
 .account-note {
@@ -410,6 +444,12 @@ h2 span { color: var(--wedding-accent-dark); }
   font-size: 14px;
   line-height: 1.75;
 }
+.address-row .place-date-address {
+  margin-top: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.address-row .address-copy { width: auto; }
 .gallery-carousel {
   position: relative;
   margin: 0 auto;
@@ -533,9 +573,9 @@ h2 span { color: var(--wedding-accent-dark); }
   object-fit: cover;
 }
 .map-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
   margin-top: 0;
 }
 
@@ -564,6 +604,42 @@ h2 span { color: var(--wedding-accent-dark); }
   border: 1px solid #000;
   color: #000;
   background: #fff;
+}
+.map-button {
+  width: 46px;
+  min-width: 46px;
+  height: 46px;
+  min-height: 46px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0;
+}
+.map-button span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.address-row .address-copy {
+  min-height: 30px;
+  padding: 0 9px;
+  border-radius: 0;
+  font-size: 11px;
+  font-weight: 500;
+}
+.place-date-actions .calendar-add-button {
+  width: min(100%, 240px);
+  min-height: 42px;
+  margin: 14px auto 0;
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .05em;
 }
 .account-groups {
   position: relative;
