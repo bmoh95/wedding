@@ -310,6 +310,12 @@ h2 span { color: var(--wedding-accent-dark); }
 .place-date-section,
 .gallery-section,
 .account-section { text-align: center; }
+.place-date-section .section-label {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 5px 10px;
+  background: #eeeeee;
+}
 .gallery-section {
   padding-top: 50px;
   padding-bottom: 50px;
