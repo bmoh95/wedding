@@ -174,9 +174,11 @@
 
     const totalSeconds = Math.floor(diff / 1000);
     const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
 
     dday.textContent = `D-${days}`;
-    countdownDetail.textContent = '예식까지';
+    countdownDetail.textContent = `예식까지 ${days}일 ${hours}시간 ${minutes}분 남았습니다.`;
   }
 
   async function copyText(text) {
