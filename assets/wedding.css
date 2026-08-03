@@ -313,14 +313,10 @@ h2 span { color: var(--wedding-accent-dark); }
 .place-date-section .section-label,
 .gallery-section .section-label,
 .account-section .section-label {
-  display: block;
-  width: 100%;
   margin-bottom: 18px;
-  padding: 7px 10px;
-  border: 1px solid #d8d8d8;
-  background: #e9e9e9;
   font-size: 12px;
   letter-spacing: .34em;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .28);
 }
 .gallery-section {
   padding-top: 50px;
