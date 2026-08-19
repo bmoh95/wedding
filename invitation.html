@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>TO OUR GUEST</title>
+  <link rel="icon" type="image/png" href="assets/vendor/favicon.png?v=20260817" />
+  <link rel="apple-touch-icon" href="assets/vendor/favicon.png?v=20260817" />
+  <script>
+    (function () {
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      function toTop() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+      }
+      toTop();
+      document.addEventListener("DOMContentLoaded", toTop);
+      window.addEventListener("pageshow", toTop);
+      window.addEventListener("load", function () {
+        toTop();
+        requestAnimationFrame(toTop);
+      });
+    })();
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (rs) {
+        rs.forEach(function (r) { r.unregister(); });
+      });
+    }
+  </script>
+  <style>
+    @font-face { font-family: Suite; src: url("assets/vendor/invitation_v2/fonts/SUITE-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: Suite; src: url("assets/vendor/invitation_v2/fonts/SUITE-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: Suit; src: url("assets/vendor/invitation_v2/fonts/SUIT-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: Suit; src: url("assets/vendor/invitation_v2/fonts/SUIT-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: AbramoSerif; src: url("assets/vendor/invitation_v2/fonts/AbramoSerif.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: Lifedoodles; src: url("assets/vendor/invitation_v2/fonts/Lifedoodles-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
+    :root { --ink: #020817; --gray: #7c7c7c; --tog-444: #444; --tog-666: #666; --tog-999: #999; --bg2: #f2f2f2; --bg8: #f8f8f8; --bg-about: #ebebeb; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #d6d6d6; color: var(--ink); overflow-anchor: none; -webkit-tap-highlight-color: transparent; }
+    body { font-family: Suite, Suit, sans-serif; font-size: 0.95em; -webkit-font-smoothing: antialiased; }
+    button, a { font-family: inherit; -webkit-tap-highlight-color: transparent; }
+    .card {
+      max-width: 28rem;
+      margin: 0 auto;
+      background: #fff;
+      position: relative;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      container-type: inline-size;
+    }
+    @media (min-width: 768px) {
+      .card { margin: 48px auto; border-radius: 24px; }
+      .cover { border-radius: 24px 24px 0 0; }
+      .share { border-radius: 0 0 24px 24px; }
+    }
+    @media (min-width: 1024px) {
+      .card { max-width: 400px; }
+    }
+
+    .music-bar { position: sticky; top: 0; z-index: 50; height: 0; }
+    .music-toast {
+      position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+      background: #000; color: #fff; opacity: .5; border-radius: 999px;
+      padding: 8px 16px; font-size: 12px; white-space: nowrap; cursor: pointer;
+    }
+    .music-toast.hide { display: none; }
+    .music-btn {
+      position: absolute; top: 12px; right: 12px; width: 24px; height: 24px;
+      border: 0; background: transparent; cursor: pointer; z-index: 50;
+    }
+    .music-btn svg { width: 24px; height: 24px; display: block; }
+    .music-btn.is-playing .eq { transform-box: fill-box; transform-origin: center bottom; animation: eq 0.7s ease-in-out infinite alternate; }
+    .music-btn.is-playing .eq:nth-child(2) { animation-delay: .1s; }
+    .music-btn.is-playing .eq:nth-child(3) { animation-delay: .25s; }
+    .music-btn.is-playing .eq:nth-child(4) { animation-delay: .05s; }
+    .music-btn.is-playing .eq:nth-child(5) { animation-delay: .2s; }
+    @keyframes eq { from { transform: scaleY(.45); } to { transform: scaleY(1); } }
+
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 48px;
+      padding: 80px 36px;
+      font-family: Lifedoodles, Suite, sans-serif;
+      background: #fff;
+    }
+    .cover h1 {
+      font-size: clamp(2.4rem, 16cqi, 4rem);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.05;
+      color: transparent;
+    }
+    .cover h1 span {
+      color: #000;
+      font-size: clamp(22px, 8cqi, 32px);
+      font-family: Lifedoodles, sans-serif;
+    }
+    .cover-frame { width: 100%; aspect-ratio: 2 / 3; position: relative; }
+    .cover-photo {
+      position: absolute; inset: 1%; overflow: hidden;
+    }
+    .cover-photo img {
+      width: 100%; height: 100%; object-fit: cover; filter: brightness(1.1);
+      display: block;
+    }
+    .cover-outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
+    .cover-pin { position: absolute; top: -16px; left: 40%; width: 14%; transform: translateY(-25%); z-index: 30; pointer-events: none; }
+
+    .invite { background: #fff; padding: 56px 0 0; position: relative; z-index: 1; }
+    .birds { width: 160px; height: 46px; margin: 0 auto 40px; }
+    .invite-copy { padding: 0 clamp(16px, 11cqi, 44px); line-height: 1.8; text-align: center; font-family: Suite, sans-serif; }
+    .invite-copy p { text-align: center; color: #020817; }
+    .invite-copy .invite-poem { color: #888; }
+    .invite-names { padding-top: 40px; text-align: center; font-size: clamp(13px, 3.8cqi, 15.2px); }
+    .invite-photo { padding-top: 40px; position: relative; display: flex; justify-content: center; }
+    .invite-photo img { width: 72%; height: auto; display: block; }
+
+    .highlight {
+      min-height: 100vh;
+      background: #7c7c7c;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: AbramoSerif, serif;
+      font-size: clamp(52px, 24cqi, 96px);
+      line-height: 1;
+      text-align: center;
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .highlight-row { display: flex; justify-content: center; align-items: center; height: clamp(64px, 28cqi, 112px); overflow: hidden; }
+    .highlight span { display: inline-block; }
+
+    .calendar {
+      background: #f8f8f8;
+      padding: 80px 16px;
+    }
+    .cal-inner { padding: 0 20px; }
+    .sec-en { letter-spacing: 1px; font-size: clamp(16px, 5cqi, 20px); color: #111; text-align: center; margin-bottom: 48px; }
+    .cal-when { text-align: center; margin-bottom: 32px; }
+    .cal-when p { color: #111; }
+    .cal-when .en { font-weight: 300; margin-top: 8px; }
+    .rule { height: 1px; width: 100%; background: #000; opacity: .1; margin: 32px 0; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; row-gap: 24px; font-weight: 400; }
+    .dow { font-weight: 400; padding: 4px 8px; }
+    .day { font-weight: 200; padding: 4px 8px; }
+    .sun { color: #f87171; }
+    .day.sat { color: #666; }
+    .day-on {
+      width: 32px; height: 32px; border-radius: 999px;
+      background: #7c7c7c; color: #fff; display: flex;
+      align-items: center; justify-content: center; margin: 0 auto;
+      font-weight: 200;
+    }
+    .count { display: flex; gap: 8px; margin-top: 8px; }
+    .count-box {
+      flex: 1; background: #fff; border-radius: 8px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1);
+      padding: 16px 0; text-align: center;
+    }
+    .count-num { font-size: 24px; font-weight: 200; color: #020817; }
+    .count-lab { font-size: 12px; font-weight: 200; color: #999; margin-top: 4px; }
+    .count-msg { padding: 32px 0 0; text-align: center; font-size: .875em; }
+    .count-msg .em { color: #7c7c7c; margin: 0 4px; }
+
+    .host { background: #f2f2f2; color: #111; padding: 80px 16px; }
+    .host-lines { display: flex; flex-direction: column; width: 100%; padding: 0 clamp(8px, 8cqi, 32px); gap: 32px; }
+    .host-line { display: flex; justify-content: center; align-items: center; width: 100%; gap: clamp(4px, 2cqi, 8px); font-size: clamp(11px, 3.8cqi, 15.2px); }
+    .host-parents { font-weight: 500; letter-spacing: clamp(0.04em, 0.8cqi, 0.1em); display: flex; align-items: center; white-space: nowrap; }
+    .host-parents .dot { margin: 0 clamp(4px, 2cqi, 8px); }
+    .host-of { opacity: .7; }
+    .host-rel { flex: 1; display: flex; justify-content: flex-end; opacity: .7; }
+    .host-who { font-weight: 500; letter-spacing: clamp(0.04em, 0.8cqi, 0.1em); white-space: nowrap; }
+    .contact-btn {
+      width: 100%; height: 48px; margin-top: 48px;
+      background: #999; border: 0; border-radius: 8px;
+      color: #fff; font-size: 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px;
+    }
+    .contact-modal {
+      display: none; position: fixed; inset: 0; z-index: 90;
+      background: rgb(0 0 0 / .4);
+      align-items: center; justify-content: center; padding: 24px 16px;
+    }
+    .contact-modal.open { display: flex; }
+    .contact-sheet {
+      width: 100%; max-width: 400px; max-height: 90vh; overflow: auto;
+      background: #fff; padding: 48px 16px; border-radius: 12px;
+    }
+    .cm-title { text-align: center; font-size: 24px; font-weight: 400; line-height: 1.375; opacity: .9; }
+    .cm-sub { text-align: center; color: #7c7c7c; margin-top: 4px; }
+    .cm-card {
+      background: #fff; border-radius: 12px; padding: 24px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1);
+      margin-top: 8px; font-size: .875em;
+    }
+    .cm-card:first-child { margin-top: 0; }
+    .cm-head { display: flex; justify-content: space-between; }
+    .cm-role { color: #666; }
+    .cm-acts { display: flex; justify-content: center; gap: 12px; margin-top: 24px; }
+    .cm-acts a {
+      flex: 1; height: 40px; border-radius: 8px; color: #fff; text-decoration: none;
+      display: flex; align-items: center; justify-content: center; font-weight: 600;
+    }
+    .cm-sms { background: #666; }
+    .cm-tel { background: #111; opacity: .7; }
+
+    .about { background: #ebebeb; padding: 80px 0; }
+    .about .sec-en { padding: 0 40px; }
+    .about-row { display: flex; gap: 8px; padding: 16px; }
+    .about-card {
+      flex: 1; background: #fff; border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / .1);
+      padding: 16px; display: flex; flex-direction: column; align-items: center;
+      gap: 16px; font-size: 14px; text-align: center;
+    }
+    .about-photo { width: 100%; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 2px; }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-name { font-weight: 400; color: #020817; }
+    .about-role { color: #7c7c7c; font-weight: 600; margin-right: 4px; }
+    .about-bio { white-space: pre-line; line-height: 1.5; color: #020817; }
+
+    .gallery { background: #fff; padding: 80px 0; text-align: center; }
+    .gallery .sec-en { margin-bottom: 24px; }
+    .gallery > .gsap-div > p { padding: 0 40px; color: #111; }
+    .g-slider { padding: 0 40px; margin-top: 16px; }
+    .g-view { overflow: hidden; touch-action: pan-y; }
+    .g-track { display: flex; align-items: center; touch-action: pan-y; }
+    .g-slide {
+      position: relative; flex: 0 0 100%; width: 100%;
+    }
+    .g-slide img { display: block; width: 100%; height: auto; object-fit: contain; border-radius: 8px; }
+    .g-hit { position: absolute; inset: 0; z-index: 2; border: 0; background: transparent; cursor: pointer; touch-action: pan-y; }
+    .g-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+    .g-nav button {
+      border: 0; background: transparent; width: 40px; height: 40px;
+      padding: 0; cursor: pointer; display: grid; place-items: center;
+    }
+    .g-nav svg { display: block; opacity: .4; }
+    .g-count { font-size: 14px; color: #000; }
+    .g-lb {
+      position: fixed; inset: 0; z-index: 80;
+      display: none; background: rgb(0 0 0 / .45);
+    }
+    .g-lb.open { display: block; }
+    .g-lb-sheet {
+      position: absolute; top: 0; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 28rem; background: #fff;
+    }
+    @media (min-width: 1024px) {
+      .g-lb-sheet { max-width: 400px; }
+    }
+    .g-lb-view { overflow: hidden; width: 100%; height: 100%; }
+    .g-lb.open .g-lb-view { animation: lbIn .8s ease-in-out; }
+    @keyframes lbIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .g-lb-track { display: flex; height: 100%; align-items: center; touch-action: pan-y; }
+    .g-lb-slide {
+      flex: 0 0 100%; width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .g-lb-slide img {
+      display: block; max-width: 100%; max-height: 100%;
+      width: auto; height: auto; object-fit: contain;
+      border-radius: 0; user-select: none; -webkit-user-drag: none;
+    }
+    .g-lb-x {
+      position: absolute; top: 16px; right: 16px; z-index: 40;
+      border: 0; background: transparent; padding: 0; cursor: pointer;
+    }
+    .g-lb-bar {
+      position: absolute; left: 20px; right: 20px; bottom: 32px; z-index: 40;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .g-lb-bar button {
+      border: 0; background: transparent; padding: 0; cursor: pointer; display: grid; place-items: center;
+    }
+    .g-lb-bar button.is-off { opacity: .5; pointer-events: none; }
+    .g-lb-count { font-size: 14px; color: #666; }
+    html.is-zoomed .cover-photo img,
+    html.is-zoomed .invite-photo img,
+    html.is-zoomed .about-photo img,
+    html.is-zoomed .g-slide img,
+    html.is-zoomed .g-lb-slide img { filter: blur(16px); }
+
+    .loc { background: #f2f2f2; padding: 64px 0; }
+    .loc .sec-en { margin-bottom: 0; }
+    .loc-head { text-align: center; padding: 40px 24px 16px; }
+    .loc-name { margin-bottom: 8px; }
+    .addr-btn {
+      background: none; border: 0; opacity: .5; cursor: pointer;
+      font-size: inherit; color: inherit; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .map-wrap { position: relative; height: 224px; background: #f8f9fa; }
+    #naverMap { width: 100%; height: 100%; }
+    .nav-btns { display: flex; gap: 8px; padding: 12px 32px; }
+    .nav-btns a {
+      flex: 1; background: #fff; border-radius: 6px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / .1);
+      padding: 12px 8px; text-align: center; text-decoration: none;
+      color: #444; font-size: 14px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .trans { padding: 16px 32px 0; font-size: .875em; line-height: 1.5rem; color: #111; }
+    .trans-item { padding-bottom: 16px; }
+    .trans-h { display: flex; align-items: center; gap: 8px; padding: 8px 0; font-weight: 600; color: #999; }
+    .trans-b { padding: 16px 0; }
+    .trans-b p + p { margin-top: 4px; }
+    .trans-b strong { font-weight: 600; }
+    .bus-trunk { color: #3d5bab; }
+    .bus-branch { color: #5bb025; }
+    .hr { height: 1px; background: #999; opacity: .35; margin: 8px 0; }
+
+    .fund { background: #f8f8f8; padding: 80px 32px; }
+    .fund-line { width: 60px; height: 1px; background: #000; margin: 0 auto 32px; }
+    .fund h3, .fund .desc { text-align: center; font-size: 15.2px; font-weight: 400; }
+    .fund .desc { opacity: .5; white-space: pre-line; margin-top: 8px; }
+    .tabs { display: grid; grid-template-columns: 1fr 1fr; margin: 32px 0; height: 40px; color: #999; }
+    .tab {
+      border: 0; background: transparent; color: #999; cursor: pointer;
+      font-size: 14px; font-weight: 500; border-bottom: 1px solid transparent;
+    }
+    .tab.on { color: #020817; border-bottom-color: #111; }
+    .acc-btn {
+      width: 100%; min-height: 384px; border: 0; background: transparent;
+      color: #111; opacity: .3; cursor: pointer; font-size: 14px;
+    }
+    .acc-list { display: none; }
+    .acc-list.show { display: block; }
+    .acc-row {
+      background: #fff; border-radius: 12px; padding: 24px;
+      margin-bottom: 10px; box-shadow: 0 1px 2px rgb(0 0 0 / .06);
+    }
+    .acc-top { display: flex; justify-content: space-between; align-items: baseline; }
+    .acc-name, .acc-no { font-size: clamp(11px, 3.3cqi, 13.3px); color: #020817; }
+    .copy {
+      border: 0; width: 100%; height: 40px; margin-top: 24px;
+      background: #666; color: #f8fafc; font-weight: 300; font-size: 12px;
+      border-radius: 8px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .thanks { background: #595959; padding: 64px 44px; text-align: center; line-height: 1.8rem; color: #fff; font-weight: 300; }
+    .share { background: #fff; padding: 24px 36px 36px; }
+    .share .gsap-div { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .share-kakao, .share-copy {
+      width: 100%; height: 48px; border: 0; border-radius: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; font-size: 14px; box-sizing: border-box;
+    }
+    .share-kakao { background: #fce777; color: #222; }
+    .share-copy { background: #999; color: #fff; font-weight: 500; }
+
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+      background: #111; color: #fff; padding: 10px 16px; border-radius: 8px;
+      font-size: 13px; z-index: 80; display: none;
+    }
+    .toast.show { display: block; }
+    .reveal-text { opacity: 0; display: inline-block; }
+    .reveal-wrap { display: flex; width: fit-content; justify-content: center; align-items: center; overflow-y: clip; height: 7rem; }
+    .highlight { background: #7c7c7c; }
+    .highlight .gsap-opacity { opacity: 0; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="music-bar">
+      <button class="music-btn is-loading" id="music-toggle" type="button" data-bgm-src="assets/wedding-bgm.mp3?v=20260703-accountbox-bgm2" aria-label="배경음악 끄기" aria-pressed="true">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#101010"/><rect class="eq" x="6.6" y="9" width="1.5" height="6" fill="#fff"/><rect class="eq" x="9.7" y="7" width="1.5" height="10" fill="#fff"/><rect class="eq" x="12.8" y="8.2" width="1.5" height="7.6" fill="#fff"/><rect class="eq" x="15.9" y="6.5" width="1.5" height="11" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <section class="cover">
+      <h1 class="cover-item"><span>INVITATION</span></h1>
+      <div class="cover-frame">
+        <div class="cover-photo">
+          <img src="assets/wedding-cover-v2.jpg?v=20260816-inv" alt="cover_image" />
+        </div>
+        <svg class="cover-outline" viewBox="0 0 285 423" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M167.029 420.788L145.875 420.858C145.853 420.858 145.831 420.858 145.809 420.858C131.212 422.096 117.049 422.703 102.368 421.648L70.0625 420.839L55.2711 420.858L31.394 421.707L15.1404 422.1C15.111 422.1 15.0816 422.1 15.0559 422.1C11.1762 421.773 7.5206 421.688 3.65927 422.475C2.5681 422.696 1.6092 421.909 1.58348 420.869L1.2271 413.639C1.2271 413.62 1.2271 413.598 1.2271 413.58L1.72309 392.154L1.32263 344.329L1.19771 317.655L0.786228 289.591L0.271873 278.747L0.44455 235.242L0.580486 211.872L0.940535 194.717L1.39978 173.221C1.39978 173.221 1.39978 173.192 1.39978 173.174L0.562116 148.359L0.0220438 112.646L0.0918491 99.4793L0 85.6145L0.323309 62.2444C0.459245 52.2979 -0.117567 42.7117 0.378418 32.7247C0.679683 26.6488 0.811946 20.9147 0.646618 14.8571C0.540073 10.9719 0.944209 7.2631 1.70472 3.56166C1.75983 3.30068 1.93618 3.08014 2.17866 2.96619C3.38005 2.39646 4.55204 2.24575 5.85997 2.2237L34.5426 1.77159L48.2612 1.2092L66.8882 0.922499C70.6907 0.863687 74.3243 0.440982 78.1232 0.599037C82.091 0.76812 85.7393 0.327032 89.7623 0.31233L135.367 0.146924C139.515 0.132221 143.226 -0.213297 147.315 0.20941C147.337 0.20941 147.359 0.209411 147.381 0.213087L156.83 0.304979L173.687 0.830606L189.646 1.24229L213.031 1.54369L228.745 1.21656L274.118 1.06953C274.118 1.06953 274.147 1.06953 274.166 1.06953L280.184 0.709307C280.9 0.665198 281.484 0.701957 281.947 1.12099C282.524 1.64294 282.741 2.24943 282.752 3.14998L282.869 11.9312L283.994 32.0006L284.714 64.8284L284.938 98.0201L283.894 123.471L283.057 138.53L282.667 164.782L283.049 185.98L281.826 230.82L282.223 263.655L281.958 282.64L281.786 304.176L282.182 337.21L283.255 365.847L283.299 415.392C283.299 417.064 283.373 418.689 282.947 420.134C282.612 421.262 281.466 420.663 280.852 420.747C276.668 421.321 272.795 421.369 268.534 421.325L236.96 421.005L220.776 421.644L205.003 422.052C205.003 422.052 204.974 422.052 204.959 422.052L193.368 421.74L167.037 420.792L167.029 420.788ZM145.537 416.094C145.559 416.094 145.584 416.094 145.607 416.094L171.221 416.193L194.602 417.164L209.905 417.241L238.025 416.447L264.658 416.234C264.658 416.234 264.691 416.234 264.709 416.234L278.637 416.984C278.784 416.991 278.92 417.053 279.052 417.123C279.317 417.259 279.596 416.972 279.434 416.671C279.376 416.564 279.346 416.443 279.342 416.322L278.523 392.819L278.604 367.92L277.546 336.636L277.193 303.801L277.417 279.343L277.336 249.437L277.289 222.788L278.413 185.237L277.954 162.97L278.189 141.404L280.092 98.3987L279.857 62.2591C279.765 47.865 279.5 33.9414 278.354 19.6319C278.354 19.6172 278.354 19.5988 278.354 19.5841L278.09 6.13466C278.082 5.67887 277.708 5.3113 277.252 5.31865C276.319 5.33335 275.47 5.7193 274.508 5.7193L238.374 5.81487L222.51 6.13098L194.092 5.96925L185.249 5.66784L137.858 4.87021L98.1903 5.04297L84.0676 5.49508L68.2035 5.85898L48.4302 6.26331L37.3018 6.65661L5.6726 6.54634C5.21335 6.54634 4.84228 6.91758 4.84228 7.37705L4.82759 23.9729C4.21036 36.349 4.38304 48.2914 4.39039 60.6932L4.42713 107.838L4.46019 123.217L5.08844 149.822C5.29051 158.372 6.12082 166.462 5.93712 175L5.49992 195.437L5.16192 212.228L4.97087 236.69L4.73941 280.016C4.73941 280.016 4.73941 280.045 4.73941 280.06L5.26846 291.054L5.51829 319.5L5.63953 345.05L6.15021 393.518L5.76445 416.451C5.7571 416.958 6.20165 417.355 6.70131 417.289C9.35024 416.932 11.8669 417.072 14.5526 417.281C20.8314 417.774 26.8714 416.851 33.1428 416.627L44.0545 416.237L57.0714 415.737L87.2566 415.951L102.735 416.811C117.141 418.042 131.014 417.285 145.548 416.09L145.537 416.094Z" fill="black"/>
+        </svg>
+        <svg class="cover-pin" viewBox="0 0 45 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M19.8818 5.37724C16.6634 1.31191 9.67184 0.995795 6.57469 4.99497C4.37032 7.84364 3.53262 11.2547 4.65685 14.9414C6.22196 20.0691 12.8755 24.1675 17.0051 22.5502C21.0244 20.977 23.9121 17.0586 23.3537 12.6294C23.023 9.99761 21.4248 7.32537 19.8818 5.37724ZM19.1947 17.6357C17.6811 18.9112 15.8037 19.2678 14.0034 18.676L16.9279 13.0999C17.4386 12.1295 19.6246 11.8355 20.2418 13.0632C20.859 14.2872 20.3043 16.7021 19.1947 17.6394V17.6357Z" fill="#999999"/>
+          <path d="M40.2208 35.0521L35.2389 29.7554C32.1307 26.4546 28.9564 23.3596 25.2678 20.6359C26.7337 18.5481 28.2253 15.8612 27.88 13.0309C27.4538 9.56468 25.6021 6.1573 23.3206 3.6909C20.7929 0.959846 17.4532 0.224704 13.9079 0.0409181C7.90828 -0.264166 2.84556 1.04806 1.22901 6.99169C0.564027 9.42868 -0.0384899 11.8657 0.00192367 14.3284C0.064381 18.0519 2.45979 21.0403 5.49816 22.8266C10.8364 25.9694 17.4349 26.5832 22.5711 22.9406L34.1587 34.3573L39.3023 39.4997C40.9225 41.117 42.7889 42.4954 44.005 41.3927C44.3797 41.0545 44.4936 39.5548 44.1336 39.1762L40.2208 35.0484V35.0521ZM17.0087 22.551C12.8791 24.1646 6.22559 20.0699 4.66048 14.9422C3.53258 11.2555 4.37027 7.84445 6.57833 4.99578C9.67548 0.996603 16.667 1.31639 19.8854 5.37805C21.4285 7.32985 23.0266 9.99842 23.3573 12.6302C23.9157 17.0595 21.028 20.9778 17.0087 22.551Z" fill="black"/>
+          <path d="M16.9279 13.101L14.0034 18.677C15.8037 19.2688 17.6811 18.9123 19.1947 17.6368C20.3043 16.6995 20.859 14.2882 20.2418 13.0605C19.6246 11.8328 17.4349 12.1269 16.9279 13.0973V13.101Z" fill="black"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="invite">
+      <div class="gsap-div">
+      <div class="birds" id="birds">
+        <svg viewBox="0 0 160 46" width="160" height="46" aria-hidden="true">
+          <g fill="#7b7b7b" transform="translate(60 20) scale(.9)">
+            <path d="M1.36-2.43C.17-6.18-1.74-9.69-4.23-12.62c-.71-.85-1.72-1.72-2.74-1.37-.83.28-1.24 1.27-1.4 2.16-.3 1.62-.24 3.36-.3 5.01-.05 1.35-.55 2.16-.94 3.45-.29.94-.33 2.04.2 2.85.78 1.21 2.43 1.16 3.3 2.18-.84.77-2.16.78-3.03 1.51-.71.6-.84 1.62-.93 2.54-.2 2.21-1.11 4.31-1.44 6.55-.06.45-.08 1 .3 1.23.18.11.4.11.61.11 2.51-.05 4.83-.96 6.83-2.44.64-.47 3.64-3.62 4.17-1.72.24.89.24 1.88-.03 2.76-.22.72-.78 2.13.67 1.82.51-.11.91-.54 1.24-.97 1.37-1.74 2.59-3.78 3.19-5.99.34-1.26 0-2.13-.06-3.34-.05-1.05.97-1.52 1.55-2.29 2.92-3.83 4.58-9.03 3.64-13.95-.07-.35-.15-.7-.37-.95-.23-.25-.63-.37-.88-.15-.16.14-.22.35-.28.56C8.02-9.38 6.16-5.97 3.69-3.16c-.59.67-1.25 1.34-2.05 1.7-.08-.32-.18-.65-.28-.97z"/>
+          </g>
+          <g fill="#7b7b7b" transform="translate(92 28) rotate(8) scale(.89)">
+            <path d="M10.69 9.29C8.86 11.8 5.09 9.67 2.98 8.54c-.71-.38-1.33-.79-1.88-1.23.32.52.61 1.07.85 1.66.72 1.82 1.05 3.94.63 5.89-.03.17-.09.35-.21.45-.18.13-.41.02-.59-.1-1.55-1.03-2.87-2.49-4.07-4.05-.53-.67-1.05-1.43-1.19-2.34-.02-.11-.03-.22-.03-.33-.33.15-.69.19-1.02.11-1.01-.27-1.74-1.3-2.4-2.28-1.29-1.9-2.58-3.81-3.87-5.71-.77-1.14-1.59-2.46-1.43-3.92.03-.23.08-.45.21-.61.19-.22.48-.23.74-.21 2.93.18 5.77 1.7 7.92 4.11.45.51.82 1.03 1.15 1.57-.17-1.09-.2-2.28-.09-3.55.32-3.94 1.43-7.83 3.27-11.33.53-1.01 1.35-2.11 2.48-2.03.92.06 1.58.91 1.98 1.74 1.07 2.29 1.09 5.17 2.91 6.92.53.51 1.21.92 1.46 1.61.39 1.04-.37 2.15-1.15 2.94-.84.86-1.76 1.64-2.74 2.34.27-.05.55-.09.83-.11 1.31-.12 2.74.05 3.73.92 1.9 1.68 1.62 6.36.21 8.3z"/>
+          </g>
+        </svg>
+      </div>
+      <div class="invite-copy">
+        <p class="gsap-text invite-poem">봄물보다 깊으니라.</p>
+        <p class="gsap-text invite-poem">갈산보다 높으리라.</p>
+        <p class="gsap-text invite-poem">달보다 빛나리라.</p>
+        <p class="gsap-text invite-poem">돌보다 굳으리라.</p>
+        <p class="gsap-text invite-poem">사랑을 묻는 이 있거든 이대로만 말하리.</p>
+        <br />
+        <p class="gsap-text invite-poem">-한용운 '사랑'</p>
+        <br />
+        <p class="gsap-text">평생을 함께할 약속을 하려 합니다.</p>
+        <p class="gsap-text">저희 두 사람이 하나 되는 그 첫 시작의 자리에 오셔서</p>
+        <p class="gsap-text">축복해 주시면 감사하겠습니다.</p>
+      </div>
+      <div class="invite-names gsap-text">신랑 박용태 · 신부 나수진</div>
+      <div class="invite-photo gsap-text">
+        <img src="assets/wedding-gallery-v2-invitation.jpg?v=20260816-inv" alt="invi-image" />
+      </div>
+      </div>
+    </section>
+
+    <section class="highlight gsap-bg-color" aria-label="날짜">
+      <div class="gsap-opacity highlight-inner">
+        <div class="highlight-row"><span class="reveal-wrap"><span class="reveal-text">2</span><span class="reveal-text">0</span><span class="reveal-text">2</span><span class="reveal-text">6</span></span></div>
+        <div class="highlight-row"><span class="reveal-wrap"><span class="reveal-text">1</span><span class="reveal-text">1</span><span class="reveal-text">.</span><span class="reveal-text">2</span><span class="reveal-text">2</span><span class="reveal-text">.</span><span class="reveal-text">3</span><span class="reveal-text">:</span><span class="reveal-text">3</span><span class="reveal-text">0</span></span></div>
+      </div>
+    </section>
+
+    <section class="calendar">
+      <div class="cal-inner gsap-div">
+        <p class="sec-en gsap-opacity">WEDDING DAY</p>
+        <div class="cal-when">
+          <p class="gsap-opacity">2026년 11월 22일 일요일 | 오후 3시 30분</p>
+          <p class="en gsap-opacity">Sunday, November 22, 2026 | PM 3:30</p>
+        </div>
+        <div class="rule gsap-opacity"></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="rule gsap-opacity"></div>
+        <div class="count gsap-opacity">
+          <div class="count-box"><div class="count-num" id="d">0</div><div class="count-lab">DAYS</div></div>
+          <div class="count-box"><div class="count-num" id="h">0</div><div class="count-lab">HOURS</div></div>
+          <div class="count-box"><div class="count-num" id="m">0</div><div class="count-lab">MINUTES</div></div>
+          <div class="count-box"><div class="count-num" id="s">0</div><div class="count-lab">SECONDS</div></div>
+        </div>
+        <div class="count-msg gsap-opacity">용태 <svg width="12" height="11" viewBox="0 0 12 11" aria-hidden="true"><path d="M0.88721 5.6442L5.23558 9.85513C5.50241 10.1135 5.92616 10.1135 6.19299 9.85513L10.5414 5.6442C11.1084 5.09504 11.4286 4.33939 11.4286 3.54999C11.4286 1.93996 10.1234 0.634766 8.51334 0.634766H8.37789C7.58576 0.634766 6.82469 0.942878 6.25565 1.49393L5.74766 1.98587C5.72906 2.00388 5.69951 2.00388 5.68091 1.98587L5.17292 1.49393C4.60388 0.942878 3.84281 0.634766 3.05068 0.634766H2.91523C1.30519 0.634766 0 1.93996 0 3.54999C0 4.33939 0.320132 5.09504 0.88721 5.6442Z" fill="black"/></svg> 수진 결혼식이 <span class="em" id="daysLeft">0일</span> 남았습니다</div>
+      </div>
+    </section>
+
+    <section class="host">
+      <div class="gsap-div">
+      <div class="host-lines">
+        <div class="host-line gsap-opacity">
+          <div class="host-parents"><span>박남일</span><span class="dot">·</span><span>이봉선</span></div>
+          <span class="host-of">의</span>
+          <div class="host-rel">차남</div>
+          <div class="host-who">용태</div>
+        </div>
+        <div class="host-line gsap-opacity">
+          <div class="host-parents"><span>나철환</span><span class="dot">·</span><span>윤지은</span></div>
+          <span class="host-of">의</span>
+          <div class="host-rel">차녀</div>
+          <div class="host-who">수진</div>
+        </div>
+      </div>
+      <div style="padding:0 20px">
+        <button class="contact-btn gsap-opacity" id="contactBtn" type="button" aria-expanded="false" aria-controls="contactModal">
+          <span>축하 연락하기</span>
+          <svg width="25" height="24" viewBox="0 0 25 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.80871 11.75C2.39449 11.75 2.05871 12.0858 2.05871 12.5C2.05871 12.9142 2.39449 13.25 2.80871 13.25L19.3816 13.25L12.1773 20.4543C11.8844 20.7472 11.8844 21.2221 12.1773 21.515C12.4702 21.8079 12.945 21.8079 13.2379 21.515L21.7232 13.0297C22.0161 12.7368 22.0161 12.262 21.7232 11.9691L13.2379 3.48378C12.945 3.19089 12.4702 3.19089 12.1773 3.48378C11.8844 3.77667 11.8844 4.25155 12.1773 4.54444L19.3828 11.75L2.80871 11.75Z" fill="white"/></svg>
+        </button>
+      </div>
+      </div>
+    </section>
+
+    <section class="about">
+      <div class="gsap-div">
+      <p class="sec-en gsap-opacity">ABOUT US</p>
+      <div class="about-row gsap-opacity">
+        <div class="about-card">
+          <div class="about-photo"><img src="assets/wedding-gallery-v2-groom.jpg?v=20260816-about" alt="groom-about-us" /></div>
+          <div class="about-name"><span class="about-role">신랑</span><span>박용태</span></div>
+          <div class="about-bio">박남일 · 이봉선의 아들
+1995년 출생.  
+컴퓨터만을 사랑할 줄 알았던 남자 🤖</div>
+        </div>
+        <div class="about-card">
+          <div class="about-photo"><img src="assets/wedding-gallery-v2-bride.jpg" alt="bride-about-us" /></div>
+          <div class="about-name"><span class="about-role">신부</span><span>나수진</span></div>
+          <div class="about-bio">나철환 · 윤지은의 딸
+1997년 출생. 
+본인만을 사랑할 줄 알았던 여자 🐣</div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="gallery">
+      <div class="gsap-div">
+      <p class="sec-en gsap-opacity">GALLERY</p>
+      <p class="gsap-opacity">사진을 클릭하시면 전체 화면 보기가 가능합니다</p>
+      <div class="g-slider gsap-opacity">
+        <div class="g-view" id="gView">
+          <div class="g-track" id="gTrack">
+            <div class="g-slide"><button class="g-hit" type="button" data-i="0" aria-label="사진 1 전체화면"></button><img src="assets/wedding-gallery-v2-01.jpg?v=20260816-9" alt="gallery-paging-0" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="1" aria-label="사진 2 전체화면"></button><img src="assets/wedding-gallery-v2-02.jpg?v=20260816-9" alt="gallery-paging-1" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="2" aria-label="사진 3 전체화면"></button><img src="assets/wedding-gallery-v2-03.jpg?v=20260816-9" alt="gallery-paging-2" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="3" aria-label="사진 4 전체화면"></button><img src="assets/wedding-gallery-v2-04.jpg?v=20260816-9" alt="gallery-paging-3" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="4" aria-label="사진 5 전체화면"></button><img src="assets/wedding-gallery-v2-05.jpg?v=20260816-9" alt="gallery-paging-4" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="5" aria-label="사진 6 전체화면"></button><img src="assets/wedding-gallery-v2-06.jpg?v=20260816-9" alt="gallery-paging-5" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="6" aria-label="사진 7 전체화면"></button><img src="assets/wedding-gallery-v2-13.jpg?v=20260817-14" alt="gallery-paging-6" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="7" aria-label="사진 8 전체화면"></button><img src="assets/wedding-gallery-v2-07.jpg?v=20260816-9" alt="gallery-paging-7" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="8" aria-label="사진 9 전체화면"></button><img src="assets/wedding-gallery-v2-08.jpg?v=20260816-9" alt="gallery-paging-8" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="9" aria-label="사진 10 전체화면"></button><img src="assets/wedding-gallery-v2-14.jpg?v=20260817-14" alt="gallery-paging-9" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="10" aria-label="사진 11 전체화면"></button><img src="assets/wedding-gallery-v2-10.jpg?v=20260816-10" alt="gallery-paging-10" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="11" aria-label="사진 12 전체화면"></button><img src="assets/wedding-gallery-v2-11.jpg?v=20260816-10" alt="gallery-paging-11" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="12" aria-label="사진 13 전체화면"></button><img src="assets/wedding-gallery-v2-12.jpg?v=20260816-10" alt="gallery-paging-12" /></div>
+            <div class="g-slide"><button class="g-hit" type="button" data-i="13" aria-label="사진 14 전체화면"></button><img src="assets/wedding-gallery-v2-09.jpg?v=20260816-9" alt="gallery-paging-13" /></div>
+          </div>
+        </div>
+        <div class="g-nav">
+          <button type="button" id="gPrev" aria-label="이전">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g opacity="0.4"><path d="M16 4L8 12L16 20" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          </button>
+          <div class="g-count" id="gCount">1 / 14</div>
+          <button type="button" id="gNext" aria-label="다음">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g opacity="0.4"><path d="M8 4L16 12L8 20" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          </button>
+        </div>
+      </div>
+      </div>
+    </section>
+    <div class="g-lb" id="gLb" hidden>
+      <div class="g-lb-sheet">
+        <div class="g-lb-view" id="gLbView">
+          <div class="g-lb-track" id="gLbTrack"></div>
+        </div>
+        <button class="g-lb-x" type="button" aria-label="닫기">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="16" fill="white" fill-opacity="0.8"/><path d="M23 9L9 23" stroke="#999999" stroke-linecap="round"/><path d="M23 23L9 9" stroke="#999999" stroke-linecap="round"/></svg>
+        </button>
+        <div class="g-lb-bar">
+          <button class="g-lb-prev" type="button" aria-label="이전">
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" aria-hidden="true"><path d="M16 4.31152L8 12.3115L16 20.3115" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="g-lb-count" id="gLbCount">1 / 14</div>
+          <button class="g-lb-next" type="button" aria-label="다음">
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" aria-hidden="true"><path d="M8 4.31152L16 12.3115L8 20.3115" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section class="loc">
+      <div class="gsap-div">
+      <p class="sec-en gsap-opacity">LOCATION</p>
+      <div class="loc-head">
+        <div class="loc-name gsap-opacity">더채플 앳 청담  3층 커티지홀</div>
+        <button class="addr-btn gsap-opacity" id="addrBtn" type="button">
+          서울 강남구 선릉로 757
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16.4445 7.89062H9.44906C8.59052 7.89062 7.89453 8.58661 7.89453 9.44516V16.4406C7.89453 17.2991 8.59052 17.9951 9.44906 17.9951H16.4445C17.303 17.9951 17.999 17.2991 17.999 16.4406V9.44516C17.999 8.58661 17.303 7.89062 16.4445 7.89062Z" stroke="#444444" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="#444444" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="map-wrap gsap-opacity">
+        <div id="naverMap"></div>
+      </div>
+      <div class="nav-btns gsap-opacity">
+        <a href="nmap://place?lat=37.5222061657208&amp;lng=127.039018881669&amp;name=%EB%8D%94%EC%B1%84%ED%94%8C%20%EC%95%B3%20%EC%B2%AD%EB%8B%B4&amp;appname=https://bmoh95.github.io/wedding/invitation.html"><svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.09879 0C2.86879 0 0.258789 2.61 0.258789 5.84C0.258789 6.18 0.298789 6.53 0.368789 6.89C0.558789 7.83 0.948789 8.71 1.49879 9.49L6.08879 16L8.73879 12.24L10.6788 9.49C11.2288 8.71 11.6188 7.83 11.8088 6.89C11.8788 6.53 11.9188 6.18 11.9188 5.84C11.9188 2.62 9.30879 0 6.07879 0L6.09879 0ZM5.35879 5.73V7.9H4.02879V3.78H5.35879L6.83879 5.95V3.78H8.16879V7.89H6.83879L5.35879 5.72V5.73Z" fill="#04C75A"></path><path d="M8.16832 3.77979V7.88978H6.83832L5.35832 5.72979V7.88978H4.02832V3.77979H5.35832L6.83832 5.94978V3.77979H8.16832Z" fill="#04C75A"></path><path d="M8.16832 3.77979V7.88978H6.83832L5.35832 5.72979V7.88978H4.02832V3.77979H5.35832L6.83832 5.94978V3.77979H8.16832Z" fill="white"></path><path d="M20.4086 12.2402V16.0002H6.09863L8.74863 12.2402H20.4086Z" fill="#256BFA"></path></svg>네이버</a>
+        <a href="kakaomap://search?q=%EB%8D%94%EC%B1%84%ED%94%8C%EC%95%B3%20%EC%B2%AD%EB%8B%B4"><svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5.00167 0.000464757C2.23702 -0.00180161 0.00342633 2.20791 7.56642e-06 4.94229C-0.00227161 6.18199 0.510544 7.24039 1.28205 8.14354C2.69058 9.79006 3.92247 11.5238 4.59483 13.6055C4.65523 13.7936 4.7464 14.0066 5.00622 13.9998C5.28884 13.993 5.36519 13.7539 5.43243 13.5511C6.06376 11.6473 7.11788 10.002 8.4512 8.50729C9.24322 7.61887 9.87911 6.59561 9.98509 5.39443C10.2449 2.46514 7.9156 -0.0391967 5.00167 0.000464757ZM6.70193 4.98875C6.6951 5.89303 5.89396 6.68399 4.99369 6.67606C4.08544 6.66813 3.29684 5.87377 3.30026 4.97175C3.30368 4.07087 4.10481 3.28104 5.01078 3.28444C5.91448 3.28897 6.70877 4.08787 6.70307 4.98761L6.70193 4.98875Z" fill="#FBE100"></path></svg>카카오맵</a>
+        <a href="tmap://route?goalname=%EB%8D%94%EC%B1%84%ED%94%8C%20%EC%95%B3%20%EC%B2%AD%EB%8B%B4&amp;goalx=127.039018881669&amp;goaly=37.5222061657208"><svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12.6951 0H0.955078V3.1H12.6951V0Z" fill="url(#paint0_linear_1343_17036)"></path><path d="M9.55508 14H6.45508V6.24C6.45508 2.8 9.25508 0 12.6951 0H15.0451V3.1H12.6951C10.9651 3.1 9.55508 4.51 9.55508 6.24V14Z" fill="url(#paint1_linear_1343_17036)"></path><defs><linearGradient id="paint0_linear_1343_17036" x1="1.55508" y1="1.55" x2="7.54508" y2="1.55" gradientUnits="userSpaceOnUse"><stop stop-color="#F545BA"></stop><stop offset="1" stop-color="#783BFF"></stop></linearGradient><linearGradient id="paint1_linear_1343_17036" x1="7.84508" y1="9.57" x2="14.1151" y2="-1.38" gradientUnits="userSpaceOnUse"><stop stop-color="#0264FF"></stop><stop offset="0.12" stop-color="#0A79F2"></stop><stop offset="0.4" stop-color="#1AA5D6"></stop><stop offset="0.65" stop-color="#26C6C3"></stop><stop offset="0.86" stop-color="#2ED9B7"></stop><stop offset="1" stop-color="#31E1B3"></stop></linearGradient></defs></svg>T MAP</a>
+      </div>
+      <div class="trans">
+        <div class="hr gsap-opacity"></div>
+        <div class="trans-item gsap-opacity">
+          <div class="trans-h">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_309_5402" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="18" style="mask-type: alpha;"><rect width="18" height="18" fill="#D9D9D9"></rect></mask><g mask="url(#mask0_309_5402)"><path d="M4 11C4.55228 11 5 10.5523 5 10C5 9.44772 4.55228 9 4 9C3.44772 9 3 9.44772 3 10C3 10.5523 3.44772 11 4 11Z" fill="#999999"></path><path d="M14 11C14.5523 11 15 10.5523 15 10C15 9.44772 14.5523 9 14 9C13.4477 9 13 9.44772 13 10C13 10.5523 13.4477 11 14 11Z" fill="#999999"></path><path d="M16 7.5H2" stroke="#999999" stroke-miterlimit="10"></path><path d="M18 7H15L16 9H18V7Z" fill="#999999"></path><path d="M3 7H0V9H2L3 7Z" fill="#999999"></path><path d="M1.5 15V10L3 7.5L3.72147 3.1712C3.8822 2.20683 4.71658 1.5 5.69425 1.5H12.3057C13.2834 1.5 14.1178 2.20683 14.2785 3.1712L15 7.5L16.5 10V15H1.5Z" stroke="#999999"></path><path d="M13 15H16V17.5C16 17.7761 15.7761 18 15.5 18H13.5C13.2239 18 13 17.7761 13 17.5V15Z" fill="#999999"></path><path d="M2 15H5V17.5C5 17.7761 4.77614 18 4.5 18H2.5C2.22386 18 2 17.7761 2 17.5V15Z" fill="#999999"></path><line x1="3" y1="12.5" x2="15" y2="12.5" stroke="#999999"></line></g></svg>
+            자차
+          </div>
+          <div class="trans-b">
+            <p>내비게이션 검색명: '더채플앳 청담'</p>
+            <p>주소: 서울특별시 강남구 선릉로 757</p>
+          </div>
+          <div class="hr"></div>
+        </div>
+        <div class="trans-item gsap-opacity">
+          <div class="trans-h">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_309_5400" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="18" style="mask-type: alpha;"><rect width="18" height="18" fill="#D9D9D9"></rect></mask><g mask="url(#mask0_309_5400)"><path d="M13 16H16V17.5C16 17.7761 15.7761 18 15.5 18H13.5C13.2239 18 13 17.7761 13 17.5V16Z" fill="#999999"></path><path d="M2 16H5V17.5C5 17.7761 4.77614 18 4.5 18H2.5C2.22386 18 2 17.7761 2 17.5V16Z" fill="#999999"></path><path d="M2.5 2C2.5 1.17157 3.17157 0.5 4 0.5H14C14.8284 0.5 15.5 1.17157 15.5 2V15.5H2.5V2Z" stroke="#999999"></path><line x1="3" y1="11.5" x2="15" y2="11.5" stroke="#999999"></line><line x1="3" y1="3.5" x2="15" y2="3.5" stroke="#999999"></line><line x1="4" y1="13.5" x2="6" y2="13.5" stroke="#999999"></line><line x1="12" y1="13.5" x2="14" y2="13.5" stroke="#999999"></line><path d="M2.72361 5.94721C2.9706 5.82372 3.07071 5.52338 2.94721 5.27639C2.82372 5.0294 2.52338 4.92929 2.27639 5.05279L2.72361 5.94721ZM0.5 6.5L0.276393 6.05279L0 6.19098V6.5H0.5ZM0 8.5V9H1V8.5H0ZM2.27639 5.05279L0.276393 6.05279L0.723607 6.94721L2.72361 5.94721L2.27639 5.05279ZM0 6.5V8.5H1V6.5H0Z" fill="#999999"></path><path d="M15.2764 5.94721C15.0294 5.82372 14.9293 5.52338 15.0528 5.27639C15.1763 5.0294 15.4766 4.92929 15.7236 5.05279L15.2764 5.94721ZM17.5 6.5L17.7236 6.05279L18 6.19098V6.5H17.5ZM18 8.5V9H17V8.5H18ZM15.7236 5.05279L17.7236 6.05279L17.2764 6.94721L15.2764 5.94721L15.7236 5.05279ZM18 6.5V8.5H17V6.5H18Z" fill="#999999"></path></g></svg>
+            버스
+          </div>
+          <div class="trans-b">
+            <p><strong class="bus-trunk">간선버스: 301, 342, 472</strong></p>
+            <p><strong class="bus-branch">지선버스: 3011, 4312</strong></p>
+            <p>'영동고교 앞' 정류장 하차</p>
+            <p>하차 후 학동사거리 방면으로 약 100m 직진하시면 됩니다. (도보 약 2분)</p>
+          </div>
+          <div class="hr"></div>
+        </div>
+        <div class="trans-item gsap-opacity">
+          <div class="trans-h">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_309_5387" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="18" style="mask-type: alpha;"><rect width="18" height="18" fill="#EED8D8"></rect></mask><g mask="url(#mask0_309_5387)"><path d="M6 14C6.55228 14 7 13.5523 7 13C7 12.4477 6.55228 12 6 12C5.44772 12 5 12.4477 5 13C5 13.5523 5.44772 14 6 14Z" fill="#999999"></path><path d="M12 14C12.5523 14 13 13.5523 13 13C13 12.4477 12.5523 12 12 12C11.4477 12 11 12.4477 11 13C11 13.5523 11.4477 14 12 14Z" fill="#999999"></path><path d="M3.5 8C3.5 6.067 5.067 4.5 7 4.5H11C12.933 4.5 14.5 6.067 14.5 8V14C14.5 14.8284 13.8284 15.5 13 15.5H5C4.17157 15.5 3.5 14.8284 3.5 14V8Z" stroke="#999999"></path><line x1="3" y1="10.5" x2="14" y2="10.5" stroke="#999999"></line><line x1="7" y1="2.5" x2="11" y2="2.5" stroke="#999999"></line><path d="M0.5 17.5V8.5C0.5 4.08172 4.08172 0.5 8.5 0.5H9.5C13.9183 0.5 17.5 4.08172 17.5 8.5V17.5" stroke="#999999" stroke-linecap="square"></path><line y1="-0.5" x2="5.83095" y2="-0.5" transform="matrix(-0.514496 0.857493 -0.729537 -0.683941 6 15)" stroke="#999999"></line><line y1="-0.5" x2="5.83095" y2="-0.5" transform="matrix(0.514496 0.857493 0.729537 -0.683941 12 15)" stroke="#999999"></line></g></svg>
+            지하철
+          </div>
+          <div class="trans-b">
+            <p><strong><span style="color: rgb(104, 131, 57)">7호선</span>, <span style="color: rgb(234, 195, 60)">수인분당선</span> (강남구청역)</strong></p>
+            <p>3-1번 출구로 나와 좌측 방향으로 약 570m 직진하시면 됩니다. (도보 약 8분)</p>
+            <p>또는 3번 출구 앞에서 셔틀버스 탑승이 가능합니다. (10분 간격 운행)</p>
+            <br />
+            <p><strong style="color: rgb(234, 195, 60)">수인분당선 (압구정로데오역)</strong></p>
+            <p>5번 출구로 나와 약 507m 직진하시면 됩니다. (도보 약 7분)</p>
+          </div>
+          <div class="hr"></div>
+        </div>
+        <div class="trans-item gsap-opacity">
+          <div class="trans-h">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 13.5V9M6.5 9V4.5H10.25C11.4926 4.5 12.5 5.50736 12.5 6.75V6.75C12.5 7.99264 11.4926 9 10.25 9H6.5Z" stroke="#999999" stroke-linecap="square"></path><rect x="0.5" y="0.5" width="17" height="17" rx="3.5" stroke="#999999"></rect></svg>
+            주차
+          </div>
+          <div class="trans-b">
+            <p>하객 무료 주차: 90분 제공</p>
+            <p>초과 시 10분당 1,000원 요금이 발생합니다.</p>
+            <p>건물 내 주차장이 만차일 경우, 안내 직원의 지시에 따라 인근 외부 주차장을 이용하실 수 있습니다. (별도 주차권 배부)</p>
+            <p>주차 공간이 협소하므로 가급적 대중교통 이용을 권장드립니다.</p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="fund">
+      <div class="gsap-div">
+      <div class="fund-line gsap-opacity"></div>
+      <h3 class="gsap-opacity">마음 전하실 곳</h3>
+      <div class="tabs gsap-opacity" role="tablist">
+        <button class="tab on" type="button" data-tab="groom">신랑측에게</button>
+        <button class="tab" type="button" data-tab="bride">신부측에게</button>
+      </div>
+      <div id="groomAcc">
+        <div class="acc-list show" id="groomList">
+          <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">박용태</span><div class="acc-no"><span>우리은행</span> <span>1002-458-166399</span></div></div><button class="copy" type="button" data-copy="1002-458-166399"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">박남일</span><div class="acc-no"><span>우리은행</span> <span>185-08-11845-7</span></div></div><button class="copy" type="button" data-copy="185-08-11845-7"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">이봉선</span><div class="acc-no"><span>우리은행</span> <span>141-062061-12-001</span></div></div><button class="copy" type="button" data-copy="141-062061-12-001"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+      </div>
+      <div id="brideAcc" hidden>
+        <div class="acc-list show" id="brideList">
+          <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">나수진</span><div class="acc-no"><span>신한은행</span> <span>110-454-771082</span></div></div><button class="copy" type="button" data-copy="110-454-771082"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">나철환</span><div class="acc-no"><span>카카오뱅크</span> <span>3333-27-9236933</span></div></div><button class="copy" type="button" data-copy="3333-27-9236933"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">윤지은</span><div class="acc-no"><span>신한은행</span> <span>110-355-732054</span></div></div><button class="copy" type="button" data-copy="110-355-732054"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="thanks">
+      <div class="gsap-div">
+        <p>저희 부부의 소중한 시작을 함께 축하해 주시기 위해 귀한 시간을 내어 주신 모든 분들께 진심으로 감사드립니다.</p>
+        <br />
+        <p>따뜻한 마음과 축복을 소중히 여기며 살아가겠습니다.</p>
+      </div>
+    </section>
+
+    <section class="share">
+      <div class="gsap-div">
+      <button class="share-kakao gsap-opacity" id="shareKakao" type="button">
+        <span>카카오톡으로 청첩장 전하기</span>
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.1473 18.6464C4.95204 18.8417 4.95204 19.1583 5.1473 19.3536C5.34256 19.5488 5.65915 19.5488 5.85441 19.3536L18 7.20797L18 18C18 18.2761 18.2239 18.5 18.5 18.5C18.7761 18.5 19 18.2761 19 18L19 6C19 5.72386 18.7761 5.5 18.5 5.5L6.49999 5.5C6.22385 5.5 5.99999 5.72386 5.99999 6C5.99999 6.27614 6.22385 6.5 6.49999 6.5L17.2937 6.5L5.1473 18.6464Z" fill="#222"/></svg>
+      </button>
+      <button class="share-copy gsap-opacity" id="shareCopy" type="button">
+        <span>청첩장 주소 복사하기</span>
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 1.5C4.67157 1.5 4 2.17157 4 3V16C4 16.8284 4.67157 17.5 5.5 17.5H15.5C16.3284 17.5 17 16.8284 17 16V3C17 2.17157 16.3284 1.5 15.5 1.5H5.5ZM5 3C5 2.72386 5.22386 2.5 5.5 2.5H15.5C15.7761 2.5 16 2.72386 16 3V16C16 16.2761 15.7761 16.5 15.5 16.5H5.5C5.22386 16.5 5 16.2761 5 16V3ZM21 6C21 5.72386 20.7761 5.5 20.5 5.5C20.2239 5.5 20 5.72386 20 6V19C20 19.8284 19.3284 20.5 18.5 20.5H8.5C8.22386 20.5 8 20.7239 8 21C8 21.2761 8.22386 21.5 8.5 21.5H18.5C19.8807 21.5 21 20.3807 21 19V6Z" fill="white"/></svg>
+      </button>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <div class="contact-modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle" hidden>
+    <div class="contact-sheet">
+      <p class="cm-title" id="cmTitle">축하 연락하기</p>
+      <p class="cm-sub">직접 축하의 마음을 전해보세요</p>
+      <div class="tabs" style="margin-top:16px">
+        <button class="tab on" type="button" data-ctab="groom">신랑에게</button>
+        <button class="tab" type="button" data-ctab="bride">신부에게</button>
+      </div>
+      <div id="cGroom">
+        <div class="cm-card"><div class="cm-head"><span>박용태</span><span class="cm-role">신랑</span></div><div class="cm-acts"><a class="cm-sms" href="sms:010-9990-4363">문자 보내기</a><a class="cm-tel" href="tel:010-9990-4363">전화하기</a></div></div>
+        <div class="cm-card"><div class="cm-head"><span>박남일</span><span class="cm-role">신랑 아버지</span></div><div class="cm-acts"><a class="cm-sms" href="sms:010-4744-4364">문자 보내기</a><a class="cm-tel" href="tel:010-4744-4364">전화하기</a></div></div>
+        <div class="cm-card"><div class="cm-head"><span>이봉선</span><span class="cm-role">신랑 어머니</span></div><div class="cm-acts"><a class="cm-sms" href="sms:010-3360-6793">문자 보내기</a><a class="cm-tel" href="tel:010-3360-6793">전화하기</a></div></div>
+      </div>
+      <div id="cBride" hidden>
+        <div class="cm-card"><div class="cm-head"><span>나수진</span><span class="cm-role">신부</span></div><div class="cm-acts"><a class="cm-sms" href="sms:010-7634-5341">문자 보내기</a><a class="cm-tel" href="tel:010-7634-5341">전화하기</a></div></div>
+        <div class="cm-card"><div class="cm-head"><span>나철환</span><span class="cm-role">신부 아버지</span></div><div class="cm-acts"><a class="cm-sms" href="sms:010-5858-0506">문자 보내기</a><a class="cm-tel" href="tel:010-5858-0506">전화하기</a></div></div>
+        <div class="cm-card"><div class="cm-head"><span>윤지은</span><span class="cm-role">신부 어머니</span></div><div class="cm-acts"><a class="cm-sms" href="sms:010-8549-5341">문자 보내기</a><a class="cm-tel" href="tel:010-8549-5341">전화하기</a></div></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=v0q5e85005"></script>
+  <script src="assets/vendor/howler/howler.core.min.js?v=2.2.4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    const WED = new Date("2026-11-22T15:30:00+09:00");
+    const VENUE = { lat: 37.5222061657208, lng: 127.039018881669 };
+
+    if (window.naver && naver.maps) {
+      const map = new naver.maps.Map("naverMap", {
+        center: new naver.maps.LatLng(VENUE.lat, VENUE.lng),
+        zoom: 16,
+        zoomControl: false,
+        scrollWheel: false,
+        pinchZoom: false,
+        keyboardShortcuts: false,
+        disableDoubleClickZoom: true,
+        scaleControl: true,
+        mapDataControl: true
+      });
+      new naver.maps.Marker({
+        position: new naver.maps.LatLng(VENUE.lat, VENUE.lng),
+        map
+      });
+    }
+
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => el.classList.remove("show"), 1600);
+    }
+
+    async function copyText(text, ok) {
+      try {
+        await navigator.clipboard.writeText(text);
+        toast(ok || "복사되었습니다");
+      } catch {
+        toast("복사에 실패했습니다");
+      }
+    }
+
+    const musicToggle = document.getElementById("music-toggle");
+    const ICON_ON = '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#101010"/><rect class="eq" x="6.6" y="9" width="1.5" height="6" fill="#fff"/><rect class="eq" x="9.7" y="7" width="1.5" height="10" fill="#fff"/><rect class="eq" x="12.8" y="8.2" width="1.5" height="7.6" fill="#fff"/><rect class="eq" x="15.9" y="6.5" width="1.5" height="11" fill="#fff"/></svg>';
+    const ICON_OFF = '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#101010"/><path d="M10 8v8l6.4-4L10 8z" fill="#fff"/></svg>';
+    let musicWanted = true;
+    let pausedForBackground = false;
+    let readyAutoplayTried = false;
+    let playInFlight = false;
+    let lastPlayWasSilent = true;
+    let bgm;
+    function pageAllowsMusic() { return document.visibilityState !== "hidden"; }
+    function setMusicState(state) {
+      const isPlaying = state === "playing";
+      const isLoading = state === "loading";
+      const isPressed = isPlaying || (isLoading && musicWanted);
+      musicToggle.classList.toggle("is-playing", isPlaying);
+      musicToggle.classList.toggle("is-loading", isLoading);
+      musicToggle.setAttribute("aria-pressed", String(isPressed));
+      musicToggle.setAttribute("aria-label", isPressed ? "배경음악 끄기" : "배경음악 켜기");
+      musicToggle.innerHTML = isPressed ? ICON_ON : ICON_OFF;
+    }
+    function playMusic(options) {
+      const silent = !!(options && options.silent);
+      if (!musicWanted || !pageAllowsMusic() || !bgm || bgm.playing()) return;
+      lastPlayWasSilent = silent;
+      playInFlight = true;
+      setMusicState("loading");
+      try { bgm.play(); }
+      catch {
+        playInFlight = false;
+        setMusicState(silent && musicWanted ? "loading" : "off");
+        if (!silent) toast("브라우저가 재생을 막았습니다. 버튼을 한 번 더 눌러 주세요.");
+      }
+      window.setTimeout(() => { if (playInFlight && bgm && !bgm.playing()) playInFlight = false; }, 800);
+    }
+    function pauseMusic(options) {
+      if (!(options && options.keepWanted)) musicWanted = false;
+      playInFlight = false;
+      if (bgm) bgm.pause();
+      setMusicState("off");
+    }
+    function pauseForBackground() {
+      if (!musicWanted) return;
+      if (bgm && !bgm.playing() && !musicToggle.classList.contains("is-loading")) return;
+      pausedForBackground = true;
+      pauseMusic({ keepWanted: true });
+    }
+    function resumeWantedMusic() {
+      if (!musicWanted || !pageAllowsMusic()) return;
+      playInFlight = false;
+      playMusic({ silent: true });
+    }
+    function resumeAfterForeground() {
+      if (musicWanted && pausedForBackground && pageAllowsMusic()) {
+        pausedForBackground = false;
+        playInFlight = false;
+        playMusic({ silent: true });
+      }
+    }
+    function handleVisibilityChange() {
+      if (!pageAllowsMusic()) { pauseForBackground(); return; }
+      resumeAfterForeground();
+    }
+    function retryAutoplayAfterLoad() {
+      if (readyAutoplayTried || !musicWanted || !pageAllowsMusic() || (bgm && bgm.playing())) return;
+      readyAutoplayTried = true;
+      playMusic({ silent: true });
+    }
+    if (typeof window.Howl === "function") {
+      bgm = new window.Howl({
+        src: [musicToggle.dataset.bgmSrc || "assets/wedding-bgm.mp3"],
+        html5: true,
+        loop: true,
+        preload: true,
+        volume: 0.57,
+        onload: retryAutoplayAfterLoad,
+        onplay: () => { playInFlight = false; setMusicState("playing"); },
+        onpause: () => { playInFlight = false; if (!musicWanted || pausedForBackground) setMusicState("off"); },
+        onstop: () => { playInFlight = false; if (!musicWanted) setMusicState("off"); },
+        onplayerror: () => {
+          playInFlight = false;
+          setMusicState(musicWanted ? "loading" : "off");
+          bgm.once("unlock", () => { if (musicWanted && pageAllowsMusic()) playMusic({ silent: true }); });
+        },
+        onloaderror: () => { playInFlight = false; setMusicState("off"); toast("음악 파일을 불러오지 못했습니다."); }
+      });
+      musicToggle.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (bgm.playing()) { pauseMusic(); return; }
+        musicWanted = true;
+        pausedForBackground = false;
+        playInFlight = false;
+        playMusic();
+      });
+      ["pointerdown", "touchstart", "keydown"].forEach((eventName) => {
+        document.addEventListener(eventName, resumeWantedMusic, { passive: true });
+      });
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+      window.addEventListener("pageshow", resumeAfterForeground);
+      window.addEventListener("load", retryAutoplayAfterLoad, { once: true });
+      playMusic({ silent: true });
+    } else {
+      musicWanted = false;
+      setMusicState("off");
+    }
+
+    if (window.lottie) {
+      const birdsEl = document.getElementById("birds");
+      const anim = lottie.loadAnimation({
+        container: birdsEl,
+        renderer: "svg",
+        loop: true,
+        autoplay: false,
+        path: "assets/vendor/invitation_v2/lotties/birds.json"
+      });
+      anim.addEventListener("DOMLoaded", () => {
+        [...birdsEl.querySelectorAll("svg")].slice(0, -1).forEach((n) => n.remove());
+      });
+      const playBirds = () => { if (anim && typeof anim.play === "function") anim.play(); };
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) playBirds(); });
+        }, { threshold: 0.2 }).observe(birdsEl);
+      } else {
+        playBirds();
+      }
+    }
+
+    const grid = document.getElementById("calGrid");
+    const dows = ["일","월","화","수","목","금","토"];
+    dows.forEach((d, i) => {
+      const el = document.createElement("div");
+      el.className = "dow gsap-opacity" + (i === 0 ? " sun" : "");
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+    const first = new Date(2026, 10, 1);
+    for (let i = 1; i <= 30; i++) {
+      const dt = new Date(2026, 10, i);
+      const wrap = document.createElement("div");
+      if (i === 22) {
+        wrap.className = "gsap-opacity";
+        wrap.innerHTML = '<div class="day-on">22</div>';
+      } else {
+        wrap.className = "day gsap-opacity" + (dt.getDay() === 0 ? " sun" : dt.getDay() === 6 ? " sat" : "");
+        wrap.textContent = i;
+      }
+      grid.appendChild(wrap);
+    }
+
+    function tick() {
+      const now = Date.now();
+      let diff = Math.max(0, WED.getTime() - now);
+      const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+      const h = Math.floor(diff / 3600000); diff -= h * 3600000;
+      const m = Math.floor(diff / 60000); diff -= m * 60000;
+      const s = Math.floor(diff / 1000);
+      document.getElementById("d").textContent = d;
+      document.getElementById("h").textContent = h;
+      document.getElementById("m").textContent = m;
+      document.getElementById("s").textContent = s;
+      document.getElementById("daysLeft").textContent = d + "일";
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    const contactBtn = document.getElementById("contactBtn");
+    const contactModal = document.getElementById("contactModal");
+    function setContactOpen(open) {
+      contactModal.classList.toggle("open", open);
+      contactModal.hidden = !open;
+      contactBtn.setAttribute("aria-expanded", String(open));
+      document.body.style.overflow = open ? "hidden" : "";
+    }
+    contactBtn.addEventListener("click", () => setContactOpen(true));
+    contactModal.addEventListener("click", (event) => {
+      if (event.target === contactModal) setContactOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && contactModal.classList.contains("open")) setContactOpen(false);
+    });
+    contactModal.querySelectorAll("[data-ctab]").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        contactModal.querySelectorAll("[data-ctab]").forEach((el) => el.classList.toggle("on", el === tab));
+        const isGroom = tab.dataset.ctab === "groom";
+        document.getElementById("cGroom").hidden = !isGroom;
+        document.getElementById("cBride").hidden = isGroom;
+      });
+    });
+
+    document.getElementById("addrBtn").addEventListener("click", () => {
+      copyText("서울 강남구 선릉로 757", "주소가 복사되었습니다");
+    });
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("on"));
+        tab.classList.add("on");
+        const isGroom = tab.dataset.tab === "groom";
+        document.getElementById("groomAcc").hidden = !isGroom;
+        document.getElementById("brideAcc").hidden = isGroom;
+      });
+    });
+    document.querySelectorAll(".acc-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const list = document.getElementById(btn.dataset.target);
+        const show = list.classList.toggle("show");
+        btn.style.display = show ? "none" : "";
+      });
+    });
+    document.querySelectorAll("[data-copy]").forEach((btn) => {
+      btn.addEventListener("click", () => copyText((btn.dataset.copy || "").replaceAll("-", ""), "계좌번호가 복사되었습니다"));
+    });
+
+    document.getElementById("shareCopy").addEventListener("click", () => {
+      copyText(location.href, "청첩장 주소가 복사되었습니다");
+    });
+    document.getElementById("shareKakao").addEventListener("click", async () => {
+      if (navigator.share) {
+        try { await navigator.share({ title: "TO OUR GUEST", url: location.href }); return; } catch {}
+      }
+      copyText(location.href, "청첩장 주소가 복사되었습니다");
+    });
+
+    (function setupGallery() {
+      const srcs = [...document.querySelectorAll(".g-slide img")].map((img) => img.src);
+      const n = srcs.length;
+      if (!n) return;
+      const track = document.getElementById("gTrack");
+      const view = document.getElementById("gView");
+      const countEl = document.getElementById("gCount");
+      const lb = document.getElementById("gLb");
+      const lbView = document.getElementById("gLbView");
+      const lbTrack = document.getElementById("gLbTrack");
+      const lbCount = document.getElementById("gLbCount");
+      const lbPrev = lb.querySelector(".g-lb-prev");
+      const lbNext = lb.querySelector(".g-lb-next");
+      srcs.forEach((src, idx) => {
+        const slide = document.createElement("div");
+        slide.className = "g-lb-slide";
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "gallery-paging-" + idx;
+        slide.appendChild(img);
+        lbTrack.appendChild(slide);
+      });
+      let i = 0, startX = 0, dx = 0, dragging = false, opened = false, dragEl = null;
+      function paint(el, withAnim, offsetPx) {
+        const w = (el === lbTrack ? lbView : view).clientWidth || 1;
+        el.style.transition = withAnim ? "transform .3s ease" : "none";
+        el.style.transform = "translate3d(" + ((-i * w + (offsetPx || 0)) / w * 100) + "%,0,0)";
+      }
+      function go(next) {
+        i = Math.max(0, Math.min(n - 1, next));
+        paint(track, true, 0);
+        countEl.textContent = (i + 1) + " / " + n;
+        if (opened) {
+          paint(lbTrack, true, 0);
+          lbCount.textContent = (i + 1) + " / " + n;
+          lbPrev.classList.toggle("is-off", i === 0);
+          lbNext.classList.toggle("is-off", i === n - 1);
+        }
+      }
+      function openLb(idx) {
+        i = idx;
+        opened = true;
+        lb.hidden = false;
+        lb.classList.add("open");
+        lbCount.textContent = (i + 1) + " / " + n;
+        lbPrev.classList.toggle("is-off", i === 0);
+        lbNext.classList.toggle("is-off", i === n - 1);
+        paint(lbTrack, false, 0);
+      }
+      function closeLb() {
+        lb.classList.remove("open");
+        lb.hidden = true;
+        opened = false;
+      }
+      function bindSwipe(el, mover) {
+        el.addEventListener("pointerdown", (e) => {
+          if (e.target.closest(".g-nav button, .g-lb-x, .g-lb-bar")) return;
+          dragging = true; dragEl = mover; startX = e.clientX; dx = 0;
+          mover.style.transition = "none";
+          el.setPointerCapture(e.pointerId);
+        });
+        el.addEventListener("pointermove", (e) => {
+          if (!dragging || dragEl !== mover) return;
+          dx = e.clientX - startX;
+          paint(mover, false, dx);
+        });
+        function endDrag() {
+          if (!dragging || dragEl !== mover) return;
+          dragging = false; dragEl = null;
+          if (dx < -40) go(i + 1);
+          else if (dx > 40) go(i - 1);
+          else go(i);
+        }
+        el.addEventListener("pointerup", endDrag);
+        el.addEventListener("pointercancel", endDrag);
+      }
+      document.querySelectorAll(".g-hit").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (Math.abs(dx) > 8) return;
+          openLb(Number(btn.dataset.i));
+        });
+      });
+      bindSwipe(view, track);
+      bindSwipe(lbView, lbTrack);
+      lb.querySelector(".g-lb-x").addEventListener("click", closeLb);
+      lb.querySelector(".g-lb-prev").addEventListener("click", () => go(i - 1));
+      lb.querySelector(".g-lb-next").addEventListener("click", () => go(i + 1));
+      document.getElementById("gPrev").addEventListener("click", () => go(i - 1));
+      document.getElementById("gNext").addEventListener("click", () => go(i + 1));
+      lbView.addEventListener("click", (e) => {
+        if (Math.abs(dx) > 8) return;
+        if (e.target.closest(".g-lb-x, .g-lb-bar")) return;
+        closeLb();
+      });
+      lb.addEventListener("click", (e) => {
+        if (e.target === lb) closeLb();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (!opened) return;
+        if (e.key === "Escape") closeLb();
+        if (e.key === "ArrowLeft") go(i - 1);
+        if (e.key === "ArrowRight") go(i + 1);
+      });
+      go(0);
+    })();
+
+    (function setupZoomBlur() {
+      const vp = window.visualViewport;
+      if (!vp) return;
+      const sync = () => document.documentElement.classList.toggle("is-zoomed", vp.scale > 1);
+      vp.addEventListener("resize", sync);
+      vp.addEventListener("scroll", sync);
+      window.addEventListener("load", sync);
+      sync();
+    })();
+
+    document.documentElement.classList.add("js-ready");
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({
+        ignoreMobileResize: true,
+        autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"
+      });
+      gsap.from(".cover-item", { opacity: 0, y: 6, duration: 1.2, stagger: 0.15, delay: 0.3 });
+      function fadeFrom(root, selector, stagger, start) {
+        if (!root) return;
+        const items = root.querySelectorAll(selector);
+        if (!items.length) return;
+        gsap.from(items, {
+          scrollTrigger: {
+            trigger: root.querySelector(".gsap-div") || root,
+            start: start || "top 50%",
+            once: true,
+            fastScrollEnd: true
+          },
+          opacity: 0, y: 40, duration: 1, stagger: stagger, ease: "power1.out"
+        });
+      }
+      fadeFrom(document.querySelector(".invite"), ".gsap-text", 0.05);
+      fadeFrom(document.querySelector(".calendar"), ".gsap-opacity", 0.015);
+      fadeFrom(document.querySelector(".host"), ".gsap-opacity", 0.15);
+      fadeFrom(document.querySelector(".about"), ".gsap-opacity", 0.05);
+      fadeFrom(document.querySelector(".gallery"), ".gsap-opacity", 0.1);
+      fadeFrom(document.querySelector(".loc"), ".gsap-opacity", 0.1);
+      fadeFrom(document.querySelector(".fund"), ".gsap-opacity", 0.1);
+      fadeFrom(document.querySelector(".share"), ".gsap-opacity", 0.1, "top bottom");
+      window.addEventListener("load", () => ScrollTrigger.refresh());
+      let dateRevealed = false;
+      ScrollTrigger.create({
+        trigger: ".gsap-bg-color",
+        start: "top 35%",
+        end: "bottom 35%",
+        onEnter() {
+          gsap.to(".gsap-bg-color", { backgroundColor: "#7c7c7c", overwrite: "auto" });
+          gsap.to(".highlight .gsap-opacity", { opacity: 1 });
+          if (dateRevealed) return;
+          dateRevealed = true;
+          gsap.fromTo(".reveal-text", { y: 80, opacity: 0 }, { duration: 3, y: 0, opacity: 1, stagger: 0.055 });
+        },
+        onEnterBack() {
+          gsap.to(".gsap-bg-color", { backgroundColor: "#7c7c7c", overwrite: "auto" });
+          gsap.to(".highlight .gsap-opacity", { opacity: 1 });
+        },
+        onLeave() { gsap.to(".gsap-bg-color", { backgroundColor: "#fff", overwrite: "auto" }); },
+        onLeaveBack() { gsap.to(".gsap-bg-color", { backgroundColor: "#fff", overwrite: "auto" }); }
+      });
+    }
+  </script>
+</body>
+</html>
