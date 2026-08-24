@@ -964,7 +964,7 @@
     });
     document.getElementById("shareKakao").addEventListener("click", async () => {
       if (navigator.share) {
-        try { await navigator.share({ title: "TO OUR GUEST", url: location.href }); return; } catch {}
+        try { await navigator.share({ title: "박용태 ♥︎ 나수진 결혼식에 초대합니다", url: location.href }); return; } catch {}
       }
       copyText(location.href, "청첩장 주소가 복사되었습니다");
     });
