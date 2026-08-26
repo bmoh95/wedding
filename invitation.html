@@ -125,7 +125,10 @@
     .invite-copy { padding: 0 clamp(16px, 11cqi, 44px); line-height: 1.8; text-align: center; font-family: Suite, sans-serif; }
     .invite-copy p { text-align: center; color: #020817; }
     .invite-copy .invite-poem { color: #888; }
-    .invite-names { padding-top: 40px; text-align: center; font-size: clamp(13px, 3.8cqi, 15.2px); }
+    .invite-names { padding-top: 40px; text-align: center; }
+    .invite-roles { font-size: clamp(13px, 3.8cqi, 15.2px); }
+    .invite-signatures { display: flex; align-items: center; justify-content: center; gap: clamp(18px, 8cqi, 32px); margin-top: 18px; padding: 0 24px; }
+    .invite-signature { display: block; width: min(34cqi, 132px); height: auto; }
     .invite-photo { padding-top: 40px; position: relative; display: flex; justify-content: center; }
     .invite-photo img { width: 72%; height: auto; display: block; }
 
@@ -433,7 +436,13 @@
         <p class="gsap-text">저희 두 사람이 하나 되는 그 첫 시작의 자리에 오셔서</p>
         <p class="gsap-text">축복해 주시면 감사하겠습니다.</p>
       </div>
-      <div class="invite-names gsap-text">신랑 박용태 · 신부 나수진</div>
+      <div class="invite-names gsap-text">
+        <div class="invite-roles">신랑 <span aria-hidden="true">·</span> 신부</div>
+        <div class="invite-signatures" aria-label="신랑 박용태, 신부 나수진">
+          <img class="invite-signature" src="assets/박용태_필기체.png" alt="박용태" />
+          <img class="invite-signature" src="assets/나수진_필기체.png" alt="나수진" />
+        </div>
+      </div>
       <div class="invite-photo gsap-text">
         <img src="assets/wedding-gallery-v2-invitation.jpg?v=20260816-inv" alt="invi-image" />
       </div>
