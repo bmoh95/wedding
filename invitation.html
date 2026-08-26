@@ -125,6 +125,8 @@
     .invite-copy { padding: 0 clamp(16px, 11cqi, 44px); line-height: 1.8; text-align: center; font-family: Suite, sans-serif; }
     .invite-copy p { text-align: center; color: #020817; }
     .invite-copy .invite-poem { color: #888; }
+    .invite-message-image { margin: 0 auto; }
+    .invite-message-image img { display: block; width: 100%; height: auto; }
     .invite-names { padding-top: 40px; text-align: center; }
     .invite-signature-line { display: flex; align-items: center; justify-content: center; gap: clamp(6px, 2.5cqi, 10px); padding: 0 12px; white-space: nowrap; }
     .invite-role { font-size: clamp(13px, 3.8cqi, 15.2px); }
@@ -432,9 +434,9 @@
         <br />
         <p class="gsap-text invite-poem">-한용운 '사랑'</p>
         <br />
-        <p class="gsap-text">평생을 함께할 약속을 하려 합니다.</p>
-        <p class="gsap-text">저희 두 사람이 하나 되는 그 첫 시작의 자리에 오셔서</p>
-        <p class="gsap-text">축복해 주시면 감사하겠습니다.</p>
+        <div class="invite-message-image gsap-text">
+          <img src="assets/invitation-message.jpg" alt="평생을 함께할 약속을 하려 합니다. 저희 두 사람이 하나 되는 그 첫 시작의 자리에 오셔서 축복해 주시면 감사하겠습니다." />
+        </div>
       </div>
       <div class="invite-names gsap-text">
         <div class="invite-signature-line" aria-label="신랑 박용태, 신부 나수진">
