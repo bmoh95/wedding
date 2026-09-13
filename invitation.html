@@ -17,6 +17,23 @@
   <link rel="canonical" href="https://bmoh95.github.io/wedding/invitation.html" />
   <link rel="icon" type="image/png" href="assets/vendor/favicon.png?v=20260817" />
   <link rel="apple-touch-icon" href="assets/vendor/favicon.png?v=20260817" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvMsD_81_61sxe_DMW48jEDv8iZsU79zo",
+      authDomain: "invitation-fd857.firebaseapp.com",
+      projectId: "invitation-fd857",
+      storageBucket: "invitation-fd857.firebasestorage.app",
+      messagingSenderId: "80013862989",
+      appId: "1:80013862989:web:d8b2bc114aba094e715404",
+      measurementId: "G-JSZ32Z36ER"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+  </script>
   <script>
     (function () {
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
