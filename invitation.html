@@ -360,8 +360,11 @@
     }
     .tab.on { color: #020817; border-bottom-color: #111; }
     .acc-btn {
-      width: 100%; min-height: 384px; border: 0; background: transparent;
+      width: 100%; min-height: 384px; padding: 0;
+      border: 0; background: transparent;
+      display: flex; align-items: center; justify-content: center;
       color: #111; opacity: .3; cursor: pointer; font-size: 14px;
+      text-align: center;
     }
     .acc-list { display: none; }
     .acc-list.show { display: block; }
@@ -673,14 +676,16 @@
         <button class="tab" type="button" data-tab="bride">신부측에게</button>
       </div>
       <div id="groomAcc">
-        <div class="acc-list show" id="groomList">
+        <button class="acc-btn" type="button" data-target="groomList" aria-controls="groomList" aria-expanded="false">신랑측<br />계좌정보 확인하기</button>
+        <div class="acc-list" id="groomList">
           <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">박용태</span><div class="acc-no"><span>우리은행</span> <span>1002-458-166399</span></div></div><button class="copy" type="button" data-copy="1002-458-166399"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
           <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">박남일</span><div class="acc-no"><span>우리은행</span> <span>185-08-11845-7</span></div></div><button class="copy" type="button" data-copy="185-08-11845-7"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
           <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">이봉선</span><div class="acc-no"><span>우리은행</span> <span>141-062061-12-001</span></div></div><button class="copy" type="button" data-copy="141-062061-12-001"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         </div>
       </div>
       <div id="brideAcc" hidden>
-        <div class="acc-list show" id="brideList">
+        <button class="acc-btn" type="button" data-target="brideList" aria-controls="brideList" aria-expanded="false">신부측<br />계좌정보 확인하기</button>
+        <div class="acc-list" id="brideList">
           <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">나수진</span><div class="acc-no"><span>신한은행</span> <span>110-454-771082</span></div></div><button class="copy" type="button" data-copy="110-454-771082"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
           <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">나철환</span><div class="acc-no"><span>카카오뱅크</span> <span>3333-27-9236933</span></div></div><button class="copy" type="button" data-copy="3333-27-9236933"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
           <div class="acc-row gsap-opacity"><div class="acc-top"><span class="acc-name">윤지은</span><div class="acc-no"><span>신한은행</span> <span>110-355-732054</span></div></div><button class="copy" type="button" data-copy="110-355-732054"><span>계좌번호 복사하기</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.4445 7.89258H9.44906C8.59052 7.89258 7.89453 8.58857 7.89453 9.44711V16.4425C7.89453 17.3011 8.59052 17.997 9.44906 17.997H16.4445C17.303 17.997 17.999 17.3011 17.999 16.4425V9.44711C17.999 8.58857 17.303 7.89258 16.4445 7.89258Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.3318 12.1045H3.55453C3.14225 12.1045 2.74684 11.9407 2.45531 11.6492C2.16378 11.3576 2 10.9622 2 10.5499V3.55453C2 3.14225 2.16378 2.74684 2.45531 2.45531C2.74684 2.16378 3.14225 2 3.55453 2H10.5499C10.9622 2 11.3576 2.16378 11.6492 2.45531C11.9407 2.74684 12.1045 3.14225 12.1045 3.55453V4.3318" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
@@ -982,6 +987,7 @@
       btn.addEventListener("click", () => {
         const list = document.getElementById(btn.dataset.target);
         const show = list.classList.toggle("show");
+        btn.setAttribute("aria-expanded", String(show));
         btn.style.display = show ? "none" : "";
       });
     });
