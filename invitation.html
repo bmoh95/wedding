@@ -1007,6 +1007,7 @@
         list.classList.remove("is-measuring");
         owner.hidden = ownerWasHidden;
         if (height) {
+          owner.style.height = height + "px";
           btn.style.height = height + "px";
           btn.style.minHeight = height + "px";
         }
