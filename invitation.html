@@ -368,6 +368,7 @@
     }
     .acc-list { display: none; }
     .acc-list.show { display: block; }
+    .acc-list.is-measuring { display: block !important; visibility: hidden; }
     .acc-list.show .acc-row {
       animation: acc-row-reveal .48s cubic-bezier(.22, 1, .36, 1) both;
     }
@@ -995,6 +996,25 @@
         document.getElementById("brideAcc").hidden = isGroom;
       });
     });
+    function syncAccountButtonHeights() {
+      document.querySelectorAll(".acc-btn").forEach((btn) => {
+        const list = document.getElementById(btn.dataset.target);
+        const owner = list.parentElement;
+        const ownerWasHidden = owner.hidden;
+        if (ownerWasHidden) owner.hidden = false;
+        list.classList.add("is-measuring");
+        const height = list.offsetHeight;
+        list.classList.remove("is-measuring");
+        owner.hidden = ownerWasHidden;
+        if (height) {
+          btn.style.height = height + "px";
+          btn.style.minHeight = height + "px";
+        }
+      });
+    }
+    syncAccountButtonHeights();
+    document.fonts.ready.then(syncAccountButtonHeights);
+    window.addEventListener("resize", syncAccountButtonHeights);
     document.querySelectorAll(".acc-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const list = document.getElementById(btn.dataset.target);
